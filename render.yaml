@@ -1,0 +1,62 @@
+services:
+  - type: web
+    name: physical-ai-textbook-api
+    env: python
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.src.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: false
+      - key: LOG_LEVEL
+        value: INFO
+      - key: DATABASE_URL
+        fromDatabase:
+          name: neon-postgres
+          property: connectionString
+      - key: NEON_DATABASE_URL
+        sync: false
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: QDRANT_COLLECTION
+        value: book_content
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_ORG_ID
+        sync: false
+      - key: BETTER_AUTH_SECRET
+        generateValue: true
+      - key: BETTER_AUTH_URL
+        fromService:
+          type: web
+          name: physical-ai-textbook-api
+          property: host
+      - key: BETTER_AUTH_TRUST_HOST
+        value: true
+      - key: CORS_ORIGINS
+        value: https://your-username.github.io
+      - key: ALLOWED_HOSTS
+        value: your-app.onrender.com
+      - key: SESSION_COOKIE_SECURE
+        value: true
+      - key: SESSION_COOKIE_SAMESITE
+        value: lax
+      - key: SESSION_MAX_AGE_DAYS
+        value: 7
+      - key: RATE_LIMIT_PER_MINUTE
+        value: 10
+      - key: RATE_LIMIT_BURST
+        value: 20
+      - key: ENABLE_RESPONSE_CACHE
+        value: true
+      - key: CACHE_TTL_SECONDS
+        value: 3600
+      - key: MAX_CACHE_SIZE_MB
+        value: 100
