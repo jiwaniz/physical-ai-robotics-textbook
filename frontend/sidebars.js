@@ -13,7 +13,7 @@ const sidebars = {
     'intro',
     {
       type: 'category',
-      label: 'Introduction to Physical AI',
+      label: '📚 Introduction to Physical AI',
       link: {
         type: 'doc',
         id: 'introduction/index',
@@ -26,7 +26,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Module 1: ROS 2 Fundamentals',
+      label: '🤖 Module 1: ROS 2 Fundamentals',
       link: {
         type: 'doc',
         id: 'ros2/index',
@@ -40,7 +40,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Module 2: Gazebo & Unity Simulation',
+      label: '🎮 Module 2: Gazebo & Unity Simulation',
       link: {
         type: 'doc',
         id: 'simulation/index',
@@ -53,7 +53,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Module 3: NVIDIA Isaac Platform',
+      label: '🚀 Module 3: NVIDIA Isaac Platform',
       link: {
         type: 'doc',
         id: 'isaac/index',
@@ -67,7 +67,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Module 4: VLA & Capstone',
+      label: '🧠 Module 4: VLA & Capstone',
       link: {
         type: 'doc',
         id: 'vla/index',
@@ -81,7 +81,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Assessments',
+      label: '📝 Assessments',
       link: {
         type: 'doc',
         id: 'assessments/index',

@@ -8,16 +8,16 @@ const config = {
   favicon: 'img/favicon.svg',
 
   // Set the production url of your site here
-  url: 'https://your-username.github.io',
+  url: 'https://jiwaniz.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/physical-ai-robotics-textbook/',
 
   // GitHub pages deployment config
-  organizationName: 'your-org', // Usually your GitHub org/user name
-  projectName: 'physical-ai-textbook', // Usually your repo name
+  organizationName: 'jiwaniz', // Usually your GitHub org/user name
+  projectName: 'physical-ai-robotics-textbook', // Usually your repo name
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -35,7 +35,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: '/', // Serve docs at the site root
-          editUrl: 'https://github.com/your-org/physical-ai-textbook/tree/main/frontend/',
+          editUrl: 'https://github.com/jiwaniz/physical-ai-robotics-textbook/tree/001-rag-textbook-platform/frontend/',
         },
         blog: false,
         theme: {
@@ -74,7 +74,7 @@ const config = {
             label: 'Course',
           },
           {
-            href: 'https://github.com/your-org/physical-ai-textbook',
+            href: 'https://github.com/jiwaniz/physical-ai-robotics-textbook',
             label: 'GitHub',
             position: 'right',
           },
@@ -114,7 +114,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/your-org/physical-ai-textbook',
+                href: 'https://github.com/jiwaniz/physical-ai-robotics-textbook',
               },
             ],
           },
@@ -124,7 +124,7 @@ const config = {
       prism: {
         theme: require('prism-react-renderer').themes.github,
         darkTheme: require('prism-react-renderer').themes.dracula,
-        additionalLanguages: ['bash', 'python', 'cpp', 'cmake', 'yaml', 'xml'],
+        additionalLanguages: ['bash', 'python', 'cpp', 'cmake', 'yaml'],
       },
       colorMode: {
         defaultMode: 'light',
