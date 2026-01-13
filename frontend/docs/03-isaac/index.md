@@ -2,11 +2,11 @@
 sidebar_position: 4
 ---
 
-# Module 3: The AI-Robot Brain (NVIDIA Isaac™)
+# Chapter 3: The AI-Robot Brain (NVIDIA Isaac™)
 
 Explore advanced AI-powered robotics with the NVIDIA Isaac platform for perception, manipulation, and navigation.
 
-## Module Overview
+## Chapter Overview
 
 NVIDIA Isaac is a comprehensive robotics platform that combines simulation, AI, and deployment tools. Learn to build intelligent robots powered by modern AI techniques.
 
@@ -35,7 +35,7 @@ NVIDIA Isaac is a comprehensive robotics platform that combines simulation, AI, 
 
 ## Learning Outcomes
 
-By the end of this module, you will be able to:
+By the end of this chapter, you will be able to:
 - ✅ Set up and use NVIDIA Isaac Sim
 - ✅ Generate synthetic training data for AI models
 - ✅ Implement perception systems for robots

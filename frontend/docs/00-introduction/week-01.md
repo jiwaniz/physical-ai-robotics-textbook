@@ -134,26 +134,26 @@ This 13-week course is structured into 4 modules:
 ### Weeks 1-2: Introduction (This Week!)
 Foundations of Physical AI and course prerequisites
 
-### Module 1: ROS 2 Fundamentals (Weeks 3-5)
+### Chapter 1: ROS 2 Fundamentals (Weeks 3-5)
 - ROS 2 architecture and communication patterns
 - Building nodes, publishers, subscribers
 - Services, actions, and parameters
 - **Assessment**: ROS 2 multi-node project
 
-### Module 2: Gazebo & Unity Simulation (Weeks 6-7)
+### Chapter 2: Gazebo & Unity Simulation (Weeks 6-7)
 - URDF robot modeling
 - Gazebo physics simulation
 - Sensor integration and visualization
 - **Assessment**: Custom robot simulation
 
-### Module 3: NVIDIA Isaac Platform (Weeks 8-10)
+### Chapter 3: NVIDIA Isaac Platform (Weeks 8-10)
 - Isaac Sim environment setup
 - Synthetic data generation
 - Isaac Gym for reinforcement learning
 - Sim-to-real transfer techniques
 - **Assessment**: Isaac pipeline project
 
-### Module 4: Vision-Language-Action Models (Weeks 11-13)
+### Chapter 4: Vision-Language-Action Models (Weeks 11-13)
 - Multimodal AI for robotics
 - VLA model architecture
 - Action primitives and policy learning
@@ -168,7 +168,7 @@ Before proceeding, ensure you have:
 - ✅ **Linux/Ubuntu**: Basic command line, package management
 - ✅ **Git**: Version control basics
 - ⚠️ **C++** (Optional): Helpful for ROS 2 but not required
-- ⚠️ **AI/ML** (Optional): PyTorch/TensorFlow basics helpful for Module 4
+- ⚠️ **AI/ML** (Optional): PyTorch/TensorFlow basics helpful for Chapter 4
 
 ### Hardware Requirements
 - **Minimum**: x86_64 laptop, 16GB RAM, 100GB storage
@@ -230,13 +230,13 @@ Before proceeding, ensure you have:
 **A:** No! This course is simulation-based. You'll use Gazebo and Isaac Sim, which are free.
 
 ### Q: What if I don't have a GPU?
-**A:** Modules 1-2 work without a GPU. For Modules 3-4, use cloud instances (AWS, GCP) or NVIDIA Omniverse Cloud.
+**A:** Chapters 1-2 work without a GPU. For Chapters 3-4, use cloud instances (AWS, GCP) or NVIDIA Omniverse Cloud.
 
 ### Q: I'm an AI expert but new to robotics. Will I struggle?
 **A:** No! The course bridges AI and robotics. We'll teach ROS 2, simulation, and control from scratch.
 
 ### Q: I'm a roboticist but new to AI/ML. Will I struggle?
-**A:** No! Module 4 introduces VLA models with clear explanations. Prior transformer knowledge helps but isn't required.
+**A:** No! Chapter 4 introduces VLA models with clear explanations. Prior transformer knowledge helps but isn't required.
 
 ## Next Steps
 

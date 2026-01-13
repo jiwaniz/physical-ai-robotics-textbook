@@ -2,7 +2,7 @@
 
 ## Overview
 
-This week extends your Gazebo skills with sensor integration, custom world creation, and advanced simulation techniques. You'll add cameras, lidar, and IMUs to your robot, build realistic environments, and complete the Module 2 assessment project.
+This week extends your Gazebo skills with sensor integration, custom world creation, and advanced simulation techniques. You'll add cameras, lidar, and IMUs to your robot, build realistic environments, and complete the Chapter 2 assessment project.
 
 ## Learning Objectives
 
@@ -14,7 +14,7 @@ By the end of this week, you will be able to:
 - Use Gazebo model database and import custom meshes
 - Implement sensor noise and real-world effects
 - Build a complete simulated robot system
-- Complete the Module 2 assessment project
+- Complete the Chapter 2 assessment project
 
 ## Adding Sensors to URDF
 
@@ -594,7 +594,7 @@ if __name__ == '__main__':
     main()
 ```
 
-## Module 2 Assessment Project
+## Chapter 2 Assessment Project
 
 **Task**: Build a warehouse inspection robot
 
@@ -670,11 +670,11 @@ gz log -d
 
 ## Next Steps
 
-Congratulations on completing Module 2! You now have solid robot modeling and simulation skills.
+Congratulations on completing Chapter 2! You now have solid robot modeling and simulation skills.
 
 **What's next:**
-- Complete Module 2 assessment project
+- Complete Chapter 2 assessment project
 - Review Gazebo concepts as needed
-- Prepare for Module 3: [NVIDIA Isaac Platform](../03-isaac/index.md)
+- Prepare for Chapter 3: [NVIDIA Isaac Platform](../03-isaac/index.md)
 
-Module 3 will introduce GPU-accelerated simulation, photorealistic rendering, and synthetic data generation for AI/ML training!
+Chapter 3 will introduce GPU-accelerated simulation, photorealistic rendering, and synthetic data generation for AI/ML training!

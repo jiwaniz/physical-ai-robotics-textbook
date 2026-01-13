@@ -495,10 +495,10 @@ Good luck with your capstone! We're excited to see what you build! 🤖🚀
 
 Over 13 weeks, you've mastered:
 
-✅ **Module 1**: ROS 2 architecture, pub-sub, services, actions
-✅ **Module 2**: URDF modeling, Gazebo simulation, sensor integration
-✅ **Module 3**: Isaac Sim, synthetic data, RL, sim-to-real transfer
-✅ **Module 4**: VLA models, multimodal AI, end-to-end systems
+✅ **Chapter 1**: ROS 2 architecture, pub-sub, services, actions
+✅ **Chapter 2**: URDF modeling, Gazebo simulation, sensor integration
+✅ **Chapter 3**: Isaac Sim, synthetic data, RL, sim-to-real transfer
+✅ **Chapter 4**: VLA models, multimodal AI, end-to-end systems
 
 ### Certificate of Completion
 

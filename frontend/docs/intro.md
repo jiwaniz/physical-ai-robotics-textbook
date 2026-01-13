@@ -10,16 +10,16 @@ Welcome to the interactive textbook for Physical AI & Humanoid Robotics!
 
 This comprehensive 13-week course covers the fundamentals of embodied AI and humanoid robotics across four main modules:
 
-### Module 1: The Robotic Nervous System (ROS 2)
+### Chapter 1: The Robotic Nervous System (ROS 2)
 Learn the foundations of robot communication and control using ROS 2.
 
-### Module 2: The Digital Twin (Gazebo & Unity)
+### Chapter 2: The Digital Twin (Gazebo & Unity)
 Master simulation environments for testing and development.
 
-### Module 3: The AI-Robot Brain (NVIDIA Isaac™)
+### Chapter 3: The AI-Robot Brain (NVIDIA Isaac™)
 Explore advanced AI-powered robotics with NVIDIA Isaac platform.
 
-### Module 4: Vision-Language-Action (VLA)
+### Chapter 4: Vision-Language-Action (VLA)
 Integrate multimodal AI for human-robot interaction.
 
 ## Features

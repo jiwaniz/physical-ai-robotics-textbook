@@ -2,7 +2,7 @@
 
 ## Overview
 
-This week completes your ROS 2 fundamentals by covering synchronous communication (services), long-running tasks (actions), and runtime configuration (parameters). You'll also learn launch files for managing multi-node systems and complete the Module 1 assessment project.
+This week completes your ROS 2 fundamentals by covering synchronous communication (services), long-running tasks (actions), and runtime configuration (parameters). You'll also learn launch files for managing multi-node systems and complete the Chapter 1 assessment project.
 
 ## Learning Objectives
 
@@ -13,7 +13,7 @@ By the end of this week, you will be able to:
 - Manage parameters for runtime configuration
 - Write launch files to start complex multi-node systems
 - Apply ROS 2 patterns to build a complete robotic application
-- Complete the Module 1 ROS 2 project assessment
+- Complete the Chapter 1 ROS 2 project assessment
 
 ## Services: Request-Response Communication
 
@@ -622,7 +622,7 @@ ros2 launch my_robot --show-args
 </launch>
 ```
 
-## Module 1 Assessment Project
+## Chapter 1 Assessment Project
 
 ### Project Requirements
 
@@ -715,11 +715,11 @@ class MyLifecycleNode(LifecycleNode):
 
 ## Next Steps
 
-Congratulations on completing Module 1! You now have solid ROS 2 fundamentals.
+Congratulations on completing Chapter 1! You now have solid ROS 2 fundamentals.
 
 **What's next:**
-- Complete the Module 1 assessment project
-- Prepare for Module 2: [Gazebo & Unity Simulation](../02-simulation/index.md)
+- Complete the Chapter 1 assessment project
+- Prepare for Chapter 2: [Gazebo & Unity Simulation](../02-simulation/index.md)
 - Review ROS 2 concepts as needed
 
 ## Resources

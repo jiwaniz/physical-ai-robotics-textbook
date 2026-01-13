@@ -29,13 +29,13 @@ class Settings(BaseSettings):
     database_url: str = Field(..., description="PostgreSQL database URL (Neon)")
     neon_database_url: str = Field(..., description="Neon Postgres connection string")
 
-    # Qdrant Vector Database
-    qdrant_url: str = Field(..., description="Qdrant cluster URL")
-    qdrant_api_key: str = Field(..., description="Qdrant API key")
+    # Qdrant Vector Database (Optional - for RAG features)
+    qdrant_url: str = Field(default="", description="Qdrant cluster URL")
+    qdrant_api_key: str = Field(default="", description="Qdrant API key")
     qdrant_collection: str = Field(default="book_content", description="Qdrant collection name")
 
-    # OpenAI
-    openai_api_key: str = Field(..., description="OpenAI API key")
+    # OpenAI (Optional - for RAG features)
+    openai_api_key: str = Field(default="", description="OpenAI API key")
     openai_org_id: str = Field(default="", description="OpenAI organization ID")
 
     # Better-Auth

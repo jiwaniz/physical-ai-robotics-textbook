@@ -2,11 +2,11 @@
 sidebar_position: 2
 ---
 
-# Module 1: The Robotic Nervous System (ROS 2)
+# Chapter 1: The Robotic Nervous System (ROS 2)
 
 Learn the foundations of robot communication and control using ROS 2 (Robot Operating System 2).
 
-## Module Overview
+## Chapter Overview
 
 ROS 2 is the backbone of modern robotics, providing the communication infrastructure that connects sensors, actuators, and AI algorithms. Think of it as the "nervous system" of a robot.
 
@@ -32,7 +32,7 @@ ROS 2 is the backbone of modern robotics, providing the communication infrastruc
 
 ## Learning Outcomes
 
-By the end of this module, you will be able to:
+By the end of this chapter, you will be able to:
 - ✅ Install and configure ROS 2 Humble
 - ✅ Create ROS 2 nodes in Python
 - ✅ Implement publish-subscribe communication

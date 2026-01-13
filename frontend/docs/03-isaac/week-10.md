@@ -1,8 +1,8 @@
-# Week 10: Sim-to-Real Transfer & Module 3 Project
+# Week 10: Sim-to-Real Transfer & Chapter 3 Project
 
 ## Overview
 
-This final week of Module 3 addresses the critical challenge of sim-to-real transfer: making policies and models trained in simulation work on real robots. You'll learn proven techniques, implement transfer strategies, and complete a comprehensive Isaac Sim project.
+This final week of Chapter 3 addresses the critical challenge of sim-to-real transfer: making policies and models trained in simulation work on real robots. You'll learn proven techniques, implement transfer strategies, and complete a comprehensive Isaac Sim project.
 
 ## Learning Objectives
 
@@ -13,7 +13,7 @@ By the end of this week, you will be able to:
 - Implement system identification for physics calibration
 - Use sim-to-real transfer best practices
 - Evaluate transfer success quantitatively
-- Complete the Module 3 assessment project
+- Complete the Chapter 3 assessment project
 - Deploy simulated policies to real hardware (conceptually)
 
 ## The Sim-to-Real Gap
@@ -383,7 +383,7 @@ print(f"Sim-to-Real Success Rate: {results['success_rate']:.1%}")
 - With DR: 70-85% success
 - DR + Fine-tuning: 85-95% success
 
-## Module 3 Assessment Project
+## Chapter 3 Assessment Project
 
 **Task**: Build a complete Isaac Sim pipeline for a manipulation task
 
@@ -508,9 +508,9 @@ print(f"Sim-to-Real Success Rate: {results['success_rate']:.1%}")
 - [NVIDIA Isaac Sim Examples](https://github.com/NVIDIA-Omniverse/IsaacGymEnvs)
 - [System Identification Techniques](https://stanford.edu/class/ee363/sysid.pdf)
 
-## Module 3 Summary
+## Chapter 3 Summary
 
-Congratulations on completing Module 3! You've learned:
+Congratulations on completing Chapter 3! You've learned:
 
 ✅ NVIDIA Isaac Sim setup and navigation
 ✅ USD scene creation and robot import
@@ -524,8 +524,8 @@ Congratulations on completing Module 3! You've learned:
 ## Next Steps
 
 **What's next:**
-- Complete Module 3 assessment project
+- Complete Chapter 3 assessment project
 - Review Isaac Sim concepts as needed
-- Prepare for Module 4: [Vision-Language-Action Models & Capstone](../04-vla/index.md)
+- Prepare for Chapter 4: [Vision-Language-Action Models & Capstone](../04-vla/index.md)
 
-Module 4 will bring everything together: multimodal AI, end-to-end robot systems, and your final capstone project!
+Chapter 4 will bring everything together: multimodal AI, end-to-end robot systems, and your final capstone project!

@@ -1,0 +1,121 @@
+"""
+Authentication utility functions for password hashing and JWT management.
+"""
+
+from datetime import datetime, timedelta
+from typing import Optional
+
+from fastapi import HTTPException, status
+from jose import JWTError, jwt
+from passlib.context import CryptContext
+
+from ..core.config import settings
+
+# Password hashing context with bcrypt
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# JWT configuration
+SECRET_KEY = settings.better_auth_secret
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_DAYS = 7
+
+
+def hash_password(password: str) -> str:
+    """
+    Hash a password using bcrypt.
+
+    Args:
+        password: Plain text password
+
+    Returns:
+        Hashed password string
+    """
+    return pwd_context.hash(password)
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """
+    Verify a password against its hash.
+
+    Args:
+        plain_password: Plain text password to verify
+        hashed_password: Hashed password to compare against
+
+    Returns:
+        True if password matches, False otherwise
+    """
+    return pwd_context.verify(plain_password, hashed_password)
+
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
+    """
+    Create a JWT access token.
+
+    Args:
+        data: Dictionary of data to encode in the token
+        expires_delta: Optional custom expiration time
+
+    Returns:
+        Encoded JWT token string
+    """
+    to_encode = data.copy()
+
+    # Set expiration time
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)
+
+    # Add standard JWT claims
+    to_encode.update({
+        "exp": expire,
+        "iat": datetime.utcnow()
+    })
+
+    # Encode and return token
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+def decode_access_token(token: str) -> dict:
+    """
+    Decode and validate a JWT access token.
+
+    Args:
+        token: JWT token string to decode
+
+    Returns:
+        Decoded token payload dictionary
+
+    Raises:
+        HTTPException: If token is invalid or expired
+    """
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except JWTError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token",
+            headers={"WWW-Authenticate": "Bearer"},
+        ) from e
+
+
+def validate_password_strength(password: str) -> None:
+    """
+    Validate password meets security requirements.
+
+    Args:
+        password: Password string to validate
+
+    Raises:
+        ValueError: If password doesn't meet requirements
+    """
+    if len(password) < 8:
+        raise ValueError("Password must be at least 8 characters long")
+    if not any(c.isupper() for c in password):
+        raise ValueError("Password must contain at least one uppercase letter")
+    if not any(c.islower() for c in password):
+        raise ValueError("Password must contain at least one lowercase letter")
+    if not any(c.isdigit() for c in password):
+        raise ValueError("Password must contain at least one digit")

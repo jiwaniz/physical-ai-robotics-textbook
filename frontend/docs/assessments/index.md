@@ -172,4 +172,4 @@ If you believe your work was graded incorrectly:
 
 ---
 
-**Ready to get started?** Review the [Course Schedule](../intro.md) and begin with [Module 1: ROS 2 Fundamentals](../01-ros2/index.md)!
+**Ready to get started?** Review the [Course Schedule](../intro.md) and begin with [Chapter 1: ROS 2 Fundamentals](../01-ros2/index.md)!

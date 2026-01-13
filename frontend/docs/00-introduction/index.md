@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction to Physical AI
 
-Welcome to the introduction module! This section covers the foundations of Physical AI and prepares you for the 13-week journey ahead.
+Welcome to the introduction chapter! This section covers the foundations of Physical AI and prepares you for the 13-week journey ahead.
 
 ## What You'll Learn
 
@@ -20,9 +20,9 @@ Welcome to the introduction module! This section covers the foundations of Physi
 - Setting up your development environment
 - Introduction to ROS 2 ecosystem
 
-## Module Objectives
+## Chapter Objectives
 
-By the end of this introduction module, you will:
+By the end of this introduction chapter, you will:
 - ✅ Understand the concept of Physical AI and embodied intelligence
 - ✅ Set up your development environment (Ubuntu 22.04, ROS 2 Humble)
 - ✅ Understand the course structure and assessment criteria

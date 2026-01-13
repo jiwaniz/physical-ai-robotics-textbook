@@ -583,6 +583,6 @@ Trains 2048 cartpoles in parallel!
 
 Great work! You now understand synthetic data generation and parallel RL training.
 
-Next week: [Week 10: Sim-to-Real Transfer & Module 3 Project](week-10.md)
+Next week: [Week 10: Sim-to-Real Transfer & Chapter 3 Project](week-10.md)
 
 We'll tackle the sim-to-real gap and complete a comprehensive Isaac Sim project!

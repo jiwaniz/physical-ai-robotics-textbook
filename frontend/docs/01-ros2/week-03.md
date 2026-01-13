@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to Module 1! This week introduces ROS 2 (Robot Operating System 2), the industry-standard middleware for building modular, distributed robotic systems. You'll learn the fundamental architecture, install ROS 2 Humble, and create your first ROS 2 node.
+Welcome to Chapter 1! This week introduces ROS 2 (Robot Operating System 2), the industry-standard middleware for building modular, distributed robotic systems. You'll learn the fundamental architecture, install ROS 2 Humble, and create your first ROS 2 node.
 
 ## Learning Objectives
 

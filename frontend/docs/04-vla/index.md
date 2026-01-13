@@ -1,4 +1,4 @@
-# Module 4: Vision-Language-Action Models & Capstone
+# Chapter 4: Vision-Language-Action Models & Capstone
 
 **Weeks 11-13**
 
@@ -8,7 +8,7 @@ This module explores Vision-Language-Action (VLA) models and their application i
 
 ## Learning Objectives
 
-By the end of this module, you will be able to:
+By the end of this chapter, you will be able to:
 
 - Understand the architecture and principles of Vision-Language-Action models
 - Integrate VLA models with robotic control systems
@@ -36,7 +36,7 @@ By the end of this module, you will be able to:
 
 ## Prerequisites
 
-Before starting this module, ensure you have:
+Before starting this chapter, ensure you have:
 
 - ✅ Completed Modules 1-3 (ROS 2, Simulation, NVIDIA Isaac)
 - ✅ Understanding of deep learning fundamentals (transformers, attention mechanisms)

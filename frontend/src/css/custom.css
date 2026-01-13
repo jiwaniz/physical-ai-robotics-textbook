@@ -4,6 +4,9 @@
  * work well for content-centric websites.
  */
 
+/* Import authentication form styles */
+@import './auth.css';
+
 /* Custom theme colors for Physical AI & Robotics */
 :root {
   /* Primary colors - NVIDIA-inspired green for robotics/AI theme */

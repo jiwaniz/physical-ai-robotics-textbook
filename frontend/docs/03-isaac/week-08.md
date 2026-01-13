@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to Module 3! This week introduces NVIDIA Isaac Sim, a GPU-accelerated robotics simulator built on NVIDIA Omniverse. You'll learn why Isaac Sim is revolutionary for Physical AI, install the platform, create your first simulation, and integrate with ROS 2.
+Welcome to Chapter 3! This week introduces NVIDIA Isaac Sim, a GPU-accelerated robotics simulator built on NVIDIA Omniverse. You'll learn why Isaac Sim is revolutionary for Physical AI, install the platform, create your first simulation, and integrate with ROS 2.
 
 ## Learning Objectives
 

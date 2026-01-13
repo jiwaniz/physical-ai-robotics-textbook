@@ -185,7 +185,7 @@ code --install-extension eamodio.gitlens
 
 ### 4. Docker Installation
 
-Docker is essential for reproducible environments and will be used in Modules 3-4.
+Docker is essential for reproducible environments and will be used in Chapters 3-4.
 
 ```bash
 # Install dependencies
@@ -215,7 +215,7 @@ docker run hello-world
 
 ### 5. NVIDIA GPU Setup (If Applicable)
 
-For users with NVIDIA GPUs (required for Isaac Sim in Module 3):
+For users with NVIDIA GPUs (required for Isaac Sim in Chapter 3):
 
 ```bash
 # Check GPU
@@ -460,7 +460,7 @@ Before proceeding:
 - ✅ Join the course discussion forum
 - ✅ Complete the Week 2 quiz
 
-Ready to start Module 1? Continue to [Week 3: ROS 2 Architecture & Core Concepts](../01-ros2/week-03.md).
+Ready to start Chapter 1? Continue to [Week 3: ROS 2 Architecture & Core Concepts](../01-ros2/week-03.md).
 
 ## Additional Resources
 

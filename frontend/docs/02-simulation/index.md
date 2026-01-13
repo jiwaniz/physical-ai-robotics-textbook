@@ -2,11 +2,11 @@
 sidebar_position: 3
 ---
 
-# Module 2: The Digital Twin (Gazebo & Unity)
+# Chapter 2: The Digital Twin (Gazebo & Unity)
 
 Master simulation environments for testing and developing robot systems before deploying to physical hardware.
 
-## Module Overview
+## Chapter Overview
 
 Simulation is critical for robotics development - it's faster, safer, and cheaper than testing on real robots. Learn to create digital twins of robots and environments using industry-standard tools.
 
@@ -28,7 +28,7 @@ Simulation is critical for robotics development - it's faster, safer, and cheape
 
 ## Learning Outcomes
 
-By the end of this module, you will be able to:
+By the end of this chapter, you will be able to:
 - ✅ Create robot models using URDF
 - ✅ Simulate robots in Gazebo with accurate physics
 - ✅ Build custom simulation environments

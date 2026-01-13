@@ -26,7 +26,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🤖 Module 1: ROS 2 Fundamentals',
+      label: '🤖 Chapter 1: ROS 2 Fundamentals',
       link: {
         type: 'doc',
         id: 'ros2/index',
@@ -40,7 +40,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🎮 Module 2: Gazebo & Unity Simulation',
+      label: '🎮 Chapter 2: Gazebo & Unity Simulation',
       link: {
         type: 'doc',
         id: 'simulation/index',
@@ -53,7 +53,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🚀 Module 3: NVIDIA Isaac Platform',
+      label: '🚀 Chapter 3: NVIDIA Isaac Platform',
       link: {
         type: 'doc',
         id: 'isaac/index',
@@ -67,7 +67,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🧠 Module 4: VLA & Capstone',
+      label: '🧠 Chapter 4: VLA & Capstone',
       link: {
         type: 'doc',
         id: 'vla/index',

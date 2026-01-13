@@ -117,13 +117,16 @@ async def root():
     }
 
 
-# TODO: Import and include routers in later phases
-# Phase 4 (US2): from .auth.routes import router as auth_router
-# Phase 4 (US2): from .users.routes import router as users_router
+# Import routers
+from .auth.routes import router as auth_router
+from .users.routes import router as users_router
+
+# Include routers
+app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(users_router, prefix="/api/users", tags=["Users"])
+
+# TODO: Import and include additional routers in later phases
 # Phase 5 (US3): from .chat.routes import router as chat_router
 # Phase 8 (US5): from .personalization.routes import router as personalization_router
-
-# app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
-# app.include_router(users_router, prefix="/api/users", tags=["Users"])
 # app.include_router(chat_router, prefix="/api/chat", tags=["Chat"])
 # app.include_router(personalization_router, prefix="/api/personalization", tags=["Personalization"])

@@ -4,7 +4,7 @@ uvicorn[standard]==0.27.0
 python-multipart==0.0.9
 
 # Authentication
-better-auth==1.0.0
+# Note: Using native FastAPI JWT auth (better-auth is Node.js only)
 
 # Database
 sqlalchemy==2.0.25

@@ -53,7 +53,7 @@ Follow-up TODOs: None
 **The RAG chatbot MUST provide accurate, context-aware, and helpful assistance.**
 
 - Semantic search MUST retrieve relevant content chunks from the textbook
-- Responses MUST cite sources (module, week, section) for verification
+- Responses MUST cite sources (Chapter, week, section) for verification
 - User-selected text MUST be prioritized in context for targeted help
 - Chatbot MUST handle technical queries: ROS 2 commands, URDF syntax, Isaac Sim errors, troubleshooting
 - Response quality MUST be monitored via user feedback (thumbs up/down)
@@ -182,11 +182,11 @@ Follow-up TODOs: None
 ### Content Organization
 
 - **Structure:**
-  - Weeks 1-2: Introduction to Physical AI
-  - Module 1 (Weeks 3-5): ROS 2 Fundamentals
-  - Module 2 (Weeks 6-7): Gazebo & Unity Simulation
-  - Module 3 (Weeks 8-10): NVIDIA Isaac Platform
-  - Module 4 (Weeks 11-13): VLA & Capstone
+  - Chapter 1 Introduction to Physical AI
+  - Chapter 2 (Weeks 3-5): ROS 2 Fundamentals
+  - Chapter 3 (Weeks 6-7): Gazebo & Unity Simulation
+  - Chapter 4 (Weeks 8-10): NVIDIA Isaac Platform
+  - Chapter 5 (Weeks 11-13): VLA & Capstone
 
 - **Each Week MUST Include:**
   - Learning outcomes (3-5 bullet points)
@@ -215,7 +215,7 @@ Follow-up TODOs: None
 
 ### Navigation & Discoverability
 
-- Sidebar navigation MUST reflect module/week structure
+- Sidebar navigation MUST reflect Chapter/week structure
 - Search MUST index all content (Algolia DocSearch or local)
 - Breadcrumbs MUST show current location
 - "Next/Previous" buttons at bottom of each page
