@@ -1,14 +1,7 @@
 name: Generate Content Embeddings
 
+# Temporarily disabled - script not yet implemented
 on:
-  push:
-    branches:
-      - main
-      - master
-    paths:
-      - 'frontend/docs/**/*.md'
-      - 'scripts/embed_content.py'
-      - '.github/workflows/embed-content.yml'
   workflow_dispatch:
     inputs:
       force_regenerate:
