@@ -20,7 +20,9 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/signup", response_model=AuthResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/signup", response_model=AuthResponse, status_code=status.HTTP_201_CREATED
+)
 async def signup(
     request: SignupRequest,
     response: Response,

@@ -23,47 +23,73 @@ class AppException(Exception):
 class AuthenticationError(AppException):
     """Raised when authentication fails."""
 
-    def __init__(self, message: str = "Authentication failed", details: Optional[Dict[str, Any]] = None):
+    def __init__(
+        self,
+        message: str = "Authentication failed",
+        details: Optional[Dict[str, Any]] = None,
+    ):
         super().__init__(message=message, status_code=401, details=details)
 
 
 class AuthorizationError(AppException):
     """Raised when user lacks required permissions."""
 
-    def __init__(self, message: str = "Insufficient permissions", details: Optional[Dict[str, Any]] = None):
+    def __init__(
+        self,
+        message: str = "Insufficient permissions",
+        details: Optional[Dict[str, Any]] = None,
+    ):
         super().__init__(message=message, status_code=403, details=details)
 
 
 class NotFoundError(AppException):
     """Raised when a requested resource is not found."""
 
-    def __init__(self, message: str = "Resource not found", details: Optional[Dict[str, Any]] = None):
+    def __init__(
+        self,
+        message: str = "Resource not found",
+        details: Optional[Dict[str, Any]] = None,
+    ):
         super().__init__(message=message, status_code=404, details=details)
 
 
 class ValidationError(AppException):
     """Raised when input validation fails."""
 
-    def __init__(self, message: str = "Validation error", details: Optional[Dict[str, Any]] = None):
+    def __init__(
+        self,
+        message: str = "Validation error",
+        details: Optional[Dict[str, Any]] = None,
+    ):
         super().__init__(message=message, status_code=422, details=details)
 
 
 class RateLimitError(AppException):
     """Raised when rate limit is exceeded."""
 
-    def __init__(self, message: str = "Rate limit exceeded", details: Optional[Dict[str, Any]] = None):
+    def __init__(
+        self,
+        message: str = "Rate limit exceeded",
+        details: Optional[Dict[str, Any]] = None,
+    ):
         super().__init__(message=message, status_code=429, details=details)
 
 
 class ExternalServiceError(AppException):
     """Raised when an external service (OpenAI, Qdrant) fails."""
 
-    def __init__(self, message: str = "External service error", details: Optional[Dict[str, Any]] = None):
+    def __init__(
+        self,
+        message: str = "External service error",
+        details: Optional[Dict[str, Any]] = None,
+    ):
         super().__init__(message=message, status_code=503, details=details)
 
 
 class DatabaseError(AppException):
     """Raised when database operations fail."""
 
-    def __init__(self, message: str = "Database error", details: Optional[Dict[str, Any]] = None):
+    def __init__(
+        self, message: str = "Database error", details: Optional[Dict[str, Any]] = None
+    ):
         super().__init__(message=message, status_code=500, details=details)

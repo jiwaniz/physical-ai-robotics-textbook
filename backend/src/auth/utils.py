@@ -67,10 +67,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
         expire = datetime.utcnow() + timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)
 
     # Add standard JWT claims
-    to_encode.update({
-        "exp": expire,
-        "iat": datetime.utcnow()
-    })
+    to_encode.update({"exp": expire, "iat": datetime.utcnow()})
 
     # Encode and return token
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)

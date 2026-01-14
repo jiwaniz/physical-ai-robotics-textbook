@@ -12,7 +12,9 @@ class SignupRequest(BaseModel):
     """Request schema for user signup."""
 
     email: EmailStr = Field(..., description="User email address")
-    password: str = Field(..., min_length=8, description="User password (minimum 8 characters)")
+    password: str = Field(
+        ..., min_length=8, description="User password (minimum 8 characters)"
+    )
     name: str = Field(..., min_length=1, max_length=255, description="User full name")
 
     @field_validator("password")

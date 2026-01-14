@@ -48,8 +48,7 @@ class BaseModel(Base, TimestampMixin):
     def to_dict(self) -> dict:
         """Convert model to dictionary."""
         return {
-            column.name: getattr(self, column.name)
-            for column in self.__table__.columns
+            column.name: getattr(self, column.name) for column in self.__table__.columns
         }
 
 
@@ -58,14 +57,19 @@ class User(BaseModel):
 
     __tablename__ = "users"
 
-    email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False, index=True)
+    email: Mapped[str] = mapped_column(
+        String(255), unique=True, nullable=False, index=True
+    )
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
     # Relationship
     profile: Mapped[Optional["UserProfile"]] = relationship(
-        "UserProfile", back_populates="user", uselist=False, cascade="all, delete-orphan"
+        "UserProfile",
+        back_populates="user",
+        uselist=False,
+        cascade="all, delete-orphan",
     )
 
 

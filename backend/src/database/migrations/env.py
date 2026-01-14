@@ -22,7 +22,9 @@ if config.config_file_name is not None:
 # Set SQLAlchemy URL from settings
 # Convert async URL to sync URL for Alembic (migrations run synchronously)
 # Replace asyncpg driver with psycopg2 and ssl parameter format
-sync_database_url = settings.database_url.replace("postgresql+asyncpg://", "postgresql://").replace("ssl=require", "sslmode=require")
+sync_database_url = settings.database_url.replace(
+    "postgresql+asyncpg://", "postgresql://"
+).replace("ssl=require", "sslmode=require")
 config.set_main_option("sqlalchemy.url", sync_database_url)
 
 # add your model's MetaData object here

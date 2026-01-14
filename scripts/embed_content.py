@@ -74,7 +74,7 @@ def extract_frontmatter(content: str) -> tuple[dict, str]:
             for line in yaml_content.split("\n"):
                 if ":" in line:
                     key, value = line.split(":", 1)
-                    frontmatter[key.strip()] = value.strip().strip('"\'')
+                    frontmatter[key.strip()] = value.strip().strip("\"'")
 
     return frontmatter, body
 
@@ -96,7 +96,9 @@ def clean_markdown(text: str) -> str:
     return text.strip()
 
 
-def chunk_text(text: str, chunk_size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP) -> Generator[str, None, None]:
+def chunk_text(
+    text: str, chunk_size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP
+) -> Generator[str, None, None]:
     """Split text into overlapping chunks."""
     if len(text) <= chunk_size:
         yield text
@@ -146,17 +148,19 @@ def process_file(file_path: Path, docs_root: Path) -> list[dict]:
         parts = list(relative_path.parts)
         section = parts[0] if parts else "general"
 
-        chunks.append({
-            "id": generate_point_id(str(relative_path), i),
-            "text": chunk,
-            "metadata": {
-                "file_path": str(relative_path),
-                "section": section,
-                "title": frontmatter.get("title", file_path.stem),
-                "chunk_index": i,
-                "sidebar_position": frontmatter.get("sidebar_position", "0"),
+        chunks.append(
+            {
+                "id": generate_point_id(str(relative_path), i),
+                "text": chunk,
+                "metadata": {
+                    "file_path": str(relative_path),
+                    "section": section,
+                    "title": frontmatter.get("title", file_path.stem),
+                    "chunk_index": i,
+                    "sidebar_position": frontmatter.get("sidebar_position", "0"),
+                },
             }
-        })
+        )
 
     return chunks
 
@@ -203,7 +207,9 @@ def main():
 
     # Ensure collection exists
     collections = qdrant_client.get_collections()
-    collection_exists = any(c.name == QDRANT_COLLECTION for c in collections.collections)
+    collection_exists = any(
+        c.name == QDRANT_COLLECTION for c in collections.collections
+    )
 
     if FORCE_REGENERATE and collection_exists:
         print(f"Force regenerate: Deleting existing collection '{QDRANT_COLLECTION}'")
@@ -229,7 +235,9 @@ def main():
         chunks = process_file(file_path, docs_path)
         all_chunks.extend(chunks)
         if chunks:
-            print(f"  Processed: {file_path.relative_to(docs_path)} ({len(chunks)} chunks)")
+            print(
+                f"  Processed: {file_path.relative_to(docs_path)} ({len(chunks)} chunks)"
+            )
 
     print(f"\nTotal chunks to embed: {len(all_chunks)}")
 
@@ -242,20 +250,24 @@ def main():
     points = []
 
     for i in range(0, len(all_chunks), batch_size):
-        batch = all_chunks[i:i + batch_size]
+        batch = all_chunks[i : i + batch_size]
         texts = [chunk["text"] for chunk in batch]
 
-        print(f"Generating embeddings for batch {i // batch_size + 1}/{(len(all_chunks) + batch_size - 1) // batch_size}...")
+        print(
+            f"Generating embeddings for batch {i // batch_size + 1}/{(len(all_chunks) + batch_size - 1) // batch_size}..."
+        )
 
         embeddings = generate_embeddings(google_client, texts)
 
         for j, embedding in enumerate(embeddings):
             chunk = batch[j]
-            points.append(PointStruct(
-                id=chunk["id"],
-                vector=embedding,
-                payload=chunk["metadata"],
-            ))
+            points.append(
+                PointStruct(
+                    id=chunk["id"],
+                    vector=embedding,
+                    payload=chunk["metadata"],
+                )
+            )
 
     # Upsert to Qdrant
     print(f"\nUpserting {len(points)} points to Qdrant...")
@@ -263,7 +275,7 @@ def main():
     # Upsert in batches
     upsert_batch_size = 100
     for i in range(0, len(points), upsert_batch_size):
-        batch = points[i:i + upsert_batch_size]
+        batch = points[i : i + upsert_batch_size]
         qdrant_client.upsert(
             collection_name=QDRANT_COLLECTION,
             points=batch,
@@ -278,7 +290,9 @@ def main():
         info = qdrant_client.get_collection(collection_name=QDRANT_COLLECTION)
         print(f"Verified vectors in collection: {info.vectors_count}")
     except Exception as e:
-        print(f"Note: Could not verify collection info (client/server version mismatch): {type(e).__name__}")
+        print(
+            f"Note: Could not verify collection info (client/server version mismatch): {type(e).__name__}"
+        )
 
 
 if __name__ == "__main__":
