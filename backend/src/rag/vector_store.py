@@ -22,7 +22,7 @@ class QdrantVectorStore:
             timeout=30.0,
         )
         self.collection_name = settings.qdrant_collection
-        self.vector_size = 1536  # OpenAI text-embedding-3-small dimension
+        self.vector_size = 768  # Google text-embedding-004 dimension
 
     def create_collection(self, recreate: bool = False) -> None:
         """

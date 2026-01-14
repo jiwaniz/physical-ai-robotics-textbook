@@ -34,9 +34,8 @@ class Settings(BaseSettings):
     qdrant_api_key: str = Field(default="", description="Qdrant API key")
     qdrant_collection: str = Field(default="book_content", description="Qdrant collection name")
 
-    # OpenAI (Optional - for RAG features)
-    openai_api_key: str = Field(default="", description="OpenAI API key")
-    openai_org_id: str = Field(default="", description="OpenAI organization ID")
+    # Google AI (Optional - for RAG features)
+    google_api_key: str = Field(default="", description="Google AI API key for embeddings")
 
     # Better-Auth
     better_auth_secret: str = Field(..., description="Better-Auth secret key (256-bit)")
