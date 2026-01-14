@@ -23,9 +23,7 @@ class UserProfileRequest(BaseModel):
     software_level: ExperienceLevel = Field(
         ..., description="Software development experience level"
     )
-    hardware_level: ExperienceLevel = Field(
-        ..., description="Hardware/robotics experience level"
-    )
+    hardware_level: ExperienceLevel = Field(..., description="Hardware/robotics experience level")
     topics: List[str] = Field(
         default_factory=list,
         description="List of topics/technologies user is familiar with",

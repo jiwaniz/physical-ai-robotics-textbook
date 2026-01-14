@@ -89,7 +89,5 @@ class ExternalServiceError(AppException):
 class DatabaseError(AppException):
     """Raised when database operations fail."""
 
-    def __init__(
-        self, message: str = "Database error", details: Optional[Dict[str, Any]] = None
-    ):
+    def __init__(self, message: str = "Database error", details: Optional[Dict[str, Any]] = None):
         super().__init__(message=message, status_code=500, details=details)

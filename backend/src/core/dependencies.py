@@ -8,8 +8,8 @@ from fastapi import Cookie, Depends, Header, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database.connection import get_async_db
-from ..rag.vector_store import get_vector_store, QdrantVectorStore
-from .config import get_settings, Settings
+from ..rag.vector_store import QdrantVectorStore, get_vector_store
+from .config import Settings, get_settings
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
@@ -55,8 +55,6 @@ async def get_current_user_id(
     Returns:
         User ID if authenticated, None otherwise
     """
-    from fastapi import Cookie
-    from ..auth.utils import decode_access_token
 
     # Try to get token from cookie
     # Note: FastAPI's Cookie dependency is better for extracting cookies

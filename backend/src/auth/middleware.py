@@ -56,9 +56,7 @@ class SessionValidationMiddleware(BaseHTTPMiddleware):
 
         # TODO: Implement Better-Auth session validation in Phase 4
         # For now, allow all requests through (development mode)
-        logger.debug(
-            f"Session validation (placeholder): {request.method} {request.url.path}"
-        )
+        logger.debug(f"Session validation (placeholder): {request.method} {request.url.path}")
 
         # In Phase 4, this will:
         # 1. Extract session cookie from request

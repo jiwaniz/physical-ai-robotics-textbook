@@ -35,23 +35,17 @@ class Settings(BaseSettings):
     # Qdrant Vector Database (Optional - for RAG features)
     qdrant_url: str = Field(default="", description="Qdrant cluster URL")
     qdrant_api_key: str = Field(default="", description="Qdrant API key")
-    qdrant_collection: str = Field(
-        default="book_content", description="Qdrant collection name"
-    )
+    qdrant_collection: str = Field(default="book_content", description="Qdrant collection name")
 
     # Google AI (Optional - for RAG features)
-    google_api_key: str = Field(
-        default="", description="Google AI API key for embeddings"
-    )
+    google_api_key: str = Field(default="", description="Google AI API key for embeddings")
 
     # Better-Auth
     better_auth_secret: str = Field(..., description="Better-Auth secret key (256-bit)")
     better_auth_url: str = Field(
         default="http://localhost:8000", description="Better-Auth base URL"
     )
-    better_auth_trust_host: bool = Field(
-        default=True, description="Trust host for Better-Auth"
-    )
+    better_auth_trust_host: bool = Field(default=True, description="Trust host for Better-Auth")
 
     # Security
     allowed_hosts: List[str] = Field(
@@ -63,21 +57,15 @@ class Settings(BaseSettings):
     session_cookie_secure: bool = Field(
         default=False, description="Secure session cookies (HTTPS only)"
     )
-    session_cookie_samesite: str = Field(
-        default="lax", description="SameSite cookie attribute"
-    )
+    session_cookie_samesite: str = Field(default="lax", description="SameSite cookie attribute")
     session_max_age_days: int = Field(default=7, description="Session max age in days")
 
     # Rate Limiting
-    rate_limit_per_minute: int = Field(
-        default=10, description="Rate limit per user per minute"
-    )
+    rate_limit_per_minute: int = Field(default=10, description="Rate limit per user per minute")
     rate_limit_burst: int = Field(default=20, description="Rate limit burst size")
 
     # Caching
-    enable_response_cache: bool = Field(
-        default=True, description="Enable response caching"
-    )
+    enable_response_cache: bool = Field(default=True, description="Enable response caching")
     cache_ttl_seconds: int = Field(default=3600, description="Cache TTL in seconds")
     max_cache_size_mb: int = Field(default=100, description="Max cache size in MB")
 

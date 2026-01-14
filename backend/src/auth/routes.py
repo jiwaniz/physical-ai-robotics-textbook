@@ -3,9 +3,8 @@ Authentication API routes for signup, signin, signout, and user management.
 """
 
 import logging
-from typing import Optional
 
-from fastapi import APIRouter, Cookie, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -20,9 +19,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post(
-    "/signup", response_model=AuthResponse, status_code=status.HTTP_201_CREATED
-)
+@router.post("/signup", response_model=AuthResponse, status_code=status.HTTP_201_CREATED)
 async def signup(
     request: SignupRequest,
     response: Response,
