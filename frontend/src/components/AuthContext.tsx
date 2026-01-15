@@ -22,7 +22,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // API base URL - adjust based on environment
 // Use typeof check for Docusaurus compatibility
-const API_BASE_URL = (typeof process !== 'undefined' && process.env?.REACT_APP_API_URL) || 'http://localhost:8000';
+const API_BASE_URL = (typeof process !== 'undefined' && process.env?.REACT_APP_API_URL) || 'https://jiwaniz-physical-ai-backend.hf.space';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<UserResponse | null>(null);

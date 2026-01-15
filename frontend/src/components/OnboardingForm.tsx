@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-const API_BASE_URL = (typeof process !== 'undefined' && process.env?.REACT_APP_API_URL) || 'http://localhost:8000';
+const API_BASE_URL = (typeof process !== 'undefined' && process.env?.REACT_APP_API_URL) || 'https://jiwaniz-physical-ai-backend.hf.space';
 
 interface OnboardingFormProps {
   allowSkip?: boolean;
