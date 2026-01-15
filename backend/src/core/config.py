@@ -48,11 +48,11 @@ class Settings(BaseSettings):
     better_auth_trust_host: bool = Field(default=True, description="Trust host for Better-Auth")
 
     # Security
-    allowed_hosts: List[str] = Field(
-        default=["localhost", "127.0.0.1"], description="Allowed hosts for CORS"
+    allowed_hosts: str = Field(
+        default="localhost,127.0.0.1", description="Allowed hosts (comma-separated)"
     )
-    cors_origins: List[str] = Field(
-        default=["http://localhost:3000"], description="Allowed CORS origins"
+    cors_origins: str = Field(
+        default="http://localhost:3000", description="Allowed CORS origins (comma-separated)"
     )
     session_cookie_secure: bool = Field(
         default=False, description="Secure session cookies (HTTPS only)"
@@ -72,13 +72,15 @@ class Settings(BaseSettings):
     # Deployment
     render_external_url: str = Field(default="", description="Render external URL")
 
-    @field_validator("cors_origins", "allowed_hosts", mode="before")
-    @classmethod
-    def parse_list(cls, v):
-        """Parse comma-separated string into list."""
-        if isinstance(v, str):
-            return [item.strip() for item in v.split(",") if item.strip()]
-        return v
+    @property
+    def cors_origins_list(self) -> List[str]:
+        """Get CORS origins as a list."""
+        return [item.strip() for item in self.cors_origins.split(",") if item.strip()]
+
+    @property
+    def allowed_hosts_list(self) -> List[str]:
+        """Get allowed hosts as a list."""
+        return [item.strip() for item in self.allowed_hosts.split(",") if item.strip()]
 
     @property
     def is_production(self) -> bool:
