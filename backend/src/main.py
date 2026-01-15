@@ -30,9 +30,8 @@ async def lifespan(app: FastAPI):
     """
     # Startup
     logger.info("Starting up application...")
-    if settings.is_development:
-        # Initialize database tables in development
-        await init_db()
+    # Initialize database tables (creates if not exist)
+    await init_db()
     logger.info(f"Application started in {settings.environment} mode")
 
     yield
