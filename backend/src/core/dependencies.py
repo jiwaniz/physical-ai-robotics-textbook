@@ -81,20 +81,66 @@ def get_current_user_id_from_cookie(
 
         payload = decode_access_token(access_token)
         user_id = payload.get("sub")
-        return user_id
+        # Convert string to int (JWT sub claim is stored as string)
+        return int(user_id) if user_id else None
     except Exception:
         # Invalid or expired token
         return None
 
 
+def get_current_user_id_from_header(
+    authorization: Optional[str] = Header(None),
+) -> Optional[int]:
+    """
+    Extract current user ID from JWT token in Authorization header.
+
+    Args:
+        authorization: Authorization header value (Bearer <token>)
+
+    Returns:
+        User ID if authenticated, None otherwise
+    """
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info(f"Authorization header received: {authorization[:50] if authorization else 'None'}...")
+
+    if not authorization:
+        logger.info("No authorization header")
+        return None
+
+    # Check for Bearer token format
+    parts = authorization.split()
+    if len(parts) != 2 or parts[0].lower() != "bearer":
+        logger.info(f"Invalid bearer format: {parts}")
+        return None
+
+    token = parts[1]
+
+    try:
+        from ..auth.utils import decode_access_token
+
+        payload = decode_access_token(token)
+        user_id = payload.get("sub")
+        logger.info(f"Decoded user_id from header: {user_id}")
+        # Convert string to int (JWT sub claim is stored as string)
+        return int(user_id) if user_id else None
+    except Exception as e:
+        logger.error(f"Token decode error: {e}")
+        # Invalid or expired token
+        return None
+
+
 async def require_auth(
-    user_id: Optional[int] = Depends(get_current_user_id_from_cookie),
+    cookie_user_id: Optional[int] = Depends(get_current_user_id_from_cookie),
+    header_user_id: Optional[int] = Depends(get_current_user_id_from_header),
 ) -> int:
     """
     Require authentication for protected endpoints.
+    Supports both cookie-based and header-based (Bearer token) authentication.
 
     Args:
-        user_id: Current user ID from JWT cookie
+        cookie_user_id: Current user ID from JWT cookie
+        header_user_id: Current user ID from Authorization header
 
     Returns:
         User ID if authenticated
@@ -102,6 +148,9 @@ async def require_auth(
     Raises:
         HTTPException: If user is not authenticated
     """
+    # Try header first, then cookie
+    user_id = header_user_id or cookie_user_id
+
     if user_id is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

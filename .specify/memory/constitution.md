@@ -1,20 +1,14 @@
 <!--
 Sync Impact Report:
-Version: 0.0.0 → 1.0.0
-Change Type: Initial constitution creation
-Modified Principles: N/A (initial creation)
+Version: 1.0.0 → 1.1.0
+Change Type: Added Agentic Development principle
+Modified Principles: N/A
 Added Sections:
-  - Core Principles (6 principles)
-  - Technical Standards
-  - Content Development Standards
-  - User Experience Requirements
-  - Governance
+  - VII. Agentic Development (Token Optimization)
 Removed Sections: N/A
 Templates Requiring Updates:
   ✅ constitution.md (this file)
-  ⚠ .specify/templates/plan-template.md (review constitution checks)
-  ⚠ .specify/templates/spec-template.md (align with educational content standards)
-  ⚠ .specify/templates/tasks-template.md (ensure testing/quality tasks reflect principles)
+  ⚠ CLAUDE.md (align with token optimization guidelines)
 Follow-up TODOs: None
 -->
 
@@ -125,6 +119,36 @@ Follow-up TODOs: None
   - API keys NEVER committed to Git (use environment variables)
 
 **Rationale:** Educational platforms handle student data - we have a duty to protect it. Security breaches destroy trust. Even though this is a free educational resource, privacy is non-negotiable.
+
+### VII. Agentic Development (Token Optimization)
+
+**All AI-assisted development MUST optimize token usage throughout the project lifecycle.**
+
+- **Context Efficiency:**
+  - Minimize context window usage - provide only relevant information
+  - Use precise, concise prompts - avoid redundant explanations
+  - Reference files by path rather than including full content when possible
+  - Prefer targeted file reads over full codebase exploration
+
+- **Artifact Design:**
+  - Keep configuration files lean and well-structured
+  - Use tables and lists over prose for structured data
+  - Avoid duplicate information across files
+  - Documentation SHOULD be scannable (headers, bullets, tables)
+
+- **Agent Interaction Patterns:**
+  - Break complex tasks into focused subtasks
+  - Use specialized agents for specific domains (explore, plan, implement)
+  - Cache and reuse context across related operations
+  - Prefer incremental edits over full file rewrites
+
+- **Code & Documentation Standards:**
+  - Self-documenting code reduces need for extensive comments
+  - Type hints provide context without prose
+  - Consistent naming conventions reduce clarification needs
+  - READMEs focus on "what" and "why", not obvious "how"
+
+**Rationale:** AI agents have finite context windows and token costs. Optimizing token usage improves response quality, reduces latency, lowers costs, and enables more complex operations within context limits. This is essential for sustainable AI-assisted development.
 
 ---
 
@@ -269,4 +293,4 @@ This constitution is a living document. Amendments follow this process:
 
 ---
 
-**Version**: 1.0.0 | **Ratified**: 2026-01-05 | **Last Amended**: 2026-01-05
+**Version**: 1.1.0 | **Ratified**: 2026-01-05 | **Last Amended**: 2026-01-24

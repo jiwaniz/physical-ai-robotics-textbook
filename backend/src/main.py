@@ -119,10 +119,12 @@ async def root():
 # Import routers (after app creation to avoid circular imports)
 from .auth.routes import router as auth_router  # noqa: E402
 from .users.routes import router as users_router  # noqa: E402
+from .quizzes.routes import router as quizzes_router  # noqa: E402
 
 # Include routers
 app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users_router, prefix="/api/users", tags=["Users"])
+app.include_router(quizzes_router, prefix="/api/quizzes", tags=["Quizzes"])
 
 # TODO: Import and include additional routers in later phases
 # Phase 5 (US3): from .chat.routes import router as chat_router

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 interface UserResponse {
   id: number;
@@ -10,6 +11,8 @@ interface UserResponse {
 
 interface AuthContextType {
   currentUser: UserResponse | null;
+  accessToken: string | null;
+  apiBaseUrl: string;
   isLoading: boolean;
   error: string | null;
   signup: (email: string, password: string, name: string) => Promise<void>;
@@ -20,12 +23,23 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// API base URL - adjust based on environment
-// Use typeof check for Docusaurus compatibility
-const API_BASE_URL = (typeof process !== 'undefined' && process.env?.REACT_APP_API_URL) || 'https://jiwaniz-physical-ai-backend.hf.space';
+// Helper function to get API URL from Docusaurus config or fallback
+function getApiBaseUrl(siteConfig: any): string {
+  return (siteConfig?.customFields?.apiUrl as string) || 'http://localhost:8000';
+}
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { siteConfig } = useDocusaurusContext();
+  const API_BASE_URL = getApiBaseUrl(siteConfig);
+
   const [currentUser, setCurrentUser] = useState<UserResponse | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(() => {
+    // Initialize from localStorage if available
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('access_token');
+    }
+    return null;
+  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -48,6 +62,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const data = await response.json();
       setCurrentUser(data.user);
+      // Store token in state and localStorage
+      if (data.access_token) {
+        setAccessToken(data.access_token);
+        localStorage.setItem('access_token', data.access_token);
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Signup failed';
       setError(message);
@@ -74,6 +93,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const data = await response.json();
       setCurrentUser(data.user);
+      // Store token in state and localStorage
+      if (data.access_token) {
+        setAccessToken(data.access_token);
+        localStorage.setItem('access_token', data.access_token);
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Signin failed';
       setError(message);
@@ -94,6 +118,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       setCurrentUser(null);
+      setAccessToken(null);
+      localStorage.removeItem('access_token');
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Signout failed';
       setError(message);
@@ -105,8 +131,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     setError(null);
     try {
+      const storedToken = localStorage.getItem('access_token');
+      const headers: HeadersInit = {};
+      if (storedToken) {
+        headers['Authorization'] = `Bearer ${storedToken}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
         credentials: 'include',
+        headers,
       });
 
       if (response.ok) {
@@ -114,6 +147,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setCurrentUser(data);
       } else {
         setCurrentUser(null);
+        setAccessToken(null);
+        localStorage.removeItem('access_token');
       }
     } catch (err) {
       setCurrentUser(null);
@@ -129,6 +164,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const value = {
     currentUser,
+    accessToken,
+    apiBaseUrl: API_BASE_URL,
     isLoading,
     error,
     signup,

@@ -50,6 +50,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          REACT_APP_API_URL: https://jiwaniz-physical-ai-backend.hf.space
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3

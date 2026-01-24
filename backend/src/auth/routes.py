@@ -69,9 +69,9 @@ async def signup(
 
     logger.info(f"New user created: {new_user.id} - {new_user.email}")
 
-    # Create JWT token
+    # Create JWT token (sub must be string per JWT spec)
     token_data = {
-        "sub": new_user.id,
+        "sub": str(new_user.id),
         "email": new_user.email,
         "name": new_user.name,
     }
@@ -138,9 +138,9 @@ async def signin(
 
     logger.info(f"User signed in: {user.id} - {user.email}")
 
-    # Create JWT token
+    # Create JWT token (sub must be string per JWT spec)
     token_data = {
-        "sub": user.id,
+        "sub": str(user.id),
         "email": user.email,
         "name": user.name,
     }

@@ -3,9 +3,11 @@ SQLAlchemy base models and shared database models.
 """
 
 from datetime import datetime
-from typing import Any, Optional
+from enum import Enum as PyEnum
+from typing import Any, Optional, List
 
-from sqlalchemy import JSON, Boolean, Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy import JSON, Boolean, Column, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import Enum as SQLEnum
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -87,6 +89,193 @@ class UserProfile(BaseModel):
 
     # Relationship
     user: Mapped["User"] = relationship("User", back_populates="profile")
+
+
+# ==================== QUIZ ENUMS ====================
+
+
+class QuestionType(str, PyEnum):
+    """Types of quiz questions."""
+
+    MULTIPLE_CHOICE = "multiple_choice"
+    SHORT_ANSWER = "short_answer"
+    CODE_COMPLETION = "code_completion"
+
+
+class QuestionCategory(str, PyEnum):
+    """Content categories for questions (40/30/30 split per spec)."""
+
+    CONCEPTUAL = "conceptual"
+    CODE_COMPREHENSION = "code_comprehension"
+    TROUBLESHOOTING = "troubleshooting"
+
+
+class ScoringStatus(str, PyEnum):
+    """Scoring status for answers."""
+
+    PENDING = "pending"
+    AUTO_GRADED = "auto_graded"
+    MANUALLY_GRADED = "manually_graded"
+
+
+# ==================== QUIZ MODELS ====================
+
+
+class Quiz(BaseModel):
+    """Weekly quiz associated with a specific week of content."""
+
+    __tablename__ = "quizzes"
+
+    # Content association
+    week_number: Mapped[int] = mapped_column(Integer, nullable=False, index=True)
+    chapter: Mapped[str] = mapped_column(String(100), nullable=False)
+
+    # Metadata
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    description: Mapped[Optional[str]] = mapped_column(Text)
+
+    # Configuration
+    time_limit_minutes: Mapped[int] = mapped_column(Integer, default=20)
+    max_attempts: Mapped[int] = mapped_column(Integer, default=2)
+    passing_score: Mapped[float] = mapped_column(Float, default=60.0)
+    is_published: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    # Availability window
+    available_from: Mapped[Optional[datetime]] = mapped_column(DateTime)
+    available_until: Mapped[Optional[datetime]] = mapped_column(DateTime)
+
+    # Relationships
+    questions: Mapped[List["Question"]] = relationship(
+        "Question",
+        back_populates="quiz",
+        cascade="all, delete-orphan",
+        order_by="Question.order_index",
+    )
+    attempts: Mapped[List["QuizAttempt"]] = relationship(
+        "QuizAttempt",
+        back_populates="quiz",
+        cascade="all, delete-orphan",
+    )
+
+
+class Question(BaseModel):
+    """Individual quiz question with flexible content structure."""
+
+    __tablename__ = "questions"
+
+    quiz_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("quizzes.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    # Question metadata
+    question_type: Mapped[QuestionType] = mapped_column(
+        SQLEnum(QuestionType),
+        nullable=False,
+    )
+    category: Mapped[QuestionCategory] = mapped_column(
+        SQLEnum(QuestionCategory),
+        nullable=False,
+    )
+
+    # Question content (JSON structure varies by type)
+    content: Mapped[dict] = mapped_column(JSON, nullable=False)
+
+    # Scoring
+    points: Mapped[float] = mapped_column(Float, default=1.0)
+
+    # Ordering
+    order_index: Mapped[int] = mapped_column(Integer, default=0)
+
+    # Relationships
+    quiz: Mapped["Quiz"] = relationship("Quiz", back_populates="questions")
+    answers: Mapped[List["Answer"]] = relationship(
+        "Answer",
+        back_populates="question",
+        cascade="all, delete-orphan",
+    )
+
+
+class QuizAttempt(BaseModel):
+    """User's attempt at a quiz. Tracks timing and overall score."""
+
+    __tablename__ = "quiz_attempts"
+
+    quiz_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("quizzes.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    user_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    # Attempt tracking
+    attempt_number: Mapped[int] = mapped_column(Integer, nullable=False)
+    started_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    submitted_at: Mapped[Optional[datetime]] = mapped_column(DateTime)
+
+    # Scoring
+    score: Mapped[Optional[float]] = mapped_column(Float)
+    max_score: Mapped[Optional[float]] = mapped_column(Float)
+    percentage: Mapped[Optional[float]] = mapped_column(Float)
+
+    # Status
+    is_submitted: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_fully_graded: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    # Relationships
+    quiz: Mapped["Quiz"] = relationship("Quiz", back_populates="attempts")
+    user: Mapped["User"] = relationship("User")
+    answers: Mapped[List["Answer"]] = relationship(
+        "Answer",
+        back_populates="attempt",
+        cascade="all, delete-orphan",
+    )
+
+
+class Answer(BaseModel):
+    """User's answer to a specific question within an attempt."""
+
+    __tablename__ = "answers"
+
+    attempt_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("quiz_attempts.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    question_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("questions.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    # Answer content (JSON for flexibility)
+    response: Mapped[dict] = mapped_column(JSON, nullable=False)
+
+    # Scoring
+    points_earned: Mapped[Optional[float]] = mapped_column(Float)
+    scoring_status: Mapped[ScoringStatus] = mapped_column(
+        SQLEnum(ScoringStatus),
+        default=ScoringStatus.PENDING,
+    )
+
+    # Feedback
+    feedback: Mapped[Optional[str]] = mapped_column(Text)
+    graded_by: Mapped[Optional[int]] = mapped_column(Integer)
+    graded_at: Mapped[Optional[datetime]] = mapped_column(DateTime)
+
+    # Relationships
+    attempt: Mapped["QuizAttempt"] = relationship("QuizAttempt", back_populates="answers")
+    question: Mapped["Question"] = relationship("Question", back_populates="answers")
 
 
 # Additional models will be added in later phases:
