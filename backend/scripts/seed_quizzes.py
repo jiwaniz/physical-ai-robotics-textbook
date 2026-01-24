@@ -12,9 +12,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from sqlalchemy import select
-from database.connection import async_session_maker, init_db
-from database.models import Quiz, Question, QuestionType, QuestionCategory
 
+from database.connection import async_session_maker, init_db
+from database.models import Question, QuestionCategory, QuestionType, Quiz
 
 SAMPLE_QUIZZES = [
     {
@@ -35,7 +35,11 @@ SAMPLE_QUIZZES = [
                     "question_text": "What distinguishes Physical AI from traditional AI?",
                     "options": [
                         {"id": "a", "text": "It uses larger neural networks", "is_correct": False},
-                        {"id": "b", "text": "It interacts with the physical world through sensors and actuators", "is_correct": True},
+                        {
+                            "id": "b",
+                            "text": "It interacts with the physical world through sensors and actuators",
+                            "is_correct": True,
+                        },
                         {"id": "c", "text": "It requires more training data", "is_correct": False},
                         {"id": "d", "text": "It only works on cloud servers", "is_correct": False},
                     ],
@@ -51,7 +55,11 @@ SAMPLE_QUIZZES = [
                     "options": [
                         {"id": "a", "text": "Balance and locomotion", "is_correct": False},
                         {"id": "b", "text": "Real-time decision making", "is_correct": False},
-                        {"id": "c", "text": "Unlimited computational resources", "is_correct": True},
+                        {
+                            "id": "c",
+                            "text": "Unlimited computational resources",
+                            "is_correct": True,
+                        },
                         {"id": "d", "text": "Safe human-robot interaction", "is_correct": False},
                     ],
                     "explanation": "Humanoid robots face significant computational constraints. Balance, real-time decisions, and safety are all genuine challenges.",
@@ -63,7 +71,14 @@ SAMPLE_QUIZZES = [
                 "points": 3.0,
                 "content": {
                     "question_text": "Explain the concept of 'embodied cognition' and why it's important for robotics.",
-                    "expected_keywords": ["body", "environment", "interact", "physical", "cognition", "grounded"],
+                    "expected_keywords": [
+                        "body",
+                        "environment",
+                        "interact",
+                        "physical",
+                        "cognition",
+                        "grounded",
+                    ],
                     "max_length": 300,
                     "sample_answer": "Embodied cognition is the theory that cognitive processes are deeply rooted in the body's interactions with the world. For robotics, this means intelligence emerges from physical interaction with the environment, not just abstract computation.",
                 },
@@ -76,9 +91,17 @@ SAMPLE_QUIZZES = [
                     "question_text": "In the context of robot perception, what does a LiDAR sensor measure?",
                     "options": [
                         {"id": "a", "text": "Temperature of objects", "is_correct": False},
-                        {"id": "b", "text": "Distance to objects using laser light", "is_correct": True},
+                        {
+                            "id": "b",
+                            "text": "Distance to objects using laser light",
+                            "is_correct": True,
+                        },
                         {"id": "c", "text": "Color of objects", "is_correct": False},
-                        {"id": "d", "text": "Sound waves from the environment", "is_correct": False},
+                        {
+                            "id": "d",
+                            "text": "Sound waves from the environment",
+                            "is_correct": False,
+                        },
                     ],
                     "explanation": "LiDAR (Light Detection and Ranging) uses laser pulses to measure distances, creating 3D point clouds of the environment.",
                 },
@@ -91,7 +114,11 @@ SAMPLE_QUIZZES = [
                     "question_text": "A robot's depth camera is returning noisy data near reflective surfaces. What is the most likely cause?",
                     "options": [
                         {"id": "a", "text": "The robot's CPU is overheating", "is_correct": False},
-                        {"id": "b", "text": "Infrared light is reflecting unpredictably off shiny surfaces", "is_correct": True},
+                        {
+                            "id": "b",
+                            "text": "Infrared light is reflecting unpredictably off shiny surfaces",
+                            "is_correct": True,
+                        },
                         {"id": "c", "text": "The camera lens needs cleaning", "is_correct": False},
                         {"id": "d", "text": "The robot's battery is low", "is_correct": False},
                     ],
@@ -154,7 +181,10 @@ def main():
     rclpy.shutdown()""",
                     "language": "python",
                     "expected_solution": "self.publisher_.publish(msg)",
-                    "hints": ["Use the publisher object created in __init__", "The method name matches what publishers do"],
+                    "hints": [
+                        "Use the publisher object created in __init__",
+                        "The method name matches what publishers do",
+                    ],
                 },
             },
             {
@@ -165,9 +195,17 @@ def main():
                     "question_text": "What does the command `ros2 topic list` display?",
                     "options": [
                         {"id": "a", "text": "All available ROS 2 packages", "is_correct": False},
-                        {"id": "b", "text": "Currently active topics in the ROS 2 system", "is_correct": True},
+                        {
+                            "id": "b",
+                            "text": "Currently active topics in the ROS 2 system",
+                            "is_correct": True,
+                        },
                         {"id": "c", "text": "All nodes currently running", "is_correct": False},
-                        {"id": "d", "text": "The message types defined in the workspace", "is_correct": False},
+                        {
+                            "id": "d",
+                            "text": "The message types defined in the workspace",
+                            "is_correct": False,
+                        },
                     ],
                     "explanation": "ros2 topic list shows all topics currently being published or subscribed to in the ROS 2 graph.",
                 },
@@ -178,7 +216,16 @@ def main():
                 "points": 3.0,
                 "content": {
                     "question_text": "Explain the difference between ROS 2 Topics and Services. When would you use each?",
-                    "expected_keywords": ["publish", "subscribe", "request", "response", "async", "sync", "streaming", "one-time"],
+                    "expected_keywords": [
+                        "publish",
+                        "subscribe",
+                        "request",
+                        "response",
+                        "async",
+                        "sync",
+                        "streaming",
+                        "one-time",
+                    ],
                     "max_length": 400,
                     "sample_answer": "Topics use publish-subscribe for continuous, asynchronous data streaming (e.g., sensor data). Services use request-response for synchronous, one-time operations (e.g., triggering an action). Use topics for ongoing data flow, services for discrete commands.",
                 },
@@ -190,7 +237,11 @@ def main():
                 "content": {
                     "question_text": "Your ROS 2 subscriber node is not receiving messages. The publisher shows messages being sent. What should you check first?",
                     "options": [
-                        {"id": "a", "text": "Verify both nodes are using the same topic name and message type", "is_correct": True},
+                        {
+                            "id": "a",
+                            "text": "Verify both nodes are using the same topic name and message type",
+                            "is_correct": True,
+                        },
                         {"id": "b", "text": "Restart your computer", "is_correct": False},
                         {"id": "c", "text": "Reinstall ROS 2", "is_correct": False},
                         {"id": "d", "text": "Check if the CPU is overloaded", "is_correct": False},
@@ -219,7 +270,10 @@ def generate_launch_description():
     ])""",
                     "language": "python",
                     "expected_solution": "('input', 'sensor_data')",
-                    "hints": ["Remappings are tuples of (original, new)", "The format is ('from_topic', 'to_topic')"],
+                    "hints": [
+                        "Remappings are tuples of (original, new)",
+                        "The format is ('from_topic', 'to_topic')",
+                    ],
                 },
             },
         ],
@@ -241,10 +295,18 @@ def generate_launch_description():
                 "content": {
                     "question_text": "What does URDF stand for?",
                     "options": [
-                        {"id": "a", "text": "Universal Robot Definition Format", "is_correct": False},
+                        {
+                            "id": "a",
+                            "text": "Universal Robot Definition Format",
+                            "is_correct": False,
+                        },
                         {"id": "b", "text": "Unified Robot Description Format", "is_correct": True},
                         {"id": "c", "text": "Universal Robotics Data File", "is_correct": False},
-                        {"id": "d", "text": "Unified Robotic Design Framework", "is_correct": False},
+                        {
+                            "id": "d",
+                            "text": "Unified Robotic Design Framework",
+                            "is_correct": False,
+                        },
                     ],
                     "explanation": "URDF (Unified Robot Description Format) is an XML format for describing robot models in ROS.",
                 },
@@ -264,7 +326,10 @@ def generate_launch_description():
 </link>""",
                     "language": "xml",
                     "expected_solution": 'radius="0.05" length="0.3"',
-                    "hints": ["Cylinders need two dimensions", "Think about the cross-section and height"],
+                    "hints": [
+                        "Cylinders need two dimensions",
+                        "Think about the cross-section and height",
+                    ],
                 },
             },
             {
@@ -274,8 +339,16 @@ def generate_launch_description():
                 "content": {
                     "question_text": "Your robot model in Gazebo falls through the ground plane. What is the most likely cause?",
                     "options": [
-                        {"id": "a", "text": "The visual geometry is incorrect", "is_correct": False},
-                        {"id": "b", "text": "The collision geometry is missing or incorrect", "is_correct": True},
+                        {
+                            "id": "a",
+                            "text": "The visual geometry is incorrect",
+                            "is_correct": False,
+                        },
+                        {
+                            "id": "b",
+                            "text": "The collision geometry is missing or incorrect",
+                            "is_correct": True,
+                        },
                         {"id": "c", "text": "The robot name is too long", "is_correct": False},
                         {"id": "d", "text": "Gazebo needs more RAM", "is_correct": False},
                     ],
@@ -288,7 +361,14 @@ def generate_launch_description():
                 "points": 3.0,
                 "content": {
                     "question_text": "What is the difference between the <visual> and <collision> elements in URDF?",
-                    "expected_keywords": ["visual", "rendering", "display", "collision", "physics", "simplified"],
+                    "expected_keywords": [
+                        "visual",
+                        "rendering",
+                        "display",
+                        "collision",
+                        "physics",
+                        "simplified",
+                    ],
                     "max_length": 300,
                     "sample_answer": "Visual elements define how the robot appears (rendering/display). Collision elements define the geometry used for physics calculations. Collision meshes are often simplified for performance while visuals can be detailed.",
                 },

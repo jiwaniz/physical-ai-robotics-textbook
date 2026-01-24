@@ -90,9 +90,7 @@ async def get_quiz_detail(
 ):
     """Get full quiz details with questions (for taking the quiz)."""
     result = await db.execute(
-        select(Quiz)
-        .options(selectinload(Quiz.questions))
-        .where(Quiz.id == quiz_id)
+        select(Quiz).options(selectinload(Quiz.questions)).where(Quiz.id == quiz_id)
     )
     quiz = result.scalar_one_or_none()
 
@@ -151,9 +149,7 @@ async def start_quiz_attempt(
 ):
     """Start a new quiz attempt."""
     result = await db.execute(
-        select(Quiz)
-        .options(selectinload(Quiz.questions))
-        .where(Quiz.id == quiz_id)
+        select(Quiz).options(selectinload(Quiz.questions)).where(Quiz.id == quiz_id)
     )
     quiz = result.scalar_one_or_none()
 
@@ -300,9 +296,7 @@ async def submit_quiz_attempt(
     quiz_result = await db.execute(select(Quiz).where(Quiz.id == quiz_id))
     quiz = quiz_result.scalar_one()
 
-    questions_result = await db.execute(
-        select(Question).where(Question.quiz_id == quiz_id)
-    )
+    questions_result = await db.execute(select(Question).where(Question.quiz_id == quiz_id))
     questions = {q.id: q for q in questions_result.scalars().all()}
 
     for answer_req in request.answers:
@@ -328,9 +322,7 @@ async def submit_quiz_attempt(
 
     await db.commit()
 
-    answers_result = await db.execute(
-        select(Answer).where(Answer.attempt_id == attempt_id)
-    )
+    answers_result = await db.execute(select(Answer).where(Answer.attempt_id == attempt_id))
     answers = list(answers_result.scalars().all())
 
     auto_graded_count = 0
@@ -339,9 +331,7 @@ async def submit_quiz_attempt(
     for answer in answers:
         question = questions.get(answer.question_id)
         if question:
-            points, status_val, feedback = ScoringService.score_answer(
-                question, answer.response
-            )
+            points, status_val, feedback = ScoringService.score_answer(question, answer.response)
             answer.points_earned = points
             answer.scoring_status = status_val
             answer.feedback = feedback
@@ -366,7 +356,7 @@ async def submit_quiz_attempt(
     await db.commit()
 
     logger.info(
-        f"User {user_id} submitted quiz attempt {attempt_id}: {score}/{max_score} ({percentage:.1f}%)"
+        f"User {user_id} submitted attempt {attempt_id}: {score}/{max_score} ({percentage:.1f}%)"
     )
 
     return QuizResultResponse(
@@ -446,9 +436,7 @@ async def get_attempt_detail(
             detail="Cannot view results for an unsubmitted attempt",
         )
 
-    questions_result = await db.execute(
-        select(Question).where(Question.quiz_id == attempt.quiz_id)
-    )
+    questions_result = await db.execute(select(Question).where(Question.quiz_id == attempt.quiz_id))
     questions = {q.id: q for q in questions_result.scalars().all()}
 
     from .schemas import AnswerResponse
@@ -776,9 +764,7 @@ async def grade_answer(
     from ..database.models import ScoringStatus as DBScoringStatus
 
     result = await db.execute(
-        select(Answer)
-        .options(selectinload(Answer.attempt))
-        .where(Answer.id == answer_id)
+        select(Answer).options(selectinload(Answer.attempt)).where(Answer.id == answer_id)
     )
     answer = result.scalar_one_or_none()
 

@@ -4,7 +4,7 @@ Quiz business logic and scoring services.
 
 import re
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Optional, Tuple
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -69,7 +69,8 @@ class ScoringService:
                 (opt["text"] for opt in content.get("options", []) if opt.get("is_correct")),
                 "",
             )
-            feedback = f"Incorrect. The correct answer was: {correct_text}. {content.get('explanation', '')}"
+            explanation = content.get("explanation", "")
+            feedback = f"Incorrect. The correct answer was: {correct_text}. {explanation}"
             return (0.0, ScoringStatus.AUTO_GRADED, feedback)
 
     @staticmethod
@@ -128,13 +129,13 @@ class ScoringService:
 
         if len(expected_parts) == len(submitted_parts) and len(expected_parts) > 1:
             correct_parts = sum(
-                1
-                for e, s in zip(expected_parts, submitted_parts)
-                if normalize(e) == normalize(s)
+                1 for e, s in zip(expected_parts, submitted_parts) if normalize(e) == normalize(s)
             )
             if correct_parts > 0:
                 partial_score = max_points * (correct_parts / len(expected_parts))
-                feedback = f"Partially correct: {correct_parts}/{len(expected_parts)} blanks correct."
+                feedback = (
+                    f"Partially correct: {correct_parts}/{len(expected_parts)} blanks correct."
+                )
                 return (partial_score, ScoringStatus.AUTO_GRADED, feedback)
 
         return (
@@ -213,8 +214,7 @@ class QuizService:
 
         if question.question_type == QuestionType.MULTIPLE_CHOICE:
             content["options"] = [
-                {"id": opt["id"], "text": opt["text"]}
-                for opt in content.get("options", [])
+                {"id": opt["id"], "text": opt["text"]} for opt in content.get("options", [])
             ]
             content.pop("explanation", None)
 
@@ -239,9 +239,7 @@ class QuizService:
         Returns:
             Tuple of (score, max_score, percentage, is_fully_graded)
         """
-        answers_result = await db.execute(
-            select(Answer).where(Answer.attempt_id == attempt.id)
-        )
+        answers_result = await db.execute(select(Answer).where(Answer.attempt_id == attempt.id))
         answers = list(answers_result.scalars().all())
 
         questions_result = await db.execute(
