@@ -101,8 +101,11 @@ def get_current_user_id_from_header(
         User ID if authenticated, None otherwise
     """
     import logging
+
     logger = logging.getLogger(__name__)
-    logger.info(f"Authorization header received: {authorization[:50] if authorization else 'None'}...")
+    logger.info(
+        f"Authorization header received: {authorization[:50] if authorization else 'None'}..."
+    )
 
     if not authorization:
         logger.info("No authorization header")

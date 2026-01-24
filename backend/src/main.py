@@ -118,8 +118,8 @@ async def root():
 
 # Import routers (after app creation to avoid circular imports)
 from .auth.routes import router as auth_router  # noqa: E402
-from .users.routes import router as users_router  # noqa: E402
 from .quizzes.routes import router as quizzes_router  # noqa: E402
+from .users.routes import router as users_router  # noqa: E402
 
 # Include routers
 app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])

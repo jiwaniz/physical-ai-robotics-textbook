@@ -4,10 +4,11 @@ SQLAlchemy base models and shared database models.
 
 from datetime import datetime
 from enum import Enum as PyEnum
-from typing import Any, Optional, List
+from typing import Any, List, Optional
 
-from sqlalchemy import JSON, Boolean, Column, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, Boolean, Column, DateTime
 from sqlalchemy import Enum as SQLEnum
+from sqlalchemy import Float, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
