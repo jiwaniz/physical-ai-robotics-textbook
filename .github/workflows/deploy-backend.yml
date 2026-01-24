@@ -1,4 +1,4 @@
-name: Deploy Backend to Render
+name: Backend CI
 
 on:
   push:
@@ -67,17 +67,13 @@ jobs:
           flags: backend
           fail_ci_if_error: false
 
-  deploy:
+  notify:
     if: github.event_name != 'pull_request'
     needs: test
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger Render deployment
-        run: |
-          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
-
       - name: Deployment notification
         run: |
-          echo "Backend deployed to Render successfully"
-          echo "Check deployment status at: https://dashboard.render.com"
+          echo "Backend CI passed successfully"
+          echo "HuggingFace Spaces will auto-deploy from: https://huggingface.co/spaces/jiwaniz/physical-ai-backend"
