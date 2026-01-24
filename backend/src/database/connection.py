@@ -14,23 +14,35 @@ from ..core.config import settings
 # SQLAlchemy Base for models
 Base = declarative_base()
 
-# Sync engine for migrations
-sync_engine = create_engine(
-    settings.database_url.replace("postgresql://", "postgresql+psycopg2://"),
-    echo=settings.debug,
-    pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
-)
+# Check if using SQLite (for testing) vs PostgreSQL (for production)
+_is_sqlite = settings.database_url.startswith("sqlite")
 
-# Async engine for application
-async_engine = create_async_engine(
-    settings.database_url.replace("postgresql://", "postgresql+asyncpg://"),
-    echo=settings.debug,
-    pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
-)
+if _is_sqlite:
+    # SQLite configuration (for testing) - no pool settings
+    sync_engine = create_engine(
+        settings.database_url,
+        echo=settings.debug,
+    )
+    async_engine = create_async_engine(
+        settings.database_url,
+        echo=settings.debug,
+    )
+else:
+    # PostgreSQL configuration (for production) - with connection pooling
+    sync_engine = create_engine(
+        settings.database_url.replace("postgresql://", "postgresql+psycopg2://"),
+        echo=settings.debug,
+        pool_pre_ping=True,
+        pool_size=5,
+        max_overflow=10,
+    )
+    async_engine = create_async_engine(
+        settings.database_url.replace("postgresql://", "postgresql+asyncpg://"),
+        echo=settings.debug,
+        pool_pre_ping=True,
+        pool_size=5,
+        max_overflow=10,
+    )
 
 # Session factories
 SyncSessionLocal = sessionmaker(
