@@ -9,14 +9,7 @@ from typing import Dict, Optional, Tuple
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..database.models import (
-    Answer,
-    Question,
-    QuestionType,
-    Quiz,
-    QuizAttempt,
-    ScoringStatus,
-)
+from ..database.models import Answer, Question, QuestionType, Quiz, QuizAttempt, ScoringStatus
 
 
 class ScoringService:
