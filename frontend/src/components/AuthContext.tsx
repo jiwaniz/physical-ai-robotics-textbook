@@ -6,6 +6,7 @@ interface UserResponse {
   email: string;
   name: string;
   is_active: boolean;
+  email_verified: boolean;
   created_at: string;
 }
 
@@ -19,6 +20,7 @@ interface AuthContextType {
   signin: (email: string, password: string) => Promise<void>;
   signout: () => Promise<void>;
   checkAuth: () => Promise<void>;
+  resendVerification: (email: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -158,6 +160,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const resendVerification = async (email: string): Promise<void> => {
+    setError(null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/resend-verification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.detail || 'Failed to resend verification email');
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to resend verification email';
+      setError(message);
+      throw err;
+    }
+  };
+
   useEffect(() => {
     checkAuth();
   }, []);
@@ -172,6 +196,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signin,
     signout,
     checkAuth,
+    resendVerification,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

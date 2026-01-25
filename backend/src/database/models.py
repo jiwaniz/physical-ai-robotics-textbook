@@ -63,6 +63,11 @@ class User(BaseModel):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
+    # Email verification
+    email_verified: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    verification_token: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    verification_token_expires: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+
     # Relationship
     profile: Mapped[Optional["UserProfile"]] = relationship(
         "UserProfile",

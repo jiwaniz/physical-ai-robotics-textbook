@@ -43,10 +43,23 @@ class UserResponse(BaseModel):
     email: str
     name: str
     is_active: bool
+    email_verified: bool = False
     created_at: datetime
 
     class Config:
         from_attributes = True
+
+
+class VerifyEmailRequest(BaseModel):
+    """Request schema for email verification."""
+
+    token: str = Field(..., description="Email verification token")
+
+
+class ResendVerificationRequest(BaseModel):
+    """Request schema for resending verification email."""
+
+    email: EmailStr = Field(..., description="Email address to resend verification to")
 
 
 class AuthResponse(BaseModel):

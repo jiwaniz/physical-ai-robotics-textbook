@@ -11,7 +11,7 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from ..core.dependencies import get_db, require_auth
+from ..core.dependencies import get_db, require_auth, require_verified_email
 from ..database.models import Answer, Question, Quiz, QuizAttempt
 from .schemas import (
     AnswerSubmitRequest,
@@ -43,7 +43,7 @@ router = APIRouter()
 @router.get("/week/{week_number}", response_model=QuizResponse)
 async def get_quiz_for_week(
     week_number: int,
-    user_id: int = Depends(require_auth),
+    user_id: int = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Get the quiz for a specific week."""
@@ -85,7 +85,7 @@ async def get_quiz_for_week(
 @router.get("/{quiz_id}", response_model=QuizDetailResponse)
 async def get_quiz_detail(
     quiz_id: int,
-    user_id: int = Depends(require_auth),
+    user_id: int = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Get full quiz details with questions (for taking the quiz)."""
@@ -144,7 +144,7 @@ async def get_quiz_detail(
 @router.post("/{quiz_id}/start", response_model=QuizStartResponse)
 async def start_quiz_attempt(
     quiz_id: int,
-    user_id: int = Depends(require_auth),
+    user_id: int = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Start a new quiz attempt."""
@@ -205,7 +205,7 @@ async def save_answer(
     quiz_id: int,
     attempt_id: int,
     request: AnswerSubmitRequest,
-    user_id: int = Depends(require_auth),
+    user_id: int = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Save/update an answer for a specific question (auto-save)."""
@@ -269,7 +269,7 @@ async def submit_quiz_attempt(
     quiz_id: int,
     attempt_id: int,
     request: QuizSubmitRequest,
-    user_id: int = Depends(require_auth),
+    user_id: int = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Submit a completed quiz attempt for grading."""
@@ -374,7 +374,7 @@ async def submit_quiz_attempt(
 
 @router.get("/attempts", response_model=List[QuizAttemptResponse])
 async def get_my_attempts(
-    user_id: int = Depends(require_auth),
+    user_id: int = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
     quiz_id: Optional[int] = Query(None),
 ):
@@ -412,7 +412,7 @@ async def get_my_attempts(
 @router.get("/attempts/{attempt_id}", response_model=QuizAttemptDetailResponse)
 async def get_attempt_detail(
     attempt_id: int,
-    user_id: int = Depends(require_auth),
+    user_id: int = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Get detailed results for a specific attempt."""

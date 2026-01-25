@@ -11,7 +11,21 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..core.config import settings
 from ..core.dependencies import get_db, require_auth
 from ..database.models import User
-from .schemas import AuthResponse, SigninRequest, SignupRequest, UserResponse
+from .disposable_emails import is_disposable_email
+from .email_service import (
+    generate_verification_token,
+    get_token_expiry,
+    is_token_expired,
+    send_verification_email,
+)
+from .schemas import (
+    AuthResponse,
+    ResendVerificationRequest,
+    SigninRequest,
+    SignupRequest,
+    UserResponse,
+    VerifyEmailRequest,
+)
 from .utils import create_access_token, hash_password, verify_password
 
 logger = logging.getLogger(__name__)
@@ -38,8 +52,16 @@ async def signup(
 
     Raises:
         409: Email already registered
-        400: Invalid request data
+        400: Invalid request data or disposable email
     """
+    # Block disposable email domains
+    if is_disposable_email(request.email):
+        logger.warning(f"Signup attempt with disposable email: {request.email}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Disposable email addresses are not allowed. Please use a permanent email.",
+        )
+
     # Check if email already exists
     stmt = select(User).where(User.email == request.email)
     result = await db.execute(stmt)
@@ -55,12 +77,19 @@ async def signup(
     # Hash password
     password_hash = hash_password(request.password)
 
-    # Create new user
+    # Generate verification token
+    verification_token = generate_verification_token()
+    token_expires = get_token_expiry()
+
+    # Create new user (email_verified defaults to False)
     new_user = User(
         email=request.email,
         password_hash=password_hash,
         name=request.name,
         is_active=True,
+        email_verified=False,
+        verification_token=verification_token,
+        verification_token_expires=token_expires,
     )
 
     db.add(new_user)
@@ -68,6 +97,13 @@ async def signup(
     await db.refresh(new_user)
 
     logger.info(f"New user created: {new_user.id} - {new_user.email}")
+
+    # Send verification email (async, don't block signup)
+    await send_verification_email(
+        to_email=new_user.email,
+        user_name=new_user.name,
+        verification_token=verification_token,
+    )
 
     # Create JWT token (sub must be string per JWT spec)
     token_data = {
@@ -214,3 +250,104 @@ async def get_current_user(
         )
 
     return UserResponse.model_validate(user)
+
+
+@router.post("/verify-email")
+async def verify_email(
+    request: VerifyEmailRequest,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Verify user's email address using the verification token.
+
+    Args:
+        request: VerifyEmailRequest with the token
+        db: Database session
+
+    Returns:
+        Success message
+
+    Raises:
+        400: Invalid or expired token
+    """
+    # Find user by verification token
+    stmt = select(User).where(User.verification_token == request.token)
+    result = await db.execute(stmt)
+    user = result.scalar_one_or_none()
+
+    if not user:
+        logger.warning("Email verification attempt with invalid token")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid verification token",
+        )
+
+    # Check if token is expired
+    if is_token_expired(user.verification_token_expires):
+        logger.warning(f"Email verification attempt with expired token for user: {user.id}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Verification token has expired. Please request a new one.",
+        )
+
+    # Mark email as verified
+    user.email_verified = True
+    user.verification_token = None
+    user.verification_token_expires = None
+
+    await db.commit()
+
+    logger.info(f"Email verified for user: {user.id} - {user.email}")
+
+    return {"message": "Email verified successfully"}
+
+
+@router.post("/resend-verification")
+async def resend_verification(
+    request: ResendVerificationRequest,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Resend verification email to the user.
+
+    Args:
+        request: ResendVerificationRequest with email
+        db: Database session
+
+    Returns:
+        Success message (always returns success to prevent email enumeration)
+    """
+    # Find user by email
+    stmt = select(User).where(User.email == request.email)
+    result = await db.execute(stmt)
+    user = result.scalar_one_or_none()
+
+    # Always return success to prevent email enumeration
+    if not user:
+        logger.info(f"Resend verification attempt for non-existent email: {request.email}")
+        return {"message": "If your email is registered, you will receive a verification link."}
+
+    # Check if already verified
+    if user.email_verified:
+        logger.info(f"Resend verification for already verified user: {user.id}")
+        return {"message": "If your email is registered, you will receive a verification link."}
+
+    # Generate new verification token
+    verification_token = generate_verification_token()
+    token_expires = get_token_expiry()
+
+    user.verification_token = verification_token
+    user.verification_token_expires = token_expires
+
+    await db.commit()
+
+    # Send verification email
+    await send_verification_email(
+        to_email=user.email,
+        user_name=user.name,
+        verification_token=verification_token,
+    )
+
+    logger.info(f"Verification email resent for user: {user.id}")
+
+    return {"message": "If your email is registered, you will receive a verification link."}

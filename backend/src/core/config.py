@@ -47,6 +47,15 @@ class Settings(BaseSettings):
     )
     better_auth_trust_host: bool = Field(default=True, description="Trust host for Better-Auth")
 
+    # Email (Resend)
+    resend_api_key: str = Field(default="", description="Resend API key for email verification")
+    email_from: str = Field(
+        default="noreply@example.com", description="From email address for verification emails"
+    )
+    frontend_url: str = Field(
+        default="http://localhost:3000", description="Frontend URL for verification links"
+    )
+
     # Security
     allowed_hosts: str = Field(
         default="localhost,127.0.0.1", description="Allowed hosts (comma-separated)"

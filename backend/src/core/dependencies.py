@@ -161,3 +161,44 @@ async def require_auth(
             headers={"WWW-Authenticate": "Bearer"},
         )
     return user_id
+
+
+async def require_verified_email(
+    user_id: int = Depends(require_auth),
+    db: AsyncSession = Depends(get_db),
+) -> int:
+    """
+    Require both authentication and verified email for protected endpoints.
+
+    Args:
+        user_id: Current user ID from authentication
+        db: Database session
+
+    Returns:
+        User ID if authenticated and email verified
+
+    Raises:
+        HTTPException: If user is not authenticated or email not verified
+    """
+    from sqlalchemy import select
+
+    from ..database.models import User
+
+    # Query user to check email verification status
+    stmt = select(User).where(User.id == user_id)
+    result = await db.execute(stmt)
+    user = result.scalar_one_or_none()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found",
+        )
+
+    if not user.email_verified:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Email verification required. Please verify your email address.",
+        )
+
+    return user_id
