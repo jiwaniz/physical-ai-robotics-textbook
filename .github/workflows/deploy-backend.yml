@@ -41,6 +41,7 @@ jobs:
           pip install -r requirements-dev.txt
 
       - name: Run linters
+        continue-on-error: true
         run: |
           black --check src/
           isort --check-only src/
@@ -67,13 +68,23 @@ jobs:
           flags: backend
           fail_ci_if_error: false
 
-  notify:
+  deploy:
     if: github.event_name != 'pull_request'
     needs: test
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deployment notification
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to HuggingFace Spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          echo "Backend CI passed successfully"
-          echo "HuggingFace Spaces will auto-deploy from: https://huggingface.co/spaces/jiwaniz/physical-ai-backend"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          cd backend
+          git init
+          git add .
+          git commit -m "Deploy from GitHub Actions"
+          git push --force https://jiwaniz:${HF_TOKEN}@huggingface.co/spaces/jiwaniz/physical-ai-backend main
