@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from sqlalchemy import select
 
-from database.connection import async_session_maker, init_db
+from database.connection import AsyncSessionLocal, init_db
 from database.models import Question, QuestionCategory, QuestionType, Quiz
 
 SAMPLE_QUIZZES = [
@@ -397,7 +397,7 @@ async def seed_quizzes():
     """Seed the database with sample quizzes."""
     await init_db()
 
-    async with async_session_maker() as session:
+    async with AsyncSessionLocal() as session:
         for quiz_data in SAMPLE_QUIZZES:
             # Check if quiz already exists
             result = await session.execute(
