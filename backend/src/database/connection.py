@@ -6,13 +6,11 @@ from typing import AsyncGenerator
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session, sessionmaker
 
 from ..core.config import settings
-
-# SQLAlchemy Base for models
-Base = declarative_base()
+# Import Base from models to ensure tables are created
+from .models import Base
 
 # Check if using SQLite (for testing) vs PostgreSQL (for production)
 _is_sqlite = settings.database_url.startswith("sqlite")
