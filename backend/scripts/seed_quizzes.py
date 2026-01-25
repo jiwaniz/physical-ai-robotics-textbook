@@ -66,21 +66,34 @@ SAMPLE_QUIZZES = [
                 },
             },
             {
-                "question_type": QuestionType.SHORT_ANSWER,
+                "question_type": QuestionType.MULTIPLE_CHOICE,
                 "category": QuestionCategory.CONCEPTUAL,
-                "points": 3.0,
+                "points": 2.0,
                 "content": {
-                    "question_text": "Explain the concept of 'embodied cognition' and why it's important for robotics.",
-                    "expected_keywords": [
-                        "body",
-                        "environment",
-                        "interact",
-                        "physical",
-                        "cognition",
-                        "grounded",
+                    "question_text": "What is 'embodied cognition' in robotics?",
+                    "options": [
+                        {
+                            "id": "a",
+                            "text": "Running AI models on embedded hardware",
+                            "is_correct": False,
+                        },
+                        {
+                            "id": "b",
+                            "text": "Intelligence emerging from physical interaction with the environment",
+                            "is_correct": True,
+                        },
+                        {
+                            "id": "c",
+                            "text": "Programming robots using body gestures",
+                            "is_correct": False,
+                        },
+                        {
+                            "id": "d",
+                            "text": "Simulating human organs in robots",
+                            "is_correct": False,
+                        },
                     ],
-                    "max_length": 300,
-                    "sample_answer": "Embodied cognition is the theory that cognitive processes are deeply rooted in the body's interactions with the world. For robotics, this means intelligence emerges from physical interaction with the environment, not just abstract computation.",
+                    "explanation": "Embodied cognition is the theory that cognitive processes are deeply rooted in the body's interactions with the world, not just abstract computation.",
                 },
             },
             {
@@ -153,38 +166,18 @@ SAMPLE_QUIZZES = [
                 },
             },
             {
-                "question_type": QuestionType.CODE_COMPLETION,
+                "question_type": QuestionType.MULTIPLE_CHOICE,
                 "category": QuestionCategory.CODE_COMPREHENSION,
-                "points": 3.0,
+                "points": 2.0,
                 "content": {
-                    "question_text": "Complete the ROS 2 Python publisher node to publish a String message.",
-                    "code_template": """import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
-
-class MinimalPublisher(Node):
-    def __init__(self):
-        super().__init__('minimal_publisher')
-        self.publisher_ = self.create_publisher(String, 'topic', 10)
-        self.timer = self.create_timer(0.5, self.timer_callback)
-
-    def timer_callback(self):
-        msg = String()
-        msg.data = 'Hello World'
-        # Fill in the blank to publish the message
-        _______________
-
-def main():
-    rclpy.init()
-    node = MinimalPublisher()
-    rclpy.spin(node)
-    rclpy.shutdown()""",
-                    "language": "python",
-                    "expected_solution": "self.publisher_.publish(msg)",
-                    "hints": [
-                        "Use the publisher object created in __init__",
-                        "The method name matches what publishers do",
+                    "question_text": "In a ROS 2 Python publisher node, which method is used to send a message?",
+                    "options": [
+                        {"id": "a", "text": "self.publisher_.send(msg)", "is_correct": False},
+                        {"id": "b", "text": "self.publisher_.publish(msg)", "is_correct": True},
+                        {"id": "c", "text": "self.publisher_.emit(msg)", "is_correct": False},
+                        {"id": "d", "text": "self.publisher_.broadcast(msg)", "is_correct": False},
                     ],
+                    "explanation": "In ROS 2, publishers use the publish() method to send messages to a topic.",
                 },
             },
             {
@@ -211,23 +204,34 @@ def main():
                 },
             },
             {
-                "question_type": QuestionType.SHORT_ANSWER,
+                "question_type": QuestionType.MULTIPLE_CHOICE,
                 "category": QuestionCategory.CONCEPTUAL,
-                "points": 3.0,
+                "points": 2.0,
                 "content": {
-                    "question_text": "Explain the difference between ROS 2 Topics and Services. When would you use each?",
-                    "expected_keywords": [
-                        "publish",
-                        "subscribe",
-                        "request",
-                        "response",
-                        "async",
-                        "sync",
-                        "streaming",
-                        "one-time",
+                    "question_text": "What is the main difference between ROS 2 Topics and Services?",
+                    "options": [
+                        {
+                            "id": "a",
+                            "text": "Topics are faster than Services",
+                            "is_correct": False,
+                        },
+                        {
+                            "id": "b",
+                            "text": "Topics use publish-subscribe for streaming; Services use request-response for one-time operations",
+                            "is_correct": True,
+                        },
+                        {
+                            "id": "c",
+                            "text": "Services can only send strings; Topics can send any data",
+                            "is_correct": False,
+                        },
+                        {
+                            "id": "d",
+                            "text": "Topics require more memory than Services",
+                            "is_correct": False,
+                        },
                     ],
-                    "max_length": 400,
-                    "sample_answer": "Topics use publish-subscribe for continuous, asynchronous data streaming (e.g., sensor data). Services use request-response for synchronous, one-time operations (e.g., triggering an action). Use topics for ongoing data flow, services for discrete commands.",
+                    "explanation": "Topics use publish-subscribe for continuous data streaming (e.g., sensor data). Services use request-response for synchronous, one-time operations.",
                 },
             },
             {
@@ -250,30 +254,26 @@ def main():
                 },
             },
             {
-                "question_type": QuestionType.CODE_COMPLETION,
+                "question_type": QuestionType.MULTIPLE_CHOICE,
                 "category": QuestionCategory.CODE_COMPREHENSION,
-                "points": 3.0,
+                "points": 2.0,
                 "content": {
-                    "question_text": "Complete the launch file to include a node from the 'my_package' package.",
-                    "code_template": """from launch import LaunchDescription
-from launch_ros.actions import Node
-
-def generate_launch_description():
-    return LaunchDescription([
-        Node(
-            package='my_package',
-            executable='my_node',
-            name='my_node_instance',
-            # Fill in to remap the topic 'input' to 'sensor_data'
-            remappings=[_______________]
-        ),
-    ])""",
-                    "language": "python",
-                    "expected_solution": "('input', 'sensor_data')",
-                    "hints": [
-                        "Remappings are tuples of (original, new)",
-                        "The format is ('from_topic', 'to_topic')",
+                    "question_text": "In a ROS 2 launch file, how do you remap a topic named 'input' to 'sensor_data'?",
+                    "options": [
+                        {
+                            "id": "a",
+                            "text": "remappings=['input:sensor_data']",
+                            "is_correct": False,
+                        },
+                        {
+                            "id": "b",
+                            "text": "remappings=[('input', 'sensor_data')]",
+                            "is_correct": True,
+                        },
+                        {"id": "c", "text": "remap={'input': 'sensor_data'}", "is_correct": False},
+                        {"id": "d", "text": "topics={'input': 'sensor_data'}", "is_correct": False},
                     ],
+                    "explanation": "ROS 2 launch file remappings use a list of tuples: [('original_name', 'new_name')].",
                 },
             },
         ],
@@ -312,24 +312,18 @@ def generate_launch_description():
                 },
             },
             {
-                "question_type": QuestionType.CODE_COMPLETION,
+                "question_type": QuestionType.MULTIPLE_CHOICE,
                 "category": QuestionCategory.CODE_COMPREHENSION,
-                "points": 3.0,
+                "points": 2.0,
                 "content": {
-                    "question_text": "Complete the URDF to define a cylindrical link for a robot arm segment.",
-                    "code_template": """<link name="arm_link">
-  <visual>
-    <geometry>
-      <cylinder _______ _______/>
-    </geometry>
-  </visual>
-</link>""",
-                    "language": "xml",
-                    "expected_solution": 'radius="0.05" length="0.3"',
-                    "hints": [
-                        "Cylinders need two dimensions",
-                        "Think about the cross-section and height",
+                    "question_text": "Which attributes are required to define a cylinder geometry in URDF?",
+                    "options": [
+                        {"id": "a", "text": "width and height", "is_correct": False},
+                        {"id": "b", "text": "radius and length", "is_correct": True},
+                        {"id": "c", "text": "diameter and depth", "is_correct": False},
+                        {"id": "d", "text": "size and scale", "is_correct": False},
                     ],
+                    "explanation": "URDF cylinders require 'radius' (cross-section) and 'length' (height) attributes.",
                 },
             },
             {
@@ -356,21 +350,34 @@ def generate_launch_description():
                 },
             },
             {
-                "question_type": QuestionType.SHORT_ANSWER,
+                "question_type": QuestionType.MULTIPLE_CHOICE,
                 "category": QuestionCategory.CONCEPTUAL,
-                "points": 3.0,
+                "points": 2.0,
                 "content": {
-                    "question_text": "What is the difference between the <visual> and <collision> elements in URDF?",
-                    "expected_keywords": [
-                        "visual",
-                        "rendering",
-                        "display",
-                        "collision",
-                        "physics",
-                        "simplified",
+                    "question_text": "What is the difference between <visual> and <collision> elements in URDF?",
+                    "options": [
+                        {
+                            "id": "a",
+                            "text": "Visual is for 2D, collision is for 3D",
+                            "is_correct": False,
+                        },
+                        {
+                            "id": "b",
+                            "text": "Visual defines appearance; collision defines physics geometry",
+                            "is_correct": True,
+                        },
+                        {
+                            "id": "c",
+                            "text": "Visual is required, collision is optional",
+                            "is_correct": False,
+                        },
+                        {
+                            "id": "d",
+                            "text": "They are identical and interchangeable",
+                            "is_correct": False,
+                        },
                     ],
-                    "max_length": 300,
-                    "sample_answer": "Visual elements define how the robot appears (rendering/display). Collision elements define the geometry used for physics calculations. Collision meshes are often simplified for performance while visuals can be detailed.",
+                    "explanation": "Visual elements define rendering/display. Collision elements define geometry for physics. Collision meshes are often simplified for performance.",
                 },
             },
             {
