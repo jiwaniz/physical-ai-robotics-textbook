@@ -12,7 +12,13 @@ from passlib.context import CryptContext
 from ..core.config import settings
 
 # Password hashing context with bcrypt
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Using bcrypt__ident="2b" to ensure compatibility with bcrypt 4.0.1
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto",
+    bcrypt__rounds=12,
+    bcrypt__ident="2b",
+)
 
 # JWT configuration
 SECRET_KEY = settings.better_auth_secret
