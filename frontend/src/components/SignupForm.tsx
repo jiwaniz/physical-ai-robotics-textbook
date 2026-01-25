@@ -11,7 +11,7 @@ const SignupForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { signup } = useAuth();
   const history = useHistory();
-  const onboardingUrl = useBaseUrl('/onboarding');
+  const verifyPendingUrl = useBaseUrl('/verify-email-pending');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,8 +20,8 @@ const SignupForm: React.FC = () => {
 
     try {
       await signup(email, password, name);
-      // Redirect to onboarding after successful signup
-      history.push(onboardingUrl);
+      // Redirect to email verification pending page
+      history.push(verifyPendingUrl);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Signup failed');
     } finally {

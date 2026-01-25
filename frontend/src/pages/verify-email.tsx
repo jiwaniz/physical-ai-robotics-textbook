@@ -151,10 +151,10 @@ export default function VerifyEmailPage(): JSX.Element {
 
               {status === 'success' && (
                 <button
-                  onClick={() => history.push('/signin')}
+                  onClick={() => history.push('/onboarding')}
                   className="button button--primary button--lg"
                 >
-                  Sign In
+                  Continue to Course
                 </button>
               )}
 
