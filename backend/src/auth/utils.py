@@ -5,14 +5,11 @@ Authentication utility functions for password hashing and JWT management.
 from datetime import datetime, timedelta
 from typing import Optional
 
+import bcrypt
 from fastapi import HTTPException, status
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 
 from ..core.config import settings
-
-# Password hashing context with bcrypt
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # JWT configuration
 SECRET_KEY = settings.better_auth_secret
@@ -29,8 +26,19 @@ def hash_password(password: str) -> str:
 
     Returns:
         Hashed password string
+
+    Raises:
+        ValueError: If password is empty or None
     """
-    return pwd_context.hash(password)
+    if not password:
+        raise ValueError("Password cannot be empty")
+
+    # Encode password to bytes, truncate to 72 bytes (bcrypt limit)
+    password_bytes = password.encode("utf-8")[:72]
+    # Generate salt and hash
+    salt = bcrypt.gensalt(rounds=12)
+    hashed = bcrypt.hashpw(password_bytes, salt)
+    return hashed.decode("utf-8")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -44,7 +52,16 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     Returns:
         True if password matches, False otherwise
     """
-    return pwd_context.verify(plain_password, hashed_password)
+    if not plain_password or not hashed_password:
+        return False
+
+    try:
+        # Encode both to bytes, truncate plain password to 72 bytes
+        password_bytes = plain_password.encode("utf-8")[:72]
+        hashed_bytes = hashed_password.encode("utf-8")
+        return bcrypt.checkpw(password_bytes, hashed_bytes)
+    except Exception:
+        return False
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
