@@ -9,8 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from sqlalchemy.orm import Session, sessionmaker
 
 from ..core.config import settings
-# Import Base from models to ensure tables are created
-from .models import Base
+from .models import Base  # Import Base from models to ensure tables are created
 
 # Check if using SQLite (for testing) vs PostgreSQL (for production)
 _is_sqlite = settings.database_url.startswith("sqlite")

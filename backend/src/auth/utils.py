@@ -12,13 +12,7 @@ from passlib.context import CryptContext
 from ..core.config import settings
 
 # Password hashing context with bcrypt
-# Using bcrypt__ident="2b" to ensure compatibility with bcrypt 4.0.1
-pwd_context = CryptContext(
-    schemes=["bcrypt"],
-    deprecated="auto",
-    bcrypt__rounds=12,
-    bcrypt__ident="2b",
-)
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # JWT configuration
 SECRET_KEY = settings.better_auth_secret
@@ -35,13 +29,8 @@ def hash_password(password: str) -> str:
 
     Returns:
         Hashed password string
-
-    Note:
-        bcrypt has a 72-byte limit, so passwords are truncated.
     """
-    # bcrypt has a 72-byte limit - truncate to prevent errors
-    password_bytes = password.encode('utf-8')[:72]
-    return pwd_context.hash(password_bytes.decode('utf-8', errors='ignore'))
+    return pwd_context.hash(password)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -54,13 +43,8 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
     Returns:
         True if password matches, False otherwise
-
-    Note:
-        bcrypt has a 72-byte limit, so passwords are truncated before comparison.
     """
-    # bcrypt has a 72-byte limit - truncate to match hashing behavior
-    password_bytes = plain_password.encode('utf-8')[:72]
-    return pwd_context.verify(password_bytes.decode('utf-8', errors='ignore'), hashed_password)
+    return pwd_context.verify(plain_password, hashed_password)
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
