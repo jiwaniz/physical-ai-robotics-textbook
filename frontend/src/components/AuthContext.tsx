@@ -27,7 +27,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Helper function to get API URL from Docusaurus config or fallback
 function getApiBaseUrl(siteConfig: any): string {
-  return (siteConfig?.customFields?.apiUrl as string) || 'http://localhost:8000';
+  return (siteConfig?.customFields?.apiUrl as string) || 'http://localhost:8001';
 }
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
