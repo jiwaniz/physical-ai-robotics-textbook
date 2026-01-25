@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 """
 Seed script for sample quizzes.
-Run: python -m scripts.seed_quizzes
+Run: cd backend && python -m scripts.seed_quizzes
 """
 
 import asyncio
 import sys
 from pathlib import Path
 
-# Add backend src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+# Add backend directory to path for proper imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from sqlalchemy import select
 
-from database.connection import AsyncSessionLocal, init_db
-from database.models import Question, QuestionCategory, QuestionType, Quiz
+from src.database.connection import AsyncSessionLocal, async_engine
+from src.database.models import Base, Question, QuestionCategory, QuestionType, Quiz
 
 SAMPLE_QUIZZES = [
     {
@@ -402,7 +402,10 @@ SAMPLE_QUIZZES = [
 
 async def seed_quizzes():
     """Seed the database with sample quizzes."""
-    await init_db()
+    # Create tables using the Base from models.py
+    async with async_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    print("Database tables created/verified.")
 
     async with AsyncSessionLocal() as session:
         for quiz_data in SAMPLE_QUIZZES:
