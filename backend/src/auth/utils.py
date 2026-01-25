@@ -29,8 +29,13 @@ def hash_password(password: str) -> str:
 
     Returns:
         Hashed password string
+
+    Note:
+        bcrypt has a 72-byte limit, so passwords are truncated.
     """
-    return pwd_context.hash(password)
+    # bcrypt has a 72-byte limit - truncate to prevent errors
+    password_bytes = password.encode('utf-8')[:72]
+    return pwd_context.hash(password_bytes.decode('utf-8', errors='ignore'))
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -43,8 +48,13 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
     Returns:
         True if password matches, False otherwise
+
+    Note:
+        bcrypt has a 72-byte limit, so passwords are truncated before comparison.
     """
-    return pwd_context.verify(plain_password, hashed_password)
+    # bcrypt has a 72-byte limit - truncate to match hashing behavior
+    password_bytes = plain_password.encode('utf-8')[:72]
+    return pwd_context.verify(password_bytes.decode('utf-8', errors='ignore'), hashed_password)
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
