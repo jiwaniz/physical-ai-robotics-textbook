@@ -81,10 +81,16 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          cd backend
-          git init
-          git add .
-          git commit -m "Deploy from GitHub Actions"
-          git push --force https://jiwaniz:${HF_TOKEN}@huggingface.co/spaces/jiwaniz/physical-ai-backend main
+          # Clone the HF Space repo
+          git clone https://jiwaniz:${HF_TOKEN}@huggingface.co/spaces/jiwaniz/physical-ai-backend hf_space
+
+          # Copy backend files to the cloned repo
+          rsync -av --delete --exclude='.git' --exclude='venv' --exclude='__pycache__' --exclude='.pytest_cache' backend/ hf_space/
+
+          # Commit and push
+          cd hf_space
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -A
+          git diff --staged --quiet || git commit -m "Deploy from GitHub Actions - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push
