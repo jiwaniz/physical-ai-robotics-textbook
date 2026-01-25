@@ -1,9 +1,17 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
+// Load environment variables
+require('dotenv').config();
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Physical AI & Humanoid Robotics',
+
+  // Custom fields accessible via useDocusaurusContext
+  customFields: {
+    apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:8000',
+  },
   tagline: 'Interactive textbook with AI-powered learning assistance',
   favicon: 'img/favicon.svg',
 

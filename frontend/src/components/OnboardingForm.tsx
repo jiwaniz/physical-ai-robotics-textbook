@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useHistory } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-
-const API_BASE_URL = (typeof process !== 'undefined' && process.env?.REACT_APP_API_URL) || 'https://jiwaniz-physical-ai-backend.hf.space';
+import { useAuth } from './AuthContext';
 
 interface OnboardingFormProps {
   allowSkip?: boolean;
 }
 
 const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => {
+  const { accessToken, apiBaseUrl } = useAuth();
   const [softwareLevel, setSoftwareLevel] = useState<string>('');
   const [hardwareLevel, setHardwareLevel] = useState<string>('');
   const [topics, setTopics] = useState<string[]>([]);
@@ -50,11 +50,16 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+      if (accessToken) {
+        headers['Authorization'] = `Bearer ${accessToken}`;
+      }
+
+      const response = await fetch(`${apiBaseUrl}/api/users/profile`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
           software_level: softwareLevel,
           hardware_level: hardwareLevel,

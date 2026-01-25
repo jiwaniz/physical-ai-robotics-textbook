@@ -8,10 +8,18 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
-  const { currentUser, isLoading } = useAuth();
+  const { currentUser, isLoading, signout } = useAuth();
   const signupUrl = useBaseUrl('/signup');
   const signinUrl = useBaseUrl('/signin');
-  const docsUrl = useBaseUrl('/docs/intro');
+  const docsUrl = useBaseUrl('/intro');
+
+  const handleSignout = async () => {
+    try {
+      await signout();
+    } catch (err) {
+      console.error('Signout failed:', err);
+    }
+  };
 
   return (
     <header className={clsx('hero hero--primary')}>
@@ -30,6 +38,11 @@ function HomepageHeader() {
                   to={docsUrl}>
                   Continue Learning 📚
                 </Link>
+                <button
+                  className="button button--outline button--secondary button--lg"
+                  onClick={handleSignout}>
+                  Sign Out
+                </button>
               </div>
             </div>
           ) : (
