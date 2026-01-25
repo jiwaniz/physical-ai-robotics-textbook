@@ -40,7 +40,7 @@ class Settings(BaseSettings):
 
     # Better-Auth
     better_auth_secret: str = Field(..., description="Better-Auth secret key (256-bit)")
-    better_auth_url: str = Field(default="http://localhost:8000", description="Better-Auth base URL")
+    better_auth_url: str = Field(default="http://localhost:8001", description="Better-Auth base URL")
     better_auth_trust_host: bool = Field(default=True, description="Trust host for Better-Auth")
 
     # Security
