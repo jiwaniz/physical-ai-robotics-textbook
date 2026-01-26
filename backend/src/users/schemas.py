@@ -35,7 +35,7 @@ class UserProfileResponse(BaseModel):
     """Response schema for user profile data."""
 
     id: int
-    user_id: int
+    supabase_user_id: str
     software_level: Optional[str] = None
     hardware_level: Optional[str] = None
     topics: List[str] = Field(default_factory=list)

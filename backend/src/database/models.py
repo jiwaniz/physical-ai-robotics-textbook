@@ -82,9 +82,9 @@ class UserProfile(BaseModel):
 
     __tablename__ = "user_profiles"
 
-    user_id: Mapped[int] = mapped_column(
-        Integer,
-        ForeignKey("users.id", ondelete="CASCADE"),
+    # Supabase user ID (UUID string) - no FK since users are in Supabase
+    supabase_user_id: Mapped[str] = mapped_column(
+        String(36),
         unique=True,
         nullable=False,
         index=True,
@@ -92,9 +92,6 @@ class UserProfile(BaseModel):
     software_level: Mapped[Optional[str]] = mapped_column(String(20))
     hardware_level: Mapped[Optional[str]] = mapped_column(String(20))
     topics: Mapped[Optional[dict]] = mapped_column(JSON, default=list)
-
-    # Relationship
-    user: Mapped["User"] = relationship("User", back_populates="profile")
 
 
 # ==================== QUIZ ENUMS ====================

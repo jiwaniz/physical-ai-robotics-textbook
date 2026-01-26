@@ -2,14 +2,18 @@
 FastAPI dependency injection utilities.
 """
 
+import logging
 from typing import AsyncGenerator, Optional
 
-from fastapi import Cookie, Depends, Header, HTTPException, status
+from fastapi import Depends, Header, HTTPException, status
+from jose import JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database.connection import get_async_db
 from ..rag.vector_store import QdrantVectorStore, get_vector_store
-from .config import Settings, get_settings
+from .config import Settings, get_settings, settings
+
+logger = logging.getLogger(__name__)
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
@@ -43,117 +47,82 @@ def get_qdrant() -> QdrantVectorStore:
     return get_vector_store()
 
 
-async def get_current_user_id(
-    access_token: Optional[str] = Header(None, alias="Cookie"),
-) -> Optional[int]:
+def verify_supabase_token(token: str) -> Optional[dict]:
     """
-    Extract current user ID from JWT token in cookie.
+    Verify a Supabase JWT token and return the payload.
 
     Args:
-        access_token: JWT token from cookie
+        token: JWT token from Supabase
 
     Returns:
-        User ID if authenticated, None otherwise
+        Token payload if valid, None otherwise
     """
-
-    # Try to get token from cookie
-    # Note: FastAPI's Cookie dependency is better for extracting cookies
-    return None  # This will be properly handled by the actual cookie extraction below
-
-
-def get_current_user_id_from_cookie(
-    access_token: Optional[str] = Cookie(None),
-) -> Optional[int]:
-    """
-    Extract current user ID from JWT token in httpOnly cookie.
-
-    Args:
-        access_token: JWT token from cookie
-
-    Returns:
-        User ID if authenticated, None otherwise
-    """
-    if not access_token:
+    if not settings.supabase_jwt_secret:
+        logger.warning("Supabase JWT secret not configured")
         return None
 
     try:
-        from ..auth.utils import decode_access_token
-
-        payload = decode_access_token(access_token)
-        user_id = payload.get("sub")
-        # Convert string to int (JWT sub claim is stored as string)
-        return int(user_id) if user_id else None
-    except Exception:
-        # Invalid or expired token
+        # Supabase uses HS256 algorithm
+        payload = jwt.decode(
+            token,
+            settings.supabase_jwt_secret,
+            algorithms=["HS256"],
+            audience="authenticated",
+        )
+        return payload
+    except JWTError as e:
+        logger.error(f"Supabase token verification failed: {e}")
         return None
 
 
-def get_current_user_id_from_header(
+def get_supabase_user_id_from_header(
     authorization: Optional[str] = Header(None),
-) -> Optional[int]:
+) -> Optional[str]:
     """
-    Extract current user ID from JWT token in Authorization header.
+    Extract Supabase user ID from JWT token in Authorization header.
 
     Args:
         authorization: Authorization header value (Bearer <token>)
 
     Returns:
-        User ID if authenticated, None otherwise
+        User ID (UUID string) if authenticated, None otherwise
     """
-    import logging
-
-    logger = logging.getLogger(__name__)
-    logger.info(
-        f"Authorization header received: {authorization[:50] if authorization else 'None'}..."
-    )
-
     if not authorization:
-        logger.info("No authorization header")
+        logger.debug("No authorization header")
         return None
 
     # Check for Bearer token format
     parts = authorization.split()
     if len(parts) != 2 or parts[0].lower() != "bearer":
-        logger.info(f"Invalid bearer format: {parts}")
+        logger.debug(f"Invalid bearer format")
         return None
 
     token = parts[1]
+    payload = verify_supabase_token(token)
 
-    try:
-        from ..auth.utils import decode_access_token
-
-        payload = decode_access_token(token)
+    if payload:
         user_id = payload.get("sub")
-        logger.info(f"Decoded user_id from header: {user_id}")
-        # Convert string to int (JWT sub claim is stored as string)
-        return int(user_id) if user_id else None
-    except Exception as e:
-        logger.error(f"Token decode error: {e}")
-        # Invalid or expired token
-        return None
+        logger.debug(f"Decoded Supabase user_id: {user_id}")
+        return user_id
+
+    return None
 
 
 async def require_auth(
-    cookie_user_id: Optional[int] = Depends(get_current_user_id_from_cookie),
-    header_user_id: Optional[int] = Depends(get_current_user_id_from_header),
-) -> int:
+    user_id: Optional[str] = Depends(get_supabase_user_id_from_header),
+) -> str:
     """
-    Require authentication for protected endpoints.
-    Supports both cookie-based and header-based (Bearer token) authentication.
+    Require Supabase authentication for protected endpoints.
 
     Args:
-        cookie_user_id: Current user ID from JWT cookie
-        header_user_id: Current user ID from Authorization header
+        user_id: Supabase user ID from JWT token
 
     Returns:
-        User ID if authenticated
+        User ID (UUID string) if authenticated
 
     Raises:
         HTTPException: If user is not authenticated
     """
-    # Try header first, then cookie
-    user_id = header_user_id or cookie_user_id
-
     if user_id is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -163,42 +132,16 @@ async def require_auth(
     return user_id
 
 
-async def require_verified_email(
-    user_id: int = Depends(require_auth),
-    db: AsyncSession = Depends(get_db),
-) -> int:
+async def optional_auth(
+    user_id: Optional[str] = Depends(get_supabase_user_id_from_header),
+) -> Optional[str]:
     """
-    Require both authentication and verified email for protected endpoints.
+    Optional Supabase authentication - returns user ID if authenticated, None otherwise.
 
     Args:
-        user_id: Current user ID from authentication
-        db: Database session
+        user_id: Supabase user ID from JWT token
 
     Returns:
-        User ID if authenticated and email verified
-
-    Raises:
-        HTTPException: If user is not authenticated or email not verified
+        User ID (UUID string) if authenticated, None otherwise
     """
-    from sqlalchemy import select
-
-    from ..database.models import User
-
-    # Query user to check email verification status
-    stmt = select(User).where(User.id == user_id)
-    result = await db.execute(stmt)
-    user = result.scalar_one_or_none()
-
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found",
-        )
-
-    if not user.email_verified:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Email verification required. Please verify your email address.",
-        )
-
     return user_id

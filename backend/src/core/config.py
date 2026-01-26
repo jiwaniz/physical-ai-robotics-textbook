@@ -40,8 +40,13 @@ class Settings(BaseSettings):
     # Google AI (Optional - for RAG features)
     google_api_key: str = Field(default="", description="Google AI API key for embeddings")
 
-    # Better-Auth
-    better_auth_secret: str = Field(..., description="Better-Auth secret key (256-bit)")
+    # Supabase Auth
+    supabase_url: str = Field(default="", description="Supabase project URL")
+    supabase_anon_key: str = Field(default="", description="Supabase anon/public key")
+    supabase_jwt_secret: str = Field(default="", description="Supabase JWT secret for token verification")
+
+    # Better-Auth (deprecated - kept for backwards compatibility)
+    better_auth_secret: str = Field(default="deprecated", description="Better-Auth secret key (256-bit)")
     better_auth_url: str = Field(
         default="http://localhost:8001", description="Better-Auth base URL"
     )

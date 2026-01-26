@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 interface AuthContextType {
   currentUser: User | null;
   session: Session | null;
+  accessToken: string | null;
   isLoading: boolean;
   error: string | null;
   apiBaseUrl: string;
@@ -171,6 +172,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const value = {
     currentUser,
     session,
+    accessToken: session?.access_token ?? null,
     isLoading,
     error,
     apiBaseUrl: API_BASE_URL,

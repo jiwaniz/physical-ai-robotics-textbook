@@ -20,7 +20,7 @@ router = APIRouter()
 @router.post("/profile", response_model=UserProfileResponse)
 async def create_or_update_profile(
     request: UserProfileRequest,
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """
@@ -32,14 +32,14 @@ async def create_or_update_profile(
 
     Args:
         request: Profile data with software_level, hardware_level, topics
-        user_id: Current user ID from JWT token
+        user_id: Supabase user ID (UUID string) from JWT token
         db: Database session
 
     Returns:
         UserProfileResponse with updated profile data
     """
     # Check if profile already exists
-    stmt = select(UserProfile).where(UserProfile.user_id == user_id)
+    stmt = select(UserProfile).where(UserProfile.supabase_user_id == user_id)
     result = await db.execute(stmt)
     existing_profile = result.scalar_one_or_none()
 
@@ -57,7 +57,7 @@ async def create_or_update_profile(
     else:
         # Create new profile
         new_profile = UserProfile(
-            user_id=user_id,
+            supabase_user_id=user_id,
             software_level=request.software_level.value,
             hardware_level=request.hardware_level.value,
             topics=request.topics,
@@ -73,14 +73,14 @@ async def create_or_update_profile(
 
 @router.get("/profile", response_model=UserProfileResponse)
 async def get_profile(
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """
     Get the current user's profile.
 
     Args:
-        user_id: Current user ID from JWT token
+        user_id: Supabase user ID (UUID string) from JWT token
         db: Database session
 
     Returns:
@@ -89,8 +89,8 @@ async def get_profile(
     Raises:
         404: Profile not found (user hasn't completed onboarding)
     """
-    # Query profile by user_id
-    stmt = select(UserProfile).where(UserProfile.user_id == user_id)
+    # Query profile by supabase_user_id
+    stmt = select(UserProfile).where(UserProfile.supabase_user_id == user_id)
     result = await db.execute(stmt)
     profile = result.scalar_one_or_none()
 
