@@ -72,7 +72,7 @@ export default function VerifyEmailPendingPage(): JSX.Element {
               </p>
 
               <p style={{ fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '2rem' }}>
-                {currentUser?.email || 'your email address'}
+                {currentUser?.email || currentUser?.user_metadata?.email || 'your email address'}
               </p>
 
               <p style={{ color: 'var(--ifm-color-emphasis-600)', marginBottom: '2rem' }}>

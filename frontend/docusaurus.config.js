@@ -11,6 +11,9 @@ const config = {
     apiUrlProd: 'https://jiwaniz-physical-ai-backend.hf.space',
     // Development API URL (local)
     apiUrlDev: 'http://localhost:8001',
+    // Supabase configuration
+    supabaseUrl: 'https://vaumzrgjpnkahbqedcgp.supabase.co',
+    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhdW16cmdqcG5rYWhicWVkY2dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0MDE1NTAsImV4cCI6MjA4NDk3NzU1MH0.yxV9fvKagF-gFzoZjqGDoyojcv0e2QC3HEPg9zUwgOs',
   },
   tagline: 'Interactive textbook with AI-powered learning assistance',
   favicon: 'img/favicon.svg',

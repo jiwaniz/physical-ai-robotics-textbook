@@ -45,7 +45,8 @@ export default function RequireVerifiedEmail({ children }: RequireVerifiedEmailP
   }
 
   // Redirect to verification pending if email not verified
-  if (!currentUser.email_verified) {
+  // Supabase uses email_confirmed_at to track verification
+  if (!currentUser.email_confirmed_at) {
     return <Redirect to={verifyPendingUrl} />;
   }
 

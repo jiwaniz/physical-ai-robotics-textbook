@@ -1,53 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
-import { useHistory, useLocation } from '@docusaurus/router';
+import { useHistory } from '@docusaurus/router';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useAuth } from '../components/AuthContext';
 
 export default function VerifyEmailPage(): JSX.Element {
-  const { apiBaseUrl } = useAuth();
+  const { currentUser, isLoading } = useAuth();
   const history = useHistory();
-  const location = useLocation();
+  const onboardingUrl = useBaseUrl('/onboarding');
+  const signinUrl = useBaseUrl('/signin');
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState('Verifying your email...');
 
-  // Get token from URL query params
-  const params = new URLSearchParams(location.search);
-  const token = params.get('token');
-
   useEffect(() => {
-    const verifyEmail = async () => {
-      if (!token) {
+    // Supabase handles the verification via URL hash/params
+    // If user is logged in and email is confirmed, redirect to onboarding
+    if (!isLoading) {
+      if (currentUser?.email_confirmed_at) {
+        setStatus('success');
+        setMessage('Your email has been verified successfully!');
+      } else if (currentUser) {
+        // User exists but email not confirmed yet - might still be processing
+        setStatus('loading');
+        setMessage('Processing verification...');
+        // Give it a moment then check again
+        const timeout = setTimeout(() => {
+          if (!currentUser.email_confirmed_at) {
+            setStatus('error');
+            setMessage('Email verification is still pending. Please check your email.');
+          }
+        }, 3000);
+        return () => clearTimeout(timeout);
+      } else {
+        // No user - verification link might have expired or invalid
         setStatus('error');
-        setMessage('No verification token provided.');
-        return;
+        setMessage('Verification failed. The link may have expired.');
       }
-
-      try {
-        const response = await fetch(`${apiBaseUrl}/api/auth/verify-email`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ token }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          setStatus('success');
-          setMessage('Your email has been verified successfully!');
-        } else {
-          setStatus('error');
-          setMessage(data.detail || 'Failed to verify email. The link may have expired.');
-        }
-      } catch (err) {
-        setStatus('error');
-        setMessage('An error occurred while verifying your email.');
-      }
-    };
-
-    verifyEmail();
-  }, [token, apiBaseUrl]);
+    }
+  }, [currentUser, isLoading]);
 
   return (
     <Layout title="Email Verification">
@@ -142,7 +132,7 @@ export default function VerifyEmailPage(): JSX.Element {
               <h2 style={{ marginBottom: '1rem' }}>
                 {status === 'loading' && 'Verifying Email'}
                 {status === 'success' && 'Email Verified!'}
-                {status === 'error' && 'Verification Failed'}
+                {status === 'error' && 'Verification Issue'}
               </h2>
 
               <p style={{ color: 'var(--ifm-color-emphasis-700)', marginBottom: '2rem' }}>
@@ -151,7 +141,7 @@ export default function VerifyEmailPage(): JSX.Element {
 
               {status === 'success' && (
                 <button
-                  onClick={() => history.push('/onboarding')}
+                  onClick={() => history.push(onboardingUrl)}
                   className="button button--primary button--lg"
                 >
                   Continue to Course
@@ -161,10 +151,10 @@ export default function VerifyEmailPage(): JSX.Element {
               {status === 'error' && (
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                   <button
-                    onClick={() => history.push('/signup')}
+                    onClick={() => history.push(signinUrl)}
                     className="button button--secondary button--lg"
                   >
-                    Sign Up Again
+                    Sign In
                   </button>
                   <button
                     onClick={() => history.push('/')}
