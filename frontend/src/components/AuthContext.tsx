@@ -13,6 +13,7 @@ interface AuthContextType {
   signin: (email: string, password: string) => Promise<void>;
   signout: () => Promise<void>;
   resendVerification: (email: string) => Promise<void>;
+  refreshSession: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -169,6 +170,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const refreshSession = async (): Promise<void> => {
+    if (!supabase) throw new Error('Supabase not initialized');
+
+    // Refresh the session to get updated user data (including email_confirmed_at)
+    const { data, error } = await supabase.auth.refreshSession();
+
+    if (error) {
+      console.error('Failed to refresh session:', error);
+      return;
+    }
+
+    if (data.session) {
+      setSession(data.session);
+      setCurrentUser(data.user);
+    }
+  };
+
   const value = {
     currentUser,
     session,
@@ -180,6 +198,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signin,
     signout,
     resendVerification,
+    refreshSession,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

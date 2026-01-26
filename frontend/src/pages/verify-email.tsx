@@ -5,39 +5,51 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useAuth } from '../components/AuthContext';
 
 export default function VerifyEmailPage(): JSX.Element {
-  const { currentUser, isLoading } = useAuth();
+  const { currentUser, isLoading, refreshSession } = useAuth();
   const history = useHistory();
   const onboardingUrl = useBaseUrl('/onboarding');
   const signinUrl = useBaseUrl('/signin');
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState('Verifying your email...');
+  const [hasRefreshed, setHasRefreshed] = useState(false);
 
   useEffect(() => {
-    // Supabase handles the verification via URL hash/params
-    // If user is logged in and email is confirmed, redirect to onboarding
-    if (!isLoading) {
-      if (currentUser?.email_confirmed_at) {
-        setStatus('success');
-        setMessage('Your email has been verified successfully!');
-      } else if (currentUser) {
-        // User exists but email not confirmed yet - might still be processing
-        setStatus('loading');
-        setMessage('Processing verification...');
-        // Give it a moment then check again
-        const timeout = setTimeout(() => {
-          if (!currentUser.email_confirmed_at) {
-            setStatus('error');
-            setMessage('Email verification is still pending. Please check your email.');
-          }
-        }, 3000);
-        return () => clearTimeout(timeout);
-      } else {
-        // No user - verification link might have expired or invalid
-        setStatus('error');
-        setMessage('Verification failed. The link may have expired.');
+    // Refresh session to get updated email_confirmed_at status
+    const checkVerification = async () => {
+      if (!hasRefreshed) {
+        setHasRefreshed(true);
+        await refreshSession();
+        return; // Wait for next render with updated user data
       }
-    }
-  }, [currentUser, isLoading]);
+
+      if (!isLoading) {
+        if (currentUser?.email_confirmed_at) {
+          setStatus('success');
+          setMessage('Your email has been verified successfully!');
+        } else if (currentUser) {
+          // User exists but email not confirmed yet - try refreshing again
+          setStatus('loading');
+          setMessage('Processing verification...');
+          // Try refreshing session after a delay
+          const timeout = setTimeout(async () => {
+            await refreshSession();
+            // Check again after refresh
+            if (!currentUser.email_confirmed_at) {
+              setStatus('error');
+              setMessage('Email verification is still pending. Please check your email.');
+            }
+          }, 2000);
+          return () => clearTimeout(timeout);
+        } else {
+          // No user - verification link might have expired or invalid
+          setStatus('error');
+          setMessage('Verification failed. The link may have expired.');
+        }
+      }
+    };
+
+    checkVerification();
+  }, [currentUser, isLoading, hasRefreshed, refreshSession]);
 
   return (
     <Layout title="Email Verification">
