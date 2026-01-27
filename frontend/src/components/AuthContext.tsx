@@ -10,7 +10,7 @@ interface AuthContextType {
   error: string | null;
   apiBaseUrl: string;
   signup: (email: string, password: string, name: string) => Promise<void>;
-  signin: (email: string, password: string) => Promise<void>;
+  signin: (email: string, password: string) => Promise<User>;
   signout: () => Promise<void>;
   resendVerification: (email: string) => Promise<void>;
   refreshSession: () => Promise<void>;
@@ -115,7 +115,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signin = async (email: string, password: string): Promise<void> => {
+  const signin = async (email: string, password: string): Promise<User> => {
     if (!supabase) throw new Error('Supabase not initialized');
 
     setError(null);
@@ -131,6 +131,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     setSession(data.session);
     setCurrentUser(data.user);
+    return data.user;
   };
 
   const signout = async (): Promise<void> => {

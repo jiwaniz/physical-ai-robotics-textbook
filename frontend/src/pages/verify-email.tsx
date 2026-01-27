@@ -28,7 +28,11 @@ export default function VerifyEmailPage(): JSX.Element {
       setTimeout(() => {
         if (currentUser?.email_confirmed_at) {
           setStatus('success');
-          setMessage('Your email has been verified successfully!');
+          setMessage('Your email has been verified successfully! Redirecting to onboarding...');
+          // Auto-redirect to onboarding after 2 seconds
+          setTimeout(() => {
+            history.push(onboardingUrl);
+          }, 2000);
         } else if (currentUser) {
           setStatus('error');
           setMessage('Email verification is still pending. Please click the link in your email.');
@@ -147,7 +151,7 @@ export default function VerifyEmailPage(): JSX.Element {
                   onClick={() => history.push(onboardingUrl)}
                   className="button button--primary button--lg"
                 >
-                  Continue to Course
+                  Continue to Onboarding Now
                 </button>
               )}
 

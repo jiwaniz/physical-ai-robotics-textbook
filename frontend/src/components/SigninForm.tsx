@@ -8,9 +8,10 @@ const SigninForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { signin } = useAuth();
+  const { signin, signout } = useAuth();
   const history = useHistory();
   const baseUrl = useBaseUrl('/');
+  const verifyPendingUrl = useBaseUrl('/verify-email-pending');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +19,16 @@ const SigninForm: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      await signin(email, password);
+      const user = await signin(email, password);
+
+      // Check if email is verified
+      if (!user.email_confirmed_at) {
+        // Sign out the unverified user and redirect to verification page
+        await signout();
+        history.push(verifyPendingUrl);
+        return;
+      }
+
       // Redirect to home after successful signin
       history.push(baseUrl);
     } catch (err) {
