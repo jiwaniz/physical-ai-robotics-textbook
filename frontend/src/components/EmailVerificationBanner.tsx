@@ -8,7 +8,8 @@ export default function EmailVerificationBanner(): JSX.Element | null {
   const [error, setError] = useState<string | null>(null);
 
   // Only show if user is logged in but email not verified
-  if (!currentUser || currentUser.email_verified) {
+  // Supabase uses email_confirmed_at (timestamp) for verification status
+  if (!currentUser || currentUser.email_confirmed_at) {
     return null;
   }
 
