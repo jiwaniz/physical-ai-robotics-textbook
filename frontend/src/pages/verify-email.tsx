@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Layout from '@theme/Layout';
 import { useHistory } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -11,46 +11,43 @@ export default function VerifyEmailPage(): JSX.Element {
   const signinUrl = useBaseUrl('/signin');
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState('Verifying your email...');
+  const hasRefreshed = useRef(false);
 
-  // Refresh session when auth finishes loading (to get updated email_confirmed_at)
+  // Single effect to handle verification check
   useEffect(() => {
     if (isLoading) return;
 
-    const doRefresh = async () => {
-      try {
-        await refreshSession();
-      } catch (e) {
-        console.log('Session refresh skipped:', e);
+    const checkVerification = async () => {
+      // Only refresh once to avoid rate limiting
+      if (!hasRefreshed.current && currentUser) {
+        hasRefreshed.current = true;
+        try {
+          await refreshSession();
+        } catch (e) {
+          console.log('Session refresh skipped:', e);
+        }
       }
+
+      // Check verification status after a delay for Supabase to process URL hash
+      setTimeout(() => {
+        if (currentUser?.email_confirmed_at) {
+          setStatus('success');
+          setMessage('Your email has been verified successfully! Redirecting to onboarding...');
+          setTimeout(() => {
+            history.push(onboardingUrl);
+          }, 2000);
+        } else if (currentUser) {
+          setStatus('error');
+          setMessage('Email verification is still pending. Please click the link in your email.');
+        } else {
+          setStatus('error');
+          setMessage('Please sign in to verify your email.');
+        }
+      }, 1000);
     };
 
-    doRefresh();
-  }, [isLoading, refreshSession]);
-
-  // Check verification status whenever currentUser changes
-  useEffect(() => {
-    if (isLoading) return;
-
-    // Give a small delay for the session to fully update after Supabase processes URL hash
-    const timeoutId = setTimeout(() => {
-      if (currentUser?.email_confirmed_at) {
-        setStatus('success');
-        setMessage('Your email has been verified successfully! Redirecting to onboarding...');
-        // Auto-redirect to onboarding after 2 seconds
-        setTimeout(() => {
-          history.push(onboardingUrl);
-        }, 2000);
-      } else if (currentUser) {
-        setStatus('error');
-        setMessage('Email verification is still pending. Please click the link in your email.');
-      } else {
-        setStatus('error');
-        setMessage('Please sign in to verify your email.');
-      }
-    }, 1500);
-
-    return () => clearTimeout(timeoutId);
-  }, [isLoading, currentUser, history, onboardingUrl]);
+    checkVerification();
+  }, [isLoading, currentUser, history, onboardingUrl, refreshSession]);
 
   return (
     <Layout title="Email Verification">
