@@ -1106,14 +1106,32 @@ SAMPLE_QUIZZES = [
 ]
 
 
-async def seed_quizzes():
-    """Seed the database with weekly quizzes for all 12 weeks."""
+async def seed_quizzes(force_recreate: bool = False):
+    """Seed the database with weekly quizzes for all 12 weeks.
+
+    Args:
+        force_recreate: If True, delete existing quizzes and recreate them.
+    """
     # Create tables using the Base from models.py
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     print("Database tables created/verified.")
 
     async with AsyncSessionLocal() as session:
+        # If force_recreate, delete all existing quizzes first
+        if force_recreate:
+            print("Deleting existing quizzes...")
+            for week_num in range(1, 13):
+                result = await session.execute(
+                    select(Quiz).where(Quiz.week_number == week_num)
+                )
+                existing = result.scalar_one_or_none()
+                if existing:
+                    await session.delete(existing)
+                    print(f"  Deleted quiz for week {week_num}")
+            await session.commit()
+            print("All existing quizzes deleted.\n")
+
         for quiz_data in SAMPLE_QUIZZES:
             # Check if quiz already exists
             result = await session.execute(
@@ -1125,9 +1143,11 @@ async def seed_quizzes():
                 print(f"Quiz for week {quiz_data['week_number']} already exists, skipping...")
                 continue
 
-            # Create quiz
-            questions_data = quiz_data.pop("questions")
-            quiz = Quiz(**quiz_data)
+            # Create a copy of quiz_data to avoid modifying the original
+            quiz_info = {k: v for k, v in quiz_data.items() if k != "questions"}
+            questions_data = quiz_data["questions"]
+
+            quiz = Quiz(**quiz_info)
             session.add(quiz)
             await session.flush()
 
@@ -1147,4 +1167,10 @@ async def seed_quizzes():
 
 
 if __name__ == "__main__":
-    asyncio.run(seed_quizzes())
+    import sys
+
+    # Use --force or -f flag to delete and recreate all quizzes
+    force = "--force" in sys.argv or "-f" in sys.argv
+    if force:
+        print("Running with --force: Will delete and recreate all quizzes.\n")
+    asyncio.run(seed_quizzes(force_recreate=force))
