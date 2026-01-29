@@ -143,7 +143,7 @@ class QuizService:
 
     @staticmethod
     async def can_start_attempt(
-        user_id: int,
+        user_id: str,
         quiz: Quiz,
         db: AsyncSession,
     ) -> Tuple[bool, str]:
@@ -172,7 +172,7 @@ class QuizService:
 
     @staticmethod
     async def get_user_attempts_count(
-        user_id: int,
+        user_id: str,
         quiz_id: int,
         db: AsyncSession,
     ) -> int:
@@ -187,7 +187,7 @@ class QuizService:
 
     @staticmethod
     async def get_user_best_score(
-        user_id: int,
+        user_id: str,
         quiz_id: int,
         db: AsyncSession,
     ) -> Optional[float]:

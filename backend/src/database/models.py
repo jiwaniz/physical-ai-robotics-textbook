@@ -207,9 +207,9 @@ class QuizAttempt(BaseModel):
         nullable=False,
         index=True,
     )
-    user_id: Mapped[int] = mapped_column(
-        Integer,
-        ForeignKey("users.id", ondelete="CASCADE"),
+    # Supabase user ID (UUID string) - no FK since users are in Supabase
+    user_id: Mapped[str] = mapped_column(
+        String(36),
         nullable=False,
         index=True,
     )
@@ -230,7 +230,6 @@ class QuizAttempt(BaseModel):
 
     # Relationships
     quiz: Mapped["Quiz"] = relationship("Quiz", back_populates="attempts")
-    user: Mapped["User"] = relationship("User")
     answers: Mapped[List["Answer"]] = relationship(
         "Answer",
         back_populates="attempt",

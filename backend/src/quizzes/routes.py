@@ -43,7 +43,7 @@ router = APIRouter()
 @router.get("/week/{week_number}", response_model=QuizResponse)
 async def get_quiz_for_week(
     week_number: int,
-    user_id: int = Depends(require_verified_email),
+    user_id: str = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Get the quiz for a specific week."""
@@ -85,7 +85,7 @@ async def get_quiz_for_week(
 @router.get("/{quiz_id}", response_model=QuizDetailResponse)
 async def get_quiz_detail(
     quiz_id: int,
-    user_id: int = Depends(require_verified_email),
+    user_id: str = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Get full quiz details with questions (for taking the quiz)."""
@@ -144,7 +144,7 @@ async def get_quiz_detail(
 @router.post("/{quiz_id}/start", response_model=QuizStartResponse)
 async def start_quiz_attempt(
     quiz_id: int,
-    user_id: int = Depends(require_verified_email),
+    user_id: str = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Start a new quiz attempt."""
@@ -205,7 +205,7 @@ async def save_answer(
     quiz_id: int,
     attempt_id: int,
     request: AnswerSubmitRequest,
-    user_id: int = Depends(require_verified_email),
+    user_id: str = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Save/update an answer for a specific question (auto-save)."""
@@ -269,7 +269,7 @@ async def submit_quiz_attempt(
     quiz_id: int,
     attempt_id: int,
     request: QuizSubmitRequest,
-    user_id: int = Depends(require_verified_email),
+    user_id: str = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Submit a completed quiz attempt for grading."""
@@ -374,7 +374,7 @@ async def submit_quiz_attempt(
 
 @router.get("/attempts", response_model=List[QuizAttemptResponse])
 async def get_my_attempts(
-    user_id: int = Depends(require_verified_email),
+    user_id: str = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
     quiz_id: Optional[int] = Query(None),
 ):
@@ -412,7 +412,7 @@ async def get_my_attempts(
 @router.get("/attempts/{attempt_id}", response_model=QuizAttemptDetailResponse)
 async def get_attempt_detail(
     attempt_id: int,
-    user_id: int = Depends(require_verified_email),
+    user_id: str = Depends(require_verified_email),
     db: AsyncSession = Depends(get_db),
 ):
     """Get detailed results for a specific attempt."""
@@ -487,7 +487,7 @@ async def get_attempt_detail(
 @router.post("/admin/quizzes", response_model=QuizResponse, status_code=status.HTTP_201_CREATED)
 async def create_quiz(
     request: QuizCreateRequest,
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """Create a new quiz (admin only)."""
@@ -529,7 +529,7 @@ async def create_quiz(
 async def update_quiz(
     quiz_id: int,
     request: QuizUpdateRequest,
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """Update quiz metadata (admin only)."""
@@ -574,7 +574,7 @@ async def update_quiz(
 @router.delete("/admin/quizzes/{quiz_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_quiz(
     quiz_id: int,
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """Delete a quiz and all related data (admin only)."""
@@ -597,7 +597,7 @@ async def delete_quiz(
 async def add_question(
     quiz_id: int,
     request: QuestionCreateRequest,
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """Add a question to a quiz (admin only)."""
@@ -648,7 +648,7 @@ async def add_question(
 @router.delete("/admin/questions/{question_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_question(
     question_id: int,
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """Delete a question (admin only)."""
@@ -670,7 +670,7 @@ async def delete_question(
 @router.post("/admin/quizzes/{quiz_id}/publish", response_model=QuizResponse)
 async def publish_quiz(
     quiz_id: int,
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """Publish a quiz (makes it available to students)."""
@@ -716,7 +716,7 @@ async def publish_quiz(
 
 @router.get("/admin/grading/queue", response_model=List[GradingQueueItem])
 async def get_grading_queue(
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
     quiz_id: Optional[int] = Query(None),
 ):
@@ -757,7 +757,7 @@ async def get_grading_queue(
 async def grade_answer(
     answer_id: int,
     request: GradeAnswerRequest,
-    user_id: int = Depends(require_auth),
+    user_id: str = Depends(require_auth),
     db: AsyncSession = Depends(get_db),
 ):
     """Manually grade an answer (admin only)."""
