@@ -23,10 +23,13 @@ export default function NavbarUserMenu(): JSX.Element {
   }
 
   if (currentUser) {
+    // Supabase stores user name in user_metadata from signup
+    const displayName = currentUser.user_metadata?.name || currentUser.email?.split('@')[0] || 'User';
+
     return (
       <div className="navbar__item dropdown dropdown--hoverable dropdown--right">
         <span className="navbar__link" style={{ cursor: 'pointer' }}>
-          {currentUser.name}
+          {displayName}
         </span>
         <ul className="dropdown__menu">
           <li>
