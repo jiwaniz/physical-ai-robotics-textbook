@@ -5,6 +5,7 @@ FastAPI dependency injection utilities.
 import logging
 from typing import AsyncGenerator, Optional
 
+import httpx
 from fastapi import Depends, Header, HTTPException, status
 from jose import JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,6 +15,9 @@ from ..rag.vector_store import QdrantVectorStore, get_vector_store
 from .config import Settings, get_settings, settings
 
 logger = logging.getLogger(__name__)
+
+# Cache for JWKS keys
+_jwks_cache: Optional[dict] = None
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
@@ -47,9 +51,48 @@ def get_qdrant() -> QdrantVectorStore:
     return get_vector_store()
 
 
+async def verify_supabase_token_via_api(token: str) -> Optional[dict]:
+    """
+    Verify a Supabase JWT token by calling Supabase's user API.
+    This works with both HS256 and ES256 tokens.
+
+    Args:
+        token: JWT token from Supabase
+
+    Returns:
+        User data if valid, None otherwise
+    """
+    if not settings.supabase_url:
+        logger.warning("Supabase URL not configured")
+        return None
+
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"{settings.supabase_url}/auth/v1/user",
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "apikey": settings.supabase_anon_key,
+                },
+                timeout=10.0,
+            )
+
+            if response.status_code == 200:
+                user_data = response.json()
+                logger.debug(f"Supabase user verified: {user_data.get('id')}")
+                return user_data
+            else:
+                logger.error(f"Supabase token verification failed: {response.status_code} - {response.text}")
+                return None
+    except Exception as e:
+        logger.error(f"Supabase API call failed: {e}")
+        return None
+
+
 def verify_supabase_token(token: str) -> Optional[dict]:
     """
-    Verify a Supabase JWT token and return the payload.
+    Verify a Supabase JWT token and return the payload (legacy HS256 method).
+    Falls back to None if verification fails.
 
     Args:
         token: JWT token from Supabase
@@ -62,7 +105,7 @@ def verify_supabase_token(token: str) -> Optional[dict]:
         return None
 
     try:
-        # Supabase uses HS256 algorithm
+        # Try HS256 first (older Supabase projects)
         payload = jwt.decode(
             token,
             settings.supabase_jwt_secret,
@@ -71,15 +114,16 @@ def verify_supabase_token(token: str) -> Optional[dict]:
         )
         return payload
     except JWTError as e:
-        logger.error(f"Supabase token verification failed: {e}")
+        logger.debug(f"HS256 verification failed (may be ES256 token): {e}")
         return None
 
 
-def get_supabase_user_id_from_header(
+async def get_supabase_user_id_from_header(
     authorization: Optional[str] = Header(None),
 ) -> Optional[str]:
     """
     Extract Supabase user ID from JWT token in Authorization header.
+    Supports both HS256 and ES256 tokens.
 
     Args:
         authorization: Authorization header value (Bearer <token>)
@@ -98,11 +142,19 @@ def get_supabase_user_id_from_header(
         return None
 
     token = parts[1]
-    payload = verify_supabase_token(token)
 
+    # Try HS256 verification first (faster, no network call)
+    payload = verify_supabase_token(token)
     if payload:
         user_id = payload.get("sub")
-        logger.debug(f"Decoded Supabase user_id: {user_id}")
+        logger.debug(f"Decoded Supabase user_id (HS256): {user_id}")
+        return user_id
+
+    # Fall back to API verification (works with ES256)
+    user_data = await verify_supabase_token_via_api(token)
+    if user_data:
+        user_id = user_data.get("id")
+        logger.debug(f"Verified Supabase user_id (API): {user_id}")
         return user_id
 
     return None
