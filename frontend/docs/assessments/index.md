@@ -18,14 +18,32 @@ This course uses multiple assessment methods to evaluate your understanding of p
 
 ### 1. Weekly Quizzes (20%)
 
-**Format**: Multiple choice, short answer, and code completion
+**Format**: Multiple choice (4 options, auto-scored)
 **Duration**: 15-20 minutes per quiz
 **Attempts**: 2 attempts allowed (highest score counts)
+**Passing Score**: 60%
 
 Weekly quizzes test your understanding of:
 - Conceptual knowledge (40%)
 - Code comprehension (30%)
 - Troubleshooting scenarios (30%)
+
+#### Take a Quiz
+
+| Week | Topic | Quiz Link |
+|------|-------|-----------|
+| 1 | Physical AI Fundamentals | [Start Quiz](/quiz?week=1) |
+| 2 | Dev Environment & Tools | [Start Quiz](/quiz?week=2) |
+| 3 | ROS 2 Core Concepts | [Start Quiz](/quiz?week=3) |
+| 4 | ROS 2 Communication Patterns | [Start Quiz](/quiz?week=4) |
+| 5 | Services & Actions | [Start Quiz](/quiz?week=5) |
+| 6 | Gazebo & URDF Basics | [Start Quiz](/quiz?week=6) |
+| 7 | Sensors & Perception | [Start Quiz](/quiz?week=7) |
+| 8 | NVIDIA Isaac Sim | [Start Quiz](/quiz?week=8) |
+| 9 | Synthetic Data for AI | [Start Quiz](/quiz?week=9) |
+| 10 | Sim-to-Real Transfer | [Start Quiz](/quiz?week=10) |
+| 11 | Vision-Language-Action Models | [Start Quiz](/quiz?week=11) |
+| 12 | Advanced VLA & Deployment | [Start Quiz](/quiz?week=12) |
 
 ### 2. ROS 2 Project (15%)
 

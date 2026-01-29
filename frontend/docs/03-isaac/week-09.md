@@ -586,3 +586,11 @@ Great work! You now understand synthetic data generation and parallel RL trainin
 Next week: [Week 10: Sim-to-Real Transfer & Chapter 3 Project](week-10.md)
 
 We'll tackle the sim-to-real gap and complete a comprehensive Isaac Sim project!
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 9 Quiz →](/quiz?week=9)**

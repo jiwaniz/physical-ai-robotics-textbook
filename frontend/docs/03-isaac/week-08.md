@@ -496,3 +496,11 @@ Excellent work! You've set up Isaac Sim and understand the basics.
 Next week: [Week 9: Synthetic Data Generation & Isaac Gym](week-09.md)
 
 We'll explore synthetic dataset creation for training vision models and reinforcement learning with Isaac Gym!
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 8 Quiz →](/quiz?week=8)**

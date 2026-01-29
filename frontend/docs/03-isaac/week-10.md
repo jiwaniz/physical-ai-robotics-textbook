@@ -529,3 +529,11 @@ Congratulations on completing Chapter 3! You've learned:
 - Prepare for Chapter 4: [Vision-Language-Action Models & Capstone](../04-vla/index.md)
 
 Chapter 4 will bring everything together: multimodal AI, end-to-end robot systems, and your final capstone project!
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 10 Quiz →](/quiz?week=10)**

@@ -584,3 +584,11 @@ Great job! You now know how to model robots in URDF and simulate them in Gazebo.
 Next week: [Week 7: Sensors, Worlds, and Advanced Gazebo](week-07.md)
 
 We'll add sensors (cameras, lidar), create custom worlds, and explore advanced simulation techniques!
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 6 Quiz →](/quiz?week=6)**

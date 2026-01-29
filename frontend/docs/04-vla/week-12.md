@@ -591,3 +591,11 @@ Amazing progress! You've mastered advanced VLA techniques.
 Next week: [Week 13: Capstone Project](week-13.md)
 
 The final week! You'll design and implement a complete Physical AI system integrating everything you've learned!
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 12 Quiz →](/quiz?week=12)**

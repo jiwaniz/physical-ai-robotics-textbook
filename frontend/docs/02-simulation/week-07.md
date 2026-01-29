@@ -678,3 +678,11 @@ Congratulations on completing Chapter 2! You now have solid robot modeling and s
 - Prepare for Chapter 3: [NVIDIA Isaac Platform](../03-isaac/index.md)
 
 Chapter 3 will introduce GPU-accelerated simulation, photorealistic rendering, and synthetic data generation for AI/ML training!
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 7 Quiz →](/quiz?week=7)**

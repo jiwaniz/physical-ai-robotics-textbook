@@ -656,3 +656,11 @@ We'll explore synchronous communication patterns and build a complete robot cont
 - [About QoS Settings](https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html)
 - [Common Interfaces (Message Types)](https://github.com/ros2/common_interfaces)
 - [Creating Custom Messages](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 4 Quiz →](/quiz?week=4)**

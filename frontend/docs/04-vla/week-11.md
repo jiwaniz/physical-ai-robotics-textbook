@@ -596,3 +596,11 @@ Excellent work! You now understand VLA architecture and can work with pre-traine
 Next week: [Week 12: Advanced VLA Applications](week-12.md)
 
 We'll explore action chunking, multi-task learning, and deploying VLA models on real robots!
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 11 Quiz →](/quiz?week=11)**

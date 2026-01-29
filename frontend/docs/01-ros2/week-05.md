@@ -729,3 +729,11 @@ Congratulations on completing Chapter 1! You now have solid ROS 2 fundamentals.
 - [ROS 2 Parameters Tutorial](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html)
 - [ROS 2 Launch Files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html)
 - [Lifecycle Nodes](https://design.ros2.org/articles/node_lifecycle.html)
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 5 Quiz →](/quiz?week=5)**

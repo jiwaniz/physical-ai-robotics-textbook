@@ -243,3 +243,11 @@ Before proceeding, ensure you have:
 Ready to set up your development environment? Continue to [Week 2: Development Environment Setup](week-02.md).
 
 Need help? Use the **Ask AI** button to query the course chatbot about any concept on this page!
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 1 Quiz →](/quiz?week=1)**

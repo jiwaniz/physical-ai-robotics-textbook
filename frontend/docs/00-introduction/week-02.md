@@ -469,3 +469,11 @@ Ready to start Chapter 1? Continue to [Week 3: ROS 2 Architecture & Core Concept
 - [Docker Getting Started](https://docs.docker.com/get-started/)
 - [Linux Command Line Cheat Sheet](https://www.linuxtrainingacademy.com/linux-commands-cheat-sheet/)
 - [VS Code for Python](https://code.visualstudio.com/docs/python/python-tutorial)
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 2 Quiz →](/quiz?week=2)**

@@ -524,3 +524,11 @@ We'll dive deeper into pub-sub communication, message types, and build a multi-n
 - [Understanding ROS 2 Nodes](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html)
 - [ROS 2 Design Documents](https://design.ros2.org/)
 - [DDS Specification](https://www.omg.org/spec/DDS/)
+
+---
+
+## 📝 Weekly Quiz
+
+Test your understanding of this week's content! The quiz is multiple choice, auto-scored, and you have 2 attempts.
+
+**[Take the Week 3 Quiz →](/quiz?week=3)**
