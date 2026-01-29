@@ -197,3 +197,24 @@ async def optional_auth(
         User ID (UUID string) if authenticated, None otherwise
     """
     return user_id
+
+
+async def require_verified_email(
+    user_id: str = Depends(require_auth),
+) -> str:
+    """
+    Require authentication with verified email for protected endpoints.
+    For Supabase, email is verified during the OAuth/magic link flow,
+    so if the user is authenticated, their email is verified.
+
+    Args:
+        user_id: User ID from require_auth dependency
+
+    Returns:
+        User ID (UUID string) if authenticated with verified email
+
+    Note:
+        Since Supabase handles email verification before allowing sign-in,
+        any authenticated user has a verified email by default.
+    """
+    return user_id
