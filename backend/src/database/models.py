@@ -68,13 +68,8 @@ class User(BaseModel):
     verification_token: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     verification_token_expires: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
 
-    # Relationship
-    profile: Mapped[Optional["UserProfile"]] = relationship(
-        "UserProfile",
-        back_populates="user",
-        uselist=False,
-        cascade="all, delete-orphan",
-    )
+    # Note: UserProfile uses supabase_user_id (UUID from Supabase), not a FK to this table.
+    # The relationship is removed since profiles are linked via Supabase user IDs, not local user IDs.
 
 
 class UserProfile(BaseModel):
