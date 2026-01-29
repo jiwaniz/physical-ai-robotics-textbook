@@ -170,11 +170,11 @@ class Question(BaseModel):
 
     # Question metadata
     question_type: Mapped[QuestionType] = mapped_column(
-        SQLEnum(QuestionType),
+        SQLEnum(QuestionType, values_callable=lambda e: [x.value for x in e]),
         nullable=False,
     )
     category: Mapped[QuestionCategory] = mapped_column(
-        SQLEnum(QuestionCategory),
+        SQLEnum(QuestionCategory, values_callable=lambda e: [x.value for x in e]),
         nullable=False,
     )
 
@@ -262,7 +262,7 @@ class Answer(BaseModel):
     # Scoring
     points_earned: Mapped[Optional[float]] = mapped_column(Float)
     scoring_status: Mapped[ScoringStatus] = mapped_column(
-        SQLEnum(ScoringStatus),
+        SQLEnum(ScoringStatus, values_callable=lambda e: [x.value for x in e]),
         default=ScoringStatus.PENDING,
     )
 
