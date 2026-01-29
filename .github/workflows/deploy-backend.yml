@@ -85,6 +85,12 @@ jobs:
           # Clone the HF Space repo
           git clone https://jiwaniz:${HF_TOKEN}@huggingface.co/spaces/jiwaniz/physical-ai-backend hf_space
 
+          # Reset to match remote and clear any conflicts
+          cd hf_space
+          git fetch origin
+          git reset --hard origin/main
+          cd ..
+
           # Copy backend files to the cloned repo
           rsync -av --delete --exclude='.git' --exclude='venv' --exclude='__pycache__' --exclude='.pytest_cache' backend/ hf_space/
 
@@ -94,4 +100,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git add -A
           git diff --staged --quiet || git commit -m "Deploy from GitHub Actions - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          git push --force
+          git push origin main --force
