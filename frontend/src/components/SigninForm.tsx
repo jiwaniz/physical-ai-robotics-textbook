@@ -74,6 +74,12 @@ const SigninForm: React.FC = () => {
           />
         </div>
 
+        <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
+          <a href={useBaseUrl('/forgot-password')} style={{ fontSize: '0.9rem' }}>
+            Forgot password?
+          </a>
+        </div>
+
         <button
           type="submit"
           className="button button--primary button--lg"

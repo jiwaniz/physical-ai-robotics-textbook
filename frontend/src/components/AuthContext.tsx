@@ -14,6 +14,8 @@ interface AuthContextType {
   signout: () => Promise<void>;
   resendVerification: (email: string) => Promise<void>;
   refreshSession: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
+  updatePassword: (newPassword: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -171,6 +173,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const resetPassword = async (email: string): Promise<void> => {
+    if (!supabase) throw new Error('Supabase not initialized');
+
+    setError(null);
+    const redirectUrl = typeof window !== 'undefined'
+      ? `${window.location.origin}${siteConfig.baseUrl}reset-password`
+      : undefined;
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: redirectUrl,
+    });
+
+    if (error) {
+      setError(error.message);
+      throw error;
+    }
+  };
+
+  const updatePassword = async (newPassword: string): Promise<void> => {
+    if (!supabase) throw new Error('Supabase not initialized');
+
+    setError(null);
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+
+    if (error) {
+      setError(error.message);
+      throw error;
+    }
+  };
+
   const refreshSession = async (): Promise<void> => {
     if (!supabase) throw new Error('Supabase not initialized');
 
@@ -200,6 +232,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signout,
     resendVerification,
     refreshSession,
+    resetPassword,
+    updatePassword,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
