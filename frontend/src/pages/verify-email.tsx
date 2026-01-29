@@ -11,43 +11,61 @@ export default function VerifyEmailPage(): JSX.Element {
   const signinUrl = useBaseUrl('/signin');
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState('Verifying your email...');
-  const hasRefreshed = useRef(false);
+  const hasChecked = useRef(false);
+  const checkCount = useRef(0);
 
-  // Single effect to handle verification check
+  // Check if URL has auth tokens (Supabase puts them in the hash)
+  const hasAuthTokensInUrl = () => {
+    if (typeof window === 'undefined') return false;
+    const hash = window.location.hash;
+    return hash.includes('access_token') || hash.includes('type=signup') || hash.includes('type=recovery');
+  };
+
   useEffect(() => {
     if (isLoading) return;
 
-    const checkVerification = async () => {
-      // Only refresh once to avoid rate limiting
-      if (!hasRefreshed.current && currentUser) {
-        hasRefreshed.current = true;
-        try {
-          await refreshSession();
-        } catch (e) {
-          console.log('Session refresh skipped:', e);
-        }
+    // If we already determined the final status, don't re-check
+    if (hasChecked.current && status !== 'loading') return;
+
+    const checkVerification = () => {
+      checkCount.current += 1;
+
+      // If user is verified, success!
+      if (currentUser?.email_confirmed_at) {
+        hasChecked.current = true;
+        setStatus('success');
+        setMessage('Your email has been verified successfully! Redirecting to onboarding...');
+        setTimeout(() => {
+          history.push(onboardingUrl);
+        }, 2000);
+        return;
       }
 
-      // Check verification status after a delay for Supabase to process URL hash
-      setTimeout(() => {
-        if (currentUser?.email_confirmed_at) {
-          setStatus('success');
-          setMessage('Your email has been verified successfully! Redirecting to onboarding...');
-          setTimeout(() => {
-            history.push(onboardingUrl);
-          }, 2000);
-        } else if (currentUser) {
-          setStatus('error');
-          setMessage('Email verification is still pending. Please click the link in your email.');
-        } else {
-          setStatus('error');
-          setMessage('Please sign in to verify your email.');
-        }
-      }, 1000);
+      // If user exists but not verified
+      if (currentUser && !currentUser.email_confirmed_at) {
+        hasChecked.current = true;
+        setStatus('error');
+        setMessage('Email verification is still pending. Please click the link in your email.');
+        return;
+      }
+
+      // No user yet - might still be processing URL hash tokens
+      // Wait up to 5 seconds (5 checks) for Supabase to process
+      if (!currentUser && checkCount.current < 5) {
+        setTimeout(checkVerification, 1000);
+        return;
+      }
+
+      // After waiting, still no user
+      hasChecked.current = true;
+      setStatus('error');
+      setMessage('Please sign in to verify your email.');
     };
 
-    checkVerification();
-  }, [isLoading, currentUser, history, onboardingUrl, refreshSession]);
+    // Initial delay to let Supabase process URL hash
+    const initialDelay = hasAuthTokensInUrl() ? 2000 : 500;
+    setTimeout(checkVerification, initialDelay);
+  }, [isLoading, currentUser, history, onboardingUrl, status]);
 
   return (
     <Layout title="Email Verification">
