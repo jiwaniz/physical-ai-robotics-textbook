@@ -158,3 +158,107 @@ img {
   margin: 1.5rem 0;
   border-radius: 4px;
 }
+
+/* ========================================
+   Urdu Language (Nastaliq) Styles
+   ======================================== */
+
+/* Import Noto Nastaliq Urdu font */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap');
+
+/* Global Urdu mode styles */
+body.lang-urdu {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  direction: rtl;
+  text-align: right;
+}
+
+/* Urdu content typography adjustments */
+body.lang-urdu .markdown,
+body.lang-urdu article,
+body.lang-urdu .theme-doc-markdown {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  font-size: 1.1rem;
+  line-height: 2.2;
+}
+
+/* Headings in Urdu */
+body.lang-urdu h1,
+body.lang-urdu h2,
+body.lang-urdu h3,
+body.lang-urdu h4,
+body.lang-urdu h5,
+body.lang-urdu h6 {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  line-height: 1.8;
+}
+
+/* Sidebar adjustments for RTL */
+body.lang-urdu .theme-doc-sidebar-container {
+  direction: rtl;
+}
+
+body.lang-urdu .theme-doc-sidebar-item-link,
+body.lang-urdu .theme-doc-sidebar-item-category {
+  text-align: right;
+  font-family: 'Noto Nastaliq Urdu', serif;
+}
+
+/* Navbar remains LTR for icons and controls */
+body.lang-urdu .navbar {
+  direction: ltr;
+}
+
+/* Keep code blocks in LTR */
+body.lang-urdu pre,
+body.lang-urdu code,
+body.lang-urdu .prism-code {
+  direction: ltr;
+  text-align: left;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+/* Table of contents RTL */
+body.lang-urdu .table-of-contents {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Pagination links RTL */
+body.lang-urdu .pagination-nav {
+  direction: rtl;
+}
+
+body.lang-urdu .pagination-nav__link--prev {
+  flex-direction: row-reverse;
+}
+
+body.lang-urdu .pagination-nav__link--next {
+  flex-direction: row-reverse;
+}
+
+/* Admonitions RTL */
+body.lang-urdu .admonition {
+  direction: rtl;
+  border-left: none;
+  border-right: 4px solid;
+  border-right-color: inherit;
+}
+
+/* Lists RTL */
+body.lang-urdu ul,
+body.lang-urdu ol {
+  padding-right: 2rem;
+  padding-left: 0;
+}
+
+/* Breadcrumbs RTL */
+body.lang-urdu .breadcrumbs {
+  direction: rtl;
+}
+
+/* Search results RTL */
+body.lang-urdu .search-result-match {
+  direction: rtl;
+  text-align: right;
+}
