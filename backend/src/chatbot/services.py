@@ -17,9 +17,9 @@ logger = logging.getLogger(__name__)
 
 # Collection name for the textbook embeddings
 COLLECTION_NAME = "physical_ai_textbook"
-EMBEDDING_MODEL = "text-embedding-004"
+EMBEDDING_MODEL = "models/text-embedding-004"
 EMBEDDING_DIMENSION = 768
-CHAT_MODEL = "gemini-1.5-flash"
+CHAT_MODEL = "models/gemini-2.0-flash"
 
 
 class EmbeddingService:
