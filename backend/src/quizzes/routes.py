@@ -82,6 +82,115 @@ async def get_quiz_for_week(
     )
 
 
+@router.get("/attempts", response_model=List[QuizAttemptResponse])
+async def get_my_attempts(
+    user_id: str = Depends(require_verified_email),
+    db: AsyncSession = Depends(get_db),
+    quiz_id: Optional[int] = Query(None),
+):
+    """Get all quiz attempts for the current user."""
+    query = (
+        select(QuizAttempt)
+        .options(selectinload(QuizAttempt.quiz))
+        .where(QuizAttempt.user_id == user_id)
+    )
+
+    if quiz_id:
+        query = query.where(QuizAttempt.quiz_id == quiz_id)
+
+    result = await db.execute(query.order_by(QuizAttempt.started_at.desc()))
+    attempts = result.scalars().all()
+
+    return [
+        QuizAttemptResponse(
+            id=a.id,
+            quiz_id=a.quiz_id,
+            quiz_title=a.quiz.title,
+            attempt_number=a.attempt_number,
+            started_at=a.started_at,
+            submitted_at=a.submitted_at,
+            score=a.score,
+            max_score=a.max_score,
+            percentage=a.percentage,
+            is_submitted=a.is_submitted,
+            is_fully_graded=a.is_fully_graded,
+        )
+        for a in attempts
+    ]
+
+
+@router.get("/attempts/{attempt_id}", response_model=QuizAttemptDetailResponse)
+async def get_attempt_detail(
+    attempt_id: int,
+    user_id: str = Depends(require_verified_email),
+    db: AsyncSession = Depends(get_db),
+):
+    """Get detailed results for a specific attempt."""
+    result = await db.execute(
+        select(QuizAttempt)
+        .options(selectinload(QuizAttempt.quiz), selectinload(QuizAttempt.answers))
+        .where(QuizAttempt.id == attempt_id)
+        .where(QuizAttempt.user_id == user_id)
+    )
+    attempt = result.scalar_one_or_none()
+
+    if not attempt:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Attempt not found",
+        )
+
+    if not attempt.is_submitted:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot view results for an unsubmitted attempt",
+        )
+
+    questions_result = await db.execute(select(Question).where(Question.quiz_id == attempt.quiz_id))
+    questions = {q.id: q for q in questions_result.scalars().all()}
+
+    from .schemas import AnswerResponse
+
+    answers = [
+        AnswerResponse(
+            id=a.id,
+            question_id=a.question_id,
+            response=a.response,
+            points_earned=a.points_earned,
+            scoring_status=a.scoring_status,
+            feedback=a.feedback,
+        )
+        for a in attempt.answers
+    ]
+
+    questions_with_solutions = [
+        {
+            "id": q.id,
+            "question_type": q.question_type.value,
+            "category": q.category.value,
+            "points": q.points,
+            "content": q.content,
+        }
+        for q in sorted(questions.values(), key=lambda x: x.order_index)
+    ]
+
+    return QuizAttemptDetailResponse(
+        id=attempt.id,
+        quiz_id=attempt.quiz_id,
+        quiz_title=attempt.quiz.title,
+        attempt_number=attempt.attempt_number,
+        started_at=attempt.started_at,
+        submitted_at=attempt.submitted_at,
+        score=attempt.score,
+        max_score=attempt.max_score,
+        percentage=attempt.percentage,
+        is_submitted=attempt.is_submitted,
+        is_fully_graded=attempt.is_fully_graded,
+        answers=answers,
+        questions_with_solutions=questions_with_solutions,
+    )
+
+
 @router.get("/{quiz_id}", response_model=QuizDetailResponse)
 async def get_quiz_detail(
     quiz_id: int,
@@ -369,115 +478,6 @@ async def submit_quiz_attempt(
         passed=percentage >= quiz.passing_score,
         auto_graded_count=auto_graded_count,
         pending_grading_count=pending_count,
-    )
-
-
-@router.get("/attempts", response_model=List[QuizAttemptResponse])
-async def get_my_attempts(
-    user_id: str = Depends(require_verified_email),
-    db: AsyncSession = Depends(get_db),
-    quiz_id: Optional[int] = Query(None),
-):
-    """Get all quiz attempts for the current user."""
-    query = (
-        select(QuizAttempt)
-        .options(selectinload(QuizAttempt.quiz))
-        .where(QuizAttempt.user_id == user_id)
-    )
-
-    if quiz_id:
-        query = query.where(QuizAttempt.quiz_id == quiz_id)
-
-    result = await db.execute(query.order_by(QuizAttempt.started_at.desc()))
-    attempts = result.scalars().all()
-
-    return [
-        QuizAttemptResponse(
-            id=a.id,
-            quiz_id=a.quiz_id,
-            quiz_title=a.quiz.title,
-            attempt_number=a.attempt_number,
-            started_at=a.started_at,
-            submitted_at=a.submitted_at,
-            score=a.score,
-            max_score=a.max_score,
-            percentage=a.percentage,
-            is_submitted=a.is_submitted,
-            is_fully_graded=a.is_fully_graded,
-        )
-        for a in attempts
-    ]
-
-
-@router.get("/attempts/{attempt_id}", response_model=QuizAttemptDetailResponse)
-async def get_attempt_detail(
-    attempt_id: int,
-    user_id: str = Depends(require_verified_email),
-    db: AsyncSession = Depends(get_db),
-):
-    """Get detailed results for a specific attempt."""
-    result = await db.execute(
-        select(QuizAttempt)
-        .options(selectinload(QuizAttempt.quiz), selectinload(QuizAttempt.answers))
-        .where(QuizAttempt.id == attempt_id)
-        .where(QuizAttempt.user_id == user_id)
-    )
-    attempt = result.scalar_one_or_none()
-
-    if not attempt:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Attempt not found",
-        )
-
-    if not attempt.is_submitted:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot view results for an unsubmitted attempt",
-        )
-
-    questions_result = await db.execute(select(Question).where(Question.quiz_id == attempt.quiz_id))
-    questions = {q.id: q for q in questions_result.scalars().all()}
-
-    from .schemas import AnswerResponse
-
-    answers = [
-        AnswerResponse(
-            id=a.id,
-            question_id=a.question_id,
-            response=a.response,
-            points_earned=a.points_earned,
-            scoring_status=a.scoring_status,
-            feedback=a.feedback,
-        )
-        for a in attempt.answers
-    ]
-
-    questions_with_solutions = [
-        {
-            "id": q.id,
-            "question_type": q.question_type.value,
-            "category": q.category.value,
-            "points": q.points,
-            "content": q.content,
-        }
-        for q in sorted(questions.values(), key=lambda x: x.order_index)
-    ]
-
-    return QuizAttemptDetailResponse(
-        id=attempt.id,
-        quiz_id=attempt.quiz_id,
-        quiz_title=attempt.quiz.title,
-        attempt_number=attempt.attempt_number,
-        started_at=attempt.started_at,
-        submitted_at=attempt.submitted_at,
-        score=attempt.score,
-        max_score=attempt.max_score,
-        percentage=attempt.percentage,
-        is_submitted=attempt.is_submitted,
-        is_fully_graded=attempt.is_fully_graded,
-        answers=answers,
-        questions_with_solutions=questions_with_solutions,
     )
 
 
