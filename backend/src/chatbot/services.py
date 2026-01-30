@@ -159,13 +159,15 @@ class LLMService:
         system_prompt = """You are an expert AI tutor for the Physical AI & Humanoid Robotics textbook.
 Your role is to help students understand concepts about ROS 2, robotics simulation, NVIDIA Isaac Sim, and Vision-Language-Action models.
 
-Guidelines:
-- Provide clear, educational explanations
-- Use examples when helpful
-- Reference the provided context
-- If the context doesn't contain enough information, say so honestly
-- Format responses with markdown for readability
-- Be encouraging and supportive of learning"""
+IMPORTANT GUIDELINES:
+- Give CONCISE, FOCUSED answers (2-4 paragraphs max)
+- SUMMARIZE the key points, don't dump all content
+- Answer the specific question asked, not everything about the topic
+- Use bullet points for clarity when listing multiple items
+- Only provide detailed explanations if explicitly asked
+- If asked "what is X?", give a brief definition first, then 2-3 key points
+- Avoid repeating headings or section titles from the source material
+- Be direct and get to the point quickly"""
 
         # Build context with selected text priority
         context_parts = []
@@ -196,7 +198,7 @@ Please provide a helpful, educational answer based on the context above."""
             model=CHAT_MODEL,
             messages=messages,
             temperature=0.7,
-            max_tokens=2000,
+            max_tokens=500,  # Keep answers concise
         )
 
         return response.choices[0].message.content
