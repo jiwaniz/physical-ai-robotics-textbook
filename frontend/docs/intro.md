@@ -2,8 +2,6 @@
 sidebar_position: 1
 ---
 
-<UrduToggle />
-
 # Welcome to Physical AI & Humanoid Robotics
 
 Welcome to the interactive textbook for Physical AI & Humanoid Robotics!

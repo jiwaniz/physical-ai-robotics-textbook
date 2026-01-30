@@ -35,26 +35,8 @@ const config = {
   // metadata like html lang
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ur'],
-    localeConfigs: {
-      en: {
-        label: 'English',
-        direction: 'ltr',
-      },
-      ur: {
-        label: 'اردو',
-        direction: 'rtl',
-      },
-    },
+    locales: ['en'],
   },
-
-  // Load Google Fonts for Urdu Nastaliq
-  stylesheets: [
-    {
-      href: 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap',
-      type: 'text/css',
-    },
-  ],
 
   presets: [
     [
