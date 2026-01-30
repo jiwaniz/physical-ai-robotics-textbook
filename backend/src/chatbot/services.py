@@ -19,7 +19,10 @@ logger = logging.getLogger(__name__)
 COLLECTION_NAME = "physical_ai_textbook"
 EMBEDDING_MODEL = "models/text-embedding-004"
 EMBEDDING_DIMENSION = 768
-CHAT_MODEL = "models/gemini-2.0-flash"
+
+# Groq LLM settings
+GROQ_BASE_URL = "https://api.groq.com/openai/v1"
+CHAT_MODEL = "llama-3.3-70b-versatile"
 
 
 class EmbeddingService:
@@ -137,12 +140,12 @@ class VectorStoreService:
 
 
 class LLMService:
-    """Service for interacting with Google Gemini via OpenAI SDK."""
+    """Service for interacting with Groq LLM via OpenAI SDK."""
 
     def __init__(self):
         self.client = OpenAI(
-            api_key=os.getenv("GOOGLE_API_KEY"),
-            base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+            api_key=os.getenv("GROQ_API_KEY"),
+            base_url=GROQ_BASE_URL,
         )
 
     def generate_answer(
