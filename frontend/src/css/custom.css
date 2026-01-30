@@ -165,27 +165,20 @@ img {
    Urdu Language (Nastaliq) Styles
    ======================================== */
 
-/* Global Urdu mode styles */
+/* Override Infima CSS variables for Urdu mode */
 body.lang-urdu {
-  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif !important;
+  --ifm-font-family-base: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  --ifm-heading-font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  --ifm-font-size-base: 1.1rem;
+  --ifm-line-height-base: 2.2;
   direction: rtl;
   text-align: right;
 }
 
-/* Urdu content typography adjustments */
-body.lang-urdu .markdown,
-body.lang-urdu article,
-body.lang-urdu .theme-doc-markdown,
-body.lang-urdu p,
-body.lang-urdu span,
-body.lang-urdu li,
-body.lang-urdu td,
-body.lang-urdu th,
-body.lang-urdu label,
-body.lang-urdu a:not(.navbar__link):not(.menu__link) {
+/* Ensure all text elements use Nastaliq */
+body.lang-urdu,
+body.lang-urdu *:not(code):not(pre):not(.prism-code):not(.token) {
   font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif !important;
-  font-size: 1.1rem;
-  line-height: 2.2;
 }
 
 /* Headings in Urdu */
