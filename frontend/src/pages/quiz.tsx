@@ -240,22 +240,6 @@ export default function QuizPage(): JSX.Element {
                   }}
                 >
                   <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--ifm-color-primary)' }}>
-                    {quizInfo.time_limit_minutes} min
-                  </div>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--ifm-color-emphasis-600)' }}>
-                    Time Limit
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    padding: '1rem',
-                    background: 'var(--ifm-color-emphasis-100)',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                  }}
-                >
-                  <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--ifm-color-primary)' }}>
                     {quizInfo.passing_score}%
                   </div>
                   <div style={{ fontSize: '0.875rem', color: 'var(--ifm-color-emphasis-600)' }}>
@@ -345,14 +329,15 @@ export default function QuizPage(): JSX.Element {
                   background: 'var(--ifm-color-warning-lightest)',
                   borderRadius: '8px',
                   fontSize: '0.875rem',
+                  color: 'var(--ifm-color-warning-contrast-foreground, #333)',
                 }}
               >
-                <strong>Before you start:</strong>
-                <ul style={{ margin: '0.5rem 0 0 1rem', padding: 0 }}>
+                <strong style={{ color: '#5a4a00' }}>Before you start:</strong>
+                <ul style={{ margin: '0.5rem 0 0 1rem', padding: 0, color: '#5a4a00' }}>
                   <li>Make sure you have a stable internet connection</li>
-                  <li>Once started, the timer cannot be paused</li>
                   <li>Your answers are auto-saved as you go</li>
                   <li>You can navigate between questions freely</li>
+                  <li>Click "Submit Quiz" on the last question when done</li>
                 </ul>
               </div>
             </div>

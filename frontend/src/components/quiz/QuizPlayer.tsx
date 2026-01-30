@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from '@docusaurus/router';
 import { useQuiz, QuizProvider, QuizResult } from './QuizContext';
 import QuizQuestion from './QuizQuestion';
-import QuizTimer from './QuizTimer';
 import QuizProgress from './QuizProgress';
 import QuizResults from './QuizResults';
 import styles from './Quiz.module.css';
@@ -46,16 +45,6 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
     const confirmed = window.confirm(message);
     if (!confirmed) return;
 
-    try {
-      const result = await submitQuiz();
-      setResults(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to submit quiz');
-    }
-  };
-
-  const handleTimeUp = async () => {
-    alert('Time is up! Your quiz will be submitted automatically.');
     try {
       const result = await submitQuiz();
       setResults(result);
@@ -109,11 +98,6 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
   return (
     <div className={styles.quizPlayer}>
       <div className={styles.quizHeader}>
-        <QuizTimer
-          startedAt={state.startedAt!}
-          timeLimitMinutes={state.timeLimit}
-          onTimeUp={handleTimeUp}
-        />
         <QuizProgress
           current={state.currentQuestionIndex + 1}
           total={state.questions.length}
