@@ -223,7 +223,7 @@ export default function MyScoresPage(): JSX.Element {
                 <p style={{ color: 'var(--ifm-color-emphasis-600)' }}>
                   You haven't taken any quizzes yet. Start learning and test your knowledge!
                 </p>
-                <Link to="/docs/assessments" className="button button--primary button--lg">
+                <Link to="/assessments" className="button button--primary button--lg">
                   View Available Quizzes
                 </Link>
               </div>
@@ -378,7 +378,7 @@ export default function MyScoresPage(): JSX.Element {
 
             {/* Back to Assessments */}
             <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-              <Link to="/docs/assessments" className="button button--secondary">
+              <Link to="/assessments" className="button button--secondary">
                 View All Assessments
               </Link>
             </div>

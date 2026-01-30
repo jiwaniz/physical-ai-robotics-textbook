@@ -61,7 +61,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, weekNumber }) => {
           >
             Review Content
           </Link>
-          <Link to="/docs/assessments" className="button button--primary">
+          <Link to="/assessments" className="button button--primary">
             View All Assessments
           </Link>
         </div>

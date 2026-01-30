@@ -140,7 +140,7 @@ export default function QuizPage(): JSX.Element {
             <h2>Quiz Not Found</h2>
             <p>The requested quiz could not be found.</p>
             <button
-              onClick={() => history.push('/docs/assessments')}
+              onClick={() => history.push('/assessments')}
               className="button button--primary"
             >
               View All Assessments
