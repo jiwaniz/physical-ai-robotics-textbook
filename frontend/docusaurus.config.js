@@ -35,8 +35,24 @@ const config = {
   // metadata like html lang
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'ur'],
+    localeConfigs: {
+      ur: {
+        label: 'اردو',
+        direction: 'rtl',
+      },
+    },
   },
+
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap',
+      },
+    },
+  ],
 
   presets: [
     [
@@ -92,6 +108,10 @@ const config = {
             to: '/my-scores',
             position: 'left',
             label: 'My Scores',
+          },
+          {
+            type: 'localeDropdown',
+            position: 'right',
           },
           {
             href: 'https://github.com/jiwaniz/physical-ai-robotics-textbook',
