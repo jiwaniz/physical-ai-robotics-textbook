@@ -120,6 +120,7 @@ async def root():
 from .auth.routes import router as auth_router  # noqa: E402
 from .chatbot.routes import router as chatbot_router  # noqa: E402
 from .quizzes.routes import router as quizzes_router  # noqa: E402
+from .translate.routes import router as translate_router  # noqa: E402
 from .users.routes import router as users_router  # noqa: E402
 
 # Include routers
@@ -127,3 +128,4 @@ app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users_router, prefix="/api/users", tags=["Users"])
 app.include_router(quizzes_router, prefix="/api/quizzes", tags=["Quizzes"])
 app.include_router(chatbot_router, prefix="/api/chat", tags=["Chatbot"])
+app.include_router(translate_router, prefix="/api/translate", tags=["Translation"])
