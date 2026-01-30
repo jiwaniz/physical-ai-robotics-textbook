@@ -667,6 +667,38 @@ async def delete_question(
     logger.info(f"Question deleted: {question_id}")
 
 
+@router.delete("/admin/quizzes/{quiz_id}/attempts/{target_user_id}")
+async def reset_user_attempts(
+    quiz_id: int,
+    target_user_id: str,
+    user_id: str = Depends(require_auth),
+    db: AsyncSession = Depends(get_db),
+):
+    """Delete all attempts for a specific user on a quiz (admin only)."""
+    result = await db.execute(
+        select(QuizAttempt)
+        .where(QuizAttempt.quiz_id == quiz_id)
+        .where(QuizAttempt.user_id == target_user_id)
+    )
+    attempts = result.scalars().all()
+
+    if not attempts:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No attempts found for this user on this quiz",
+        )
+
+    count = len(attempts)
+    for attempt in attempts:
+        await db.delete(attempt)
+
+    await db.commit()
+
+    logger.info(f"Admin {user_id} deleted {count} attempts for user {target_user_id} on quiz {quiz_id}")
+
+    return {"message": f"Deleted {count} attempt(s) for user {target_user_id}"}
+
+
 @router.post("/admin/quizzes/{quiz_id}/publish", response_model=QuizResponse)
 async def publish_quiz(
     quiz_id: int,
