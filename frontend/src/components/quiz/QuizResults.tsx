@@ -16,7 +16,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, weekNumber }) => {
       <div className={`${styles.resultsCard} ${passed ? styles.resultsPassed : styles.resultsFailed}`}>
         <div className={styles.resultsHeader}>
           <h2>{passed ? 'Congratulations!' : 'Keep Practicing!'}</h2>
-          <div className={styles.resultsIcon}>{passed ? '&#x2705;' : '&#x1F4DA;'}</div>
+          <div className={styles.resultsIcon}>{passed ? '✅' : '📚'}</div>
         </div>
 
         <div className={styles.resultsScore}>
