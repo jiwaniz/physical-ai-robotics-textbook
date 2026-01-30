@@ -35,7 +35,17 @@ const config = {
   // metadata like html lang
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'ur'],
+    localeConfigs: {
+      en: {
+        label: 'English',
+        direction: 'ltr',
+      },
+      ur: {
+        label: 'اردو',
+        direction: 'rtl',
+      },
+    },
   },
 
   // Load Google Fonts for Urdu Nastaliq
@@ -100,6 +110,10 @@ const config = {
             to: '/my-scores',
             position: 'left',
             label: 'My Scores',
+          },
+          {
+            type: 'localeDropdown',
+            position: 'right',
           },
           {
             href: 'https://github.com/jiwaniz/physical-ai-robotics-textbook',

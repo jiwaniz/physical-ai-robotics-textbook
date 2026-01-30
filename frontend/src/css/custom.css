@@ -262,3 +262,45 @@ body.lang-urdu .search-result-match {
   direction: rtl;
   text-align: right;
 }
+
+/* ========================================
+   AI-Translated Content Styles
+   ======================================== */
+
+/* Translated article content */
+article.urdu-translated {
+  direction: rtl;
+  text-align: right;
+}
+
+article.urdu-translated h1,
+article.urdu-translated h2,
+article.urdu-translated h3,
+article.urdu-translated h4,
+article.urdu-translated h5,
+article.urdu-translated h6,
+article.urdu-translated p,
+article.urdu-translated li,
+article.urdu-translated td,
+article.urdu-translated th {
+  font-family: 'Noto Nastaliq Urdu', serif !important;
+  line-height: 2;
+}
+
+/* Keep code blocks LTR in translated content */
+article.urdu-translated pre,
+article.urdu-translated code,
+article.urdu-translated .prism-code {
+  direction: ltr !important;
+  text-align: left !important;
+  font-family: var(--ifm-font-family-monospace) !important;
+}
+
+/* Smooth transition for translation */
+article {
+  transition: opacity 0.3s ease;
+}
+
+article.translating {
+  opacity: 0.6;
+}
