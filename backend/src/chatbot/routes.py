@@ -69,10 +69,19 @@ async def ask_question(
         )
 
     except Exception as e:
-        logger.error(f"Error processing question: {e}")
+        error_msg = str(e)
+        logger.error(f"Error processing question: {error_msg}")
+
+        # Check for rate limit errors
+        if "429" in error_msg or "quota" in error_msg.lower() or "rate" in error_msg.lower():
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail="AI service rate limit reached. Please try again in a few minutes.",
+            )
+
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to process question: {str(e)}",
+            detail=f"Failed to process question: {error_msg}",
         )
 
 

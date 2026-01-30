@@ -110,6 +110,9 @@ export default function ChatWidget(): JSX.Element | null {
       });
 
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('The AI service is currently busy. Please try again in a few minutes.');
+        }
         throw new Error('Failed to get response');
       }
 
