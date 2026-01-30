@@ -34,7 +34,8 @@ export default function QuizPage(): JSX.Element {
 
   useEffect(() => {
     if (!authLoading && !currentUser) {
-      history.push('/signin?redirect=/quiz' + location.search);
+      const redirectPath = encodeURIComponent('/quiz' + location.search);
+      history.push('/signin?redirect=' + redirectPath);
     }
   }, [currentUser, authLoading, history, location.search]);
 

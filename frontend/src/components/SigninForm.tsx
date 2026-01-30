@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
-import { useHistory } from '@docusaurus/router';
+import { useHistory, useLocation } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 const SigninForm: React.FC = () => {
@@ -10,8 +10,13 @@ const SigninForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { signin, signout } = useAuth();
   const history = useHistory();
+  const location = useLocation();
   const baseUrl = useBaseUrl('/');
   const verifyPendingUrl = useBaseUrl('/verify-email-pending');
+
+  // Get redirect URL from query params
+  const params = new URLSearchParams(location.search);
+  const redirectUrl = params.get('redirect');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,8 +34,9 @@ const SigninForm: React.FC = () => {
         return;
       }
 
-      // Redirect to home after successful signin
-      history.push(baseUrl);
+      // Redirect to original page or home after successful signin
+      const destination = redirectUrl ? decodeURIComponent(redirectUrl) : baseUrl;
+      history.push(destination);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Signin failed');
     } finally {
