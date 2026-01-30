@@ -112,10 +112,6 @@ const config = {
             label: 'My Scores',
           },
           {
-            type: 'localeDropdown',
-            position: 'right',
-          },
-          {
             href: 'https://github.com/jiwaniz/physical-ai-robotics-textbook',
             label: 'GitHub',
             position: 'right',
