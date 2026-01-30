@@ -89,6 +89,11 @@ const config = {
             label: 'Course',
           },
           {
+            to: '/my-scores',
+            position: 'left',
+            label: 'My Scores',
+          },
+          {
             href: 'https://github.com/jiwaniz/physical-ai-robotics-textbook',
             label: 'GitHub',
             position: 'right',
@@ -108,6 +113,10 @@ const config = {
               {
                 label: 'Assessments',
                 to: '/assessments',
+              },
+              {
+                label: 'My Scores',
+                to: '/my-scores',
               },
             ],
           },
