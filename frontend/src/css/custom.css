@@ -4,8 +4,7 @@
  * work well for content-centric websites.
  */
 
-/* Import Noto Nastaliq Urdu font - MUST be at top before other rules */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap');
+/* Noto Nastaliq Urdu font loaded via docusaurus.config.js stylesheets */
 
 /* Import authentication form styles */
 @import './auth.css';

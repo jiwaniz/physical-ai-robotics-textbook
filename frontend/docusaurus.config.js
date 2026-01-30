@@ -38,6 +38,14 @@ const config = {
     locales: ['en'],
   },
 
+  // Load Google Fonts for Urdu Nastaliq
+  stylesheets: [
+    {
+      href: 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap',
+      type: 'text/css',
+    },
+  ],
+
   presets: [
     [
       'classic',
