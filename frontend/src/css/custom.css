@@ -158,3 +158,85 @@ img {
   margin: 1.5rem 0;
   border-radius: 4px;
 }
+
+/* ==================== Urdu / RTL Styles ==================== */
+
+/* Apply Nastaliq font for Urdu locale */
+html[lang='ur'],
+[dir='rtl'] {
+  --ifm-font-family-base: 'Noto Nastaliq Urdu', serif;
+  font-family: 'Noto Nastaliq Urdu', serif;
+  line-height: 2.2;
+}
+
+/* Increase base font size for Nastaliq readability */
+[dir='rtl'] .markdown {
+  font-size: 1.1rem;
+}
+
+/* Keep navbar LTR for consistent icon/control placement */
+[dir='rtl'] .navbar {
+  direction: ltr;
+}
+
+/* RTL navbar items should still read RTL for text */
+[dir='rtl'] .navbar .navbar__item {
+  direction: rtl;
+}
+
+/* Code blocks stay LTR */
+[dir='rtl'] pre,
+[dir='rtl'] code {
+  direction: ltr;
+  text-align: left;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+/* Sidebar RTL adjustments */
+[dir='rtl'] .theme-doc-sidebar-container {
+  border-left: 1px solid var(--ifm-toc-border-color);
+  border-right: none;
+}
+
+/* Pagination RTL */
+[dir='rtl'] .pagination-nav__link--prev .pagination-nav__sublabel::before {
+  content: '→ ';
+}
+
+[dir='rtl'] .pagination-nav__link--next .pagination-nav__sublabel::after {
+  content: ' ←';
+}
+
+/* Admonitions RTL — flip border side */
+[dir='rtl'] .alert {
+  border-left: none;
+  border-right: var(--ifm-alert-border-left-width) solid var(--ifm-alert-border-color);
+}
+
+/* TOC RTL */
+[dir='rtl'] .table-of-contents {
+  padding-right: 0;
+  padding-left: 1rem;
+}
+
+/* Breadcrumbs RTL */
+[dir='rtl'] .breadcrumbs__item::before {
+  content: '\\';
+}
+
+/* Module badges RTL */
+[dir='rtl'] .module-badge {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+/* Prerequisites RTL */
+[dir='rtl'] .prerequisites {
+  border-left: none;
+  border-right: 4px solid var(--ifm-color-primary);
+}
+
+[dir='rtl'] .learning-objectives {
+  border-left: none;
+  border-right: 4px solid #4ecdc4;
+}

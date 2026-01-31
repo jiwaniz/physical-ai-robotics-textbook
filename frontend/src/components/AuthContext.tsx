@@ -9,6 +9,8 @@ interface AuthContextType {
   isLoading: boolean;
   error: string | null;
   apiBaseUrl: string;
+  preferredLanguage: string;
+  setPreferredLanguage: (lang: string) => Promise<void>;
   signup: (email: string, password: string, name: string) => Promise<void>;
   signin: (email: string, password: string) => Promise<User>;
   signout: () => Promise<void>;
@@ -59,6 +61,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
+  const [preferredLanguage, setPreferredLanguageState] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('preferred-language') || 'en';
+    }
+    return 'en';
+  });
 
   // Initialize Supabase client
   useEffect(() => {
@@ -67,10 +75,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSupabase(client);
 
       // Get initial session
-      client.auth.getSession().then(({ data: { session } }) => {
+      client.auth.getSession().then(async ({ data: { session } }) => {
         setSession(session);
         setCurrentUser(session?.user ?? null);
         setIsLoading(false);
+
+        // Fetch language preference from profile if authenticated
+        if (session?.access_token) {
+          try {
+            const res = await fetch(`${API_BASE_URL}/api/users/profile`, {
+              headers: { Authorization: `Bearer ${session.access_token}` },
+            });
+            if (res.ok) {
+              const profile = await res.json();
+              if (profile.preferred_language) {
+                setPreferredLanguageState(profile.preferred_language);
+                localStorage.setItem('preferred-language', profile.preferred_language);
+              }
+            }
+          } catch {
+            // Fall back to localStorage value
+          }
+        }
       });
 
       // Listen for auth changes
@@ -220,6 +246,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const setPreferredLanguage = async (lang: string): Promise<void> => {
+    setPreferredLanguageState(lang);
+    localStorage.setItem('preferred-language', lang);
+
+    // Persist to Supabase if authenticated
+    if (session?.access_token) {
+      try {
+        await fetch(`${API_BASE_URL}/api/users/profile`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({ preferred_language: lang }),
+        });
+      } catch {
+        // localStorage already saved as fallback
+      }
+    }
+  };
+
   const value = {
     currentUser,
     session,
@@ -227,6 +274,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isLoading,
     error,
     apiBaseUrl: API_BASE_URL,
+    preferredLanguage,
+    setPreferredLanguage,
     signup,
     signin,
     signout,

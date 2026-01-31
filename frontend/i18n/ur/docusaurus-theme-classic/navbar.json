@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "فزیکل AI اور روبوٹکس",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "سائٹ لوگو",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Course": {
+    "message": "کورس",
+    "description": "Navbar item with label Course"
+  },
+  "item.label.My Scores": {
+    "message": "میرے اسکور",
+    "description": "Navbar item with label My Scores"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

@@ -87,6 +87,9 @@ class UserProfile(BaseModel):
     software_level: Mapped[Optional[str]] = mapped_column(String(20))
     hardware_level: Mapped[Optional[str]] = mapped_column(String(20))
     topics: Mapped[Optional[dict]] = mapped_column(JSON, default=list)
+    preferred_language: Mapped[str] = mapped_column(
+        String(5), nullable=False, default="en", server_default="en"
+    )
 
 
 # ==================== QUIZ ENUMS ====================

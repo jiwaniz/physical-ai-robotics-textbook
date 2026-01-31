@@ -48,6 +48,7 @@ async def create_or_update_profile(
         existing_profile.software_level = request.software_level.value
         existing_profile.hardware_level = request.hardware_level.value
         existing_profile.topics = request.topics
+        existing_profile.preferred_language = request.preferred_language
 
         await db.commit()
         await db.refresh(existing_profile)
@@ -61,6 +62,7 @@ async def create_or_update_profile(
             software_level=request.software_level.value,
             hardware_level=request.hardware_level.value,
             topics=request.topics,
+            preferred_language=request.preferred_language,
         )
 
         db.add(new_profile)

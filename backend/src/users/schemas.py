@@ -4,7 +4,7 @@ Pydantic schemas for user profile endpoints.
 
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -29,6 +29,10 @@ class UserProfileRequest(BaseModel):
         description="List of topics/technologies user is familiar with",
         examples=[["python", "ml", "robotics", "ros2", "computer_vision"]],
     )
+    preferred_language: Literal["en", "ur"] = Field(
+        default="en",
+        description="Preferred UI language: 'en' (English) or 'ur' (Urdu)",
+    )
 
 
 class UserProfileResponse(BaseModel):
@@ -39,6 +43,7 @@ class UserProfileResponse(BaseModel):
     software_level: Optional[str] = None
     hardware_level: Optional[str] = None
     topics: List[str] = Field(default_factory=list)
+    preferred_language: str = "en"
     created_at: datetime
     updated_at: datetime
 
