@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "اگلا",
+    "description": "The label for version current"
+  },
+  "sidebar.courseSidebar.category.📚 Introduction to Physical AI": {
+    "message": "📚 فزیکل AI کا تعارف",
+    "description": "The label for category '📚 Introduction to Physical AI' in sidebar 'courseSidebar'"
+  },
+  "sidebar.courseSidebar.category.🤖 Chapter 1: ROS 2 Fundamentals": {
+    "message": "🤖 باب 1: ROS 2 بنیادیات",
+    "description": "The label for category '🤖 Chapter 1: ROS 2 Fundamentals' in sidebar 'courseSidebar'"
+  },
+  "sidebar.courseSidebar.category.🎮 Chapter 2: Gazebo & Unity Simulation": {
+    "message": "🎮 باب 2: Gazebo اور Unity سمیولیشن",
+    "description": "The label for category '🎮 Chapter 2: Gazebo & Unity Simulation' in sidebar 'courseSidebar'"
+  },
+  "sidebar.courseSidebar.category.🚀 Chapter 3: NVIDIA Isaac Platform": {
+    "message": "🚀 باب 3: NVIDIA Isaac پلیٹ فارم",
+    "description": "The label for category '🚀 Chapter 3: NVIDIA Isaac Platform' in sidebar 'courseSidebar'"
+  },
+  "sidebar.courseSidebar.category.🧠 Chapter 4: VLA & Capstone": {
+    "message": "🧠 باب 4: VLA اور حتمی پروجیکٹ",
+    "description": "The label for category '🧠 Chapter 4: VLA & Capstone' in sidebar 'courseSidebar'"
+  }
+}

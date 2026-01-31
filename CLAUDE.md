@@ -208,3 +208,10 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Active Technologies
+- Python 3.11 (backend), TypeScript 5.x (frontend) + FastAPI 0.115+, Docusaurus 3.x, Supabase JS SDK, React 18 (002-urdu-textbook-portal)
+- Neon PostgreSQL (user profiles), Supabase Auth (identity), static Markdown files (translations) (002-urdu-textbook-portal)
+
+## Recent Changes
+- 002-urdu-textbook-portal: Added Python 3.11 (backend), TypeScript 5.x (frontend) + FastAPI 0.115+, Docusaurus 3.x, Supabase JS SDK, React 18
