@@ -1036,5 +1036,87 @@
   },
   "component.quiz.codeCompletion.hintsLabel": {
     "message": "اشارے:"
+  },
+
+  "component.chatWidget.openChat": {
+    "message": "چیٹ کھولیں"
+  },
+  "component.chatWidget.closeChat": {
+    "message": "چیٹ بند کریں"
+  },
+  "component.chatWidget.title": {
+    "message": "AI ٹیوٹر"
+  },
+  "component.chatWidget.chatTab": {
+    "message": "چیٹ"
+  },
+  "component.chatWidget.quizTab": {
+    "message": "کوئز"
+  },
+  "component.chatWidget.selectedText": {
+    "message": "منتخب متن:"
+  },
+  "component.chatWidget.welcomeTitle": {
+    "message": "السلام علیکم! میں آپ کا AI ٹیوٹر ہوں"
+  },
+  "component.chatWidget.welcomeHints": {
+    "message": "ROS 2، روبوٹکس سمیولیشن، Isaac Sim، یا VLA ماڈلز کے بارے میں کچھ بھی پوچھیں۔"
+  },
+  "component.chatWidget.tipLabel": {
+    "message": "مشورہ:"
+  },
+  "component.chatWidget.tipText": {
+    "message": "کسی بھی صفحے پر متن منتخب کریں، پھر اس کے بارے میں سوال پوچھیں!"
+  },
+  "component.chatWidget.sources": {
+    "message": "ذرائع:"
+  },
+  "component.chatWidget.placeholder": {
+    "message": "سوال پوچھیں..."
+  },
+  "component.chatWidget.errorMessage": {
+    "message": "معذرت، ایک خرابی ہوئی۔ براہ کرم دوبارہ کوشش کریں۔"
+  },
+  "component.chatWidget.quiz.title": {
+    "message": "اپنے علم کی جانچ کریں"
+  },
+  "component.chatWidget.quiz.desc": {
+    "message": "موجودہ صفحے کے مواد پر مبنی 5 سوالات کا کوئز بنائیں۔"
+  },
+  "component.chatWidget.quiz.generate": {
+    "message": "کوئز بنائیں"
+  },
+  "component.chatWidget.quiz.generating": {
+    "message": "کوئز بنایا جا رہا ہے..."
+  },
+  "component.chatWidget.quiz.excellent": {
+    "message": "بہترین!"
+  },
+  "component.chatWidget.quiz.goodJob": {
+    "message": "اچھا کام!"
+  },
+  "component.chatWidget.quiz.keepPracticing": {
+    "message": "مشق جاری رکھیں!"
+  },
+  "component.chatWidget.quiz.tryAgain": {
+    "message": "دوبارہ کوشش کریں"
+  },
+  "component.chatWidget.quiz.previous": {
+    "message": "پچھلا"
+  },
+  "component.chatWidget.quiz.next": {
+    "message": "اگلا"
+  },
+  "component.chatWidget.quiz.submit": {
+    "message": "جمع کرائیں"
+  },
+  "component.chatWidget.quiz.notEnoughContent": {
+    "message": "اس صفحے پر کوئز بنانے کے لیے کافی مواد نہیں ہے۔"
+  },
+  "component.chatWidget.quiz.generateFailed": {
+    "message": "کوئز بنانے میں ناکامی۔ براہ کرم دوبارہ کوشش کریں۔"
+  },
+  "component.chatWidget.quiz.submitFailed": {
+    "message": "کوئز جمع کرانے میں ناکامی۔ براہ کرم دوبارہ کوشش کریں۔"
   }
 }

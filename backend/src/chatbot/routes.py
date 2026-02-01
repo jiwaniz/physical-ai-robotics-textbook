@@ -49,6 +49,7 @@ async def ask_question(
             selected_text=request.selected_text,
             page_path=request.page_path,
             conversation_id=request.conversation_id,
+            language=request.language or "en",
         )
 
         source_docs = [
@@ -100,6 +101,7 @@ async def generate_quiz(
             page_content=request.page_content,
             page_path=request.page_path,
             num_questions=request.num_questions,
+            language=request.language or "en",
         )
 
         # Cache questions for grading

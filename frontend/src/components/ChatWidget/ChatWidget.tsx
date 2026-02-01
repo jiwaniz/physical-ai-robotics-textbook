@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useLocation } from '@docusaurus/router';
+import Translate, { translate } from '@docusaurus/Translate';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useAuth } from '../AuthContext';
 import styles from './ChatWidget.module.css';
 
@@ -28,6 +30,8 @@ type QuizState = 'intro' | 'loading' | 'questions' | 'results';
 export default function ChatWidget(): JSX.Element | null {
   const { currentUser, accessToken, apiBaseUrl } = useAuth();
   const location = useLocation();
+  const { i18n } = useDocusaurusContext();
+  const currentLocale = i18n.currentLocale;
 
   // Chat state
   const [isOpen, setIsOpen] = useState(false);
@@ -106,6 +110,7 @@ export default function ChatWidget(): JSX.Element | null {
           selected_text: selectedText,
           page_path: location.pathname,
           conversation_id: conversationId,
+          language: currentLocale,
         }),
       });
 
@@ -136,7 +141,7 @@ export default function ChatWidget(): JSX.Element | null {
         ...prev,
         {
           role: 'assistant',
-          content: 'Sorry, I encountered an error. Please try again.',
+          content: translate({ message: 'Sorry, I encountered an error. Please try again.', id: 'component.chatWidget.errorMessage' }),
         },
       ]);
     } finally {
@@ -154,7 +159,7 @@ export default function ChatWidget(): JSX.Element | null {
     try {
       const pageContent = getPageContent();
       if (pageContent.length < 200) {
-        setQuizError('Not enough content on this page to generate a quiz.');
+        setQuizError(translate({ message: 'Not enough content on this page to generate a quiz.', id: 'component.chatWidget.quiz.notEnoughContent' }));
         setQuizState('intro');
         return;
       }
@@ -169,6 +174,7 @@ export default function ChatWidget(): JSX.Element | null {
           page_content: pageContent.slice(0, 10000), // Limit content size
           page_path: location.pathname,
           num_questions: 5,
+          language: currentLocale,
         }),
       });
 
@@ -183,7 +189,7 @@ export default function ChatWidget(): JSX.Element | null {
       setCurrentQuestionIndex(0);
       setQuizState('questions');
     } catch (error) {
-      setQuizError('Failed to generate quiz. Please try again.');
+      setQuizError(translate({ message: 'Failed to generate quiz. Please try again.', id: 'component.chatWidget.quiz.generateFailed' }));
       setQuizState('intro');
     }
   };
@@ -215,7 +221,7 @@ export default function ChatWidget(): JSX.Element | null {
       setQuizResult(data);
       setQuizState('results');
     } catch (error) {
-      setQuizError('Failed to submit quiz. Please try again.');
+      setQuizError(translate({ message: 'Failed to submit quiz. Please try again.', id: 'component.chatWidget.quiz.submitFailed' }));
       setQuizState('questions');
     }
   };
@@ -257,7 +263,7 @@ export default function ChatWidget(): JSX.Element | null {
       <button
         className={styles.chatButton}
         onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? 'Close chat' : 'Open chat'}
+        aria-label={isOpen ? translate({ message: 'Close chat', id: 'component.chatWidget.closeChat' }) : translate({ message: 'Open chat', id: 'component.chatWidget.openChat' })}
       >
         <span className={styles.chatButtonIcon}>{isOpen ? '×' : '💬'}</span>
       </button>
@@ -269,14 +275,14 @@ export default function ChatWidget(): JSX.Element | null {
           <div className={styles.chatHeader}>
             <div className={styles.chatTitle}>
               <span>🤖</span>
-              <span>AI Tutor</span>
+              <span><Translate id="component.chatWidget.title">AI Tutor</Translate></span>
             </div>
             <div className={styles.headerButtons}>
               <button
                 className={`${styles.headerButton} ${mode === 'chat' ? styles.active : ''}`}
                 onClick={() => setMode('chat')}
               >
-                Chat
+                <Translate id="component.chatWidget.chatTab">Chat</Translate>
               </button>
               <button
                 className={`${styles.headerButton} ${mode === 'quiz' ? styles.active : ''}`}
@@ -285,7 +291,7 @@ export default function ChatWidget(): JSX.Element | null {
                   resetQuiz();
                 }}
               >
-                Quiz
+                <Translate id="component.chatWidget.quizTab">Quiz</Translate>
               </button>
               <button
                 className={styles.closeButton}
@@ -305,7 +311,7 @@ export default function ChatWidget(): JSX.Element | null {
                 <div className={styles.selectionContext}>
                   <span className={styles.selectionContextIcon}>📝</span>
                   <div className={styles.selectionContextText}>
-                    <div className={styles.selectionContextLabel}>Selected text:</div>
+                    <div className={styles.selectionContextLabel}><Translate id="component.chatWidget.selectedText">Selected text:</Translate></div>
                     <div className={styles.selectionContextPreview}>"{selectedText}"</div>
                   </div>
                   <button
@@ -323,13 +329,13 @@ export default function ChatWidget(): JSX.Element | null {
                 {messages.length === 0 && (
                   <div className={styles.welcomeMessage}>
                     <div className={styles.welcomeIcon}>👋</div>
-                    <div className={styles.welcomeTitle}>Hi! I'm your AI Tutor</div>
+                    <div className={styles.welcomeTitle}><Translate id="component.chatWidget.welcomeTitle">Hi! I'm your AI Tutor</Translate></div>
                     <div className={styles.welcomeHints}>
-                      Ask me anything about ROS 2, robotics simulation, Isaac Sim, or VLA models.
+                      <Translate id="component.chatWidget.welcomeHints">Ask me anything about ROS 2, robotics simulation, Isaac Sim, or VLA models.</Translate>
                     </div>
                     <div className={styles.selectionHint}>
-                      <strong>Tip:</strong> Highlight text on any page, then ask a question about it
-                      for more focused answers!
+                      <strong><Translate id="component.chatWidget.tipLabel">Tip:</Translate></strong>{' '}
+                      <Translate id="component.chatWidget.tipText">Highlight text on any page, then ask a question about it for more focused answers!</Translate>
                     </div>
                   </div>
                 )}
@@ -344,7 +350,7 @@ export default function ChatWidget(): JSX.Element | null {
                     <div className={styles.messageContent}>{msg.content}</div>
                     {msg.sources && msg.sources.length > 0 && (
                       <div className={styles.sources}>
-                        <strong>Sources:</strong>{' '}
+                        <strong><Translate id="component.chatWidget.sources">Sources:</Translate></strong>{' '}
                         {msg.sources.slice(0, 3).map((source, i) => (
                           <a
                             key={i}
@@ -381,7 +387,7 @@ export default function ChatWidget(): JSX.Element | null {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Ask a question..."
+                    placeholder={translate({ message: 'Ask a question...', id: 'component.chatWidget.placeholder' })}
                     rows={1}
                     disabled={isLoading}
                   />
@@ -405,16 +411,16 @@ export default function ChatWidget(): JSX.Element | null {
                 {quizState === 'intro' && (
                   <div className={styles.quizIntro}>
                     <div className={styles.quizIntroIcon}>📚</div>
-                    <div className={styles.quizIntroTitle}>Test Your Knowledge</div>
+                    <div className={styles.quizIntroTitle}><Translate id="component.chatWidget.quiz.title">Test Your Knowledge</Translate></div>
                     <div className={styles.quizIntroDesc}>
-                      Generate a 5-question quiz based on the current page content.
+                      <Translate id="component.chatWidget.quiz.desc">Generate a 5-question quiz based on the current page content.</Translate>
                     </div>
                     {quizError && <div className={styles.errorMessage}>{quizError}</div>}
                     <button
                       className={`button button--primary ${styles.startQuizButton}`}
                       onClick={generateQuiz}
                     >
-                      Generate Quiz
+                      <Translate id="component.chatWidget.quiz.generate">Generate Quiz</Translate>
                     </button>
                   </div>
                 )}
@@ -422,7 +428,7 @@ export default function ChatWidget(): JSX.Element | null {
                 {quizState === 'loading' && (
                   <div className={styles.loadingSpinner}>
                     <div className={styles.spinner}></div>
-                    <div className={styles.loadingText}>Generating quiz...</div>
+                    <div className={styles.loadingText}><Translate id="component.chatWidget.quiz.generating">Generating quiz...</Translate></div>
                   </div>
                 )}
 
@@ -466,10 +472,10 @@ export default function ChatWidget(): JSX.Element | null {
                     <div className={styles.quizScoreLabel}>
                       {Math.round(quizResult.percentage)}% -{' '}
                       {quizResult.percentage >= 80
-                        ? 'Excellent!'
+                        ? translate({ message: 'Excellent!', id: 'component.chatWidget.quiz.excellent' })
                         : quizResult.percentage >= 60
-                        ? 'Good job!'
-                        : 'Keep practicing!'}
+                        ? translate({ message: 'Good job!', id: 'component.chatWidget.quiz.goodJob' })
+                        : translate({ message: 'Keep practicing!', id: 'component.chatWidget.quiz.keepPracticing' })}
                     </div>
                     <div className={styles.quizFeedback}>
                       {quizResult.feedback.map((item, idx) => (
@@ -490,7 +496,7 @@ export default function ChatWidget(): JSX.Element | null {
                       onClick={resetQuiz}
                       style={{ marginTop: '16px' }}
                     >
-                      Try Again
+                      <Translate id="component.chatWidget.quiz.tryAgain">Try Again</Translate>
                     </button>
                   </div>
                 )}
@@ -504,7 +510,7 @@ export default function ChatWidget(): JSX.Element | null {
                     onClick={() => setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))}
                     disabled={currentQuestionIndex === 0}
                   >
-                    Previous
+                    <Translate id="component.chatWidget.quiz.previous">Previous</Translate>
                   </button>
                   {currentQuestionIndex < quizQuestions.length - 1 ? (
                     <button
@@ -512,7 +518,7 @@ export default function ChatWidget(): JSX.Element | null {
                       onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}
                       disabled={!selectedAnswers[currentQuestionIndex]}
                     >
-                      Next
+                      <Translate id="component.chatWidget.quiz.next">Next</Translate>
                     </button>
                   ) : (
                     <button
@@ -520,7 +526,7 @@ export default function ChatWidget(): JSX.Element | null {
                       onClick={submitQuiz}
                       disabled={selectedAnswers.some((a) => !a)}
                     >
-                      Submit
+                      <Translate id="component.chatWidget.quiz.submit">Submit</Translate>
                     </button>
                   )}
                 </div>
