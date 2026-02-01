@@ -28,6 +28,10 @@ class AskRequest(BaseModel):
         None,
         description="Conversation ID for chat history",
     )
+    language: Optional[str] = Field(
+        "en",
+        description="Response language: 'en' for English, 'ur' for Urdu",
+    )
 
 
 class GenerateQuizRequest(BaseModel):
@@ -36,6 +40,10 @@ class GenerateQuizRequest(BaseModel):
     page_content: str = Field(..., min_length=100, description="Page content to generate quiz from")
     page_path: str = Field(..., description="Page path for reference")
     num_questions: int = Field(default=5, ge=3, le=10)
+    language: Optional[str] = Field(
+        "en",
+        description="Response language: 'en' for English, 'ur' for Urdu",
+    )
 
 
 class QuizAnswerRequest(BaseModel):

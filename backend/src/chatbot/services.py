@@ -154,6 +154,7 @@ class LLMService:
         context: str,
         selected_text: Optional[str] = None,
         chat_history: Optional[List[Dict]] = None,
+        language: str = "en",
     ) -> str:
         """Generate an answer using RAG context."""
         system_prompt = """You are an expert AI tutor for the Physical AI & Humanoid Robotics textbook.
@@ -168,6 +169,17 @@ IMPORTANT GUIDELINES:
 - If asked "what is X?", give a brief definition first, then 2-3 key points
 - Avoid repeating headings or section titles from the source material
 - Be direct and get to the point quickly"""
+
+        if language == "ur":
+            system_prompt += """
+
+LANGUAGE REQUIREMENT — CRITICAL:
+- You MUST respond in Urdu (اردو) using the Urdu script (NOT Hindi, NOT Roman Urdu).
+- Use proper Urdu vocabulary and phrasing, not Hindi translations.
+- Keep technical terms (ROS 2, Isaac Sim, Gazebo, Python, etc.) in English but explain them in Urdu.
+- Write numbers in Western numerals (1, 2, 3), not Eastern Arabic numerals.
+- Example: "ROS 2 ایک اوپن سورس روبوٹکس فریم ورک ہے" (correct Urdu)
+- Do NOT use Devanagari script or Hindi words."""
 
         # Build context with selected text priority
         context_parts = []
@@ -207,6 +219,7 @@ Please provide a helpful, educational answer based on the context above."""
         self,
         content: str,
         num_questions: int = 5,
+        language: str = "en",
     ) -> List[Dict]:
         """Generate quiz questions from content."""
         system_prompt = """You are a quiz generator for an educational robotics textbook.
@@ -224,6 +237,15 @@ Return a JSON array with this exact structure:
 ]
 
 Make questions that test conceptual understanding, not just memorization."""
+
+        if language == "ur":
+            system_prompt += """
+
+LANGUAGE REQUIREMENT — CRITICAL:
+- Write ALL questions, options, and explanations in Urdu (اردو) script.
+- Use proper Urdu vocabulary, NOT Hindi or Roman Urdu.
+- Keep technical terms (ROS 2, Isaac Sim, Gazebo, Python, etc.) in English.
+- Do NOT use Devanagari script."""
 
         user_message = f"""Generate {num_questions} multiple-choice questions based on this content:
 
@@ -272,6 +294,7 @@ class RAGService:
         selected_text: Optional[str] = None,
         page_path: Optional[str] = None,
         conversation_id: Optional[str] = None,
+        language: str = "en",
     ) -> Tuple[str, List[Dict], str]:
         """
         Process a question and return an answer with sources.
@@ -308,6 +331,7 @@ class RAGService:
             context=context,
             selected_text=selected_text,
             chat_history=chat_history,
+            language=language,
         )
 
         # Update conversation history
@@ -322,6 +346,7 @@ class RAGService:
         page_content: str,
         page_path: str,
         num_questions: int = 5,
+        language: str = "en",
     ) -> Tuple[str, List[Dict]]:
         """
         Generate a quiz from page content.
@@ -330,7 +355,7 @@ class RAGService:
             Tuple of (quiz_id, questions)
         """
         quiz_id = str(uuid.uuid4())
-        questions = self.llm.generate_quiz(page_content, num_questions)
+        questions = self.llm.generate_quiz(page_content, num_questions, language=language)
 
         # Add IDs to questions
         for i, q in enumerate(questions):
