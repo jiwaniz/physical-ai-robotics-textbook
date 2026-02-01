@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import Translate, { translate } from '@docusaurus/Translate';
 import { useHistory } from '@docusaurus/router';
 import { useAuth } from '../components/AuthContext';
 
@@ -47,13 +48,13 @@ export default function MyScoresPage(): JSX.Element {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to load quiz attempts');
+          throw new Error(translate({ message: 'Failed to load quiz attempts', id: 'page.myScores.error.failedLoadAttempts' }));
         }
 
         const data = await response.json();
         setAttempts(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load attempts');
+        setError(err instanceof Error ? err.message : translate({ message: 'Failed to load attempts', id: 'page.myScores.error.failedLoad' }));
       } finally {
         setLoading(false);
       }
@@ -78,7 +79,7 @@ export default function MyScoresPage(): JSX.Element {
 
   if (authLoading || loading) {
     return (
-      <Layout title="My Scores">
+      <Layout title={translate({ message: 'My Scores', id: 'page.myScores.layoutTitle' })}>
         <main className="container margin-vert--lg">
           <div className="text--center">
             <div
@@ -95,7 +96,7 @@ export default function MyScoresPage(): JSX.Element {
             <style>
               {`@keyframes spin { to { transform: rotate(360deg); } }`}
             </style>
-            <p>Loading your scores...</p>
+            <p><Translate id="page.myScores.loadingScores">Loading your scores...</Translate></p>
           </div>
         </main>
       </Layout>
@@ -108,16 +109,16 @@ export default function MyScoresPage(): JSX.Element {
 
   if (error) {
     return (
-      <Layout title="My Scores">
+      <Layout title={translate({ message: 'My Scores', id: 'page.myScores.layoutTitle' })}>
         <main className="container margin-vert--lg">
           <div className="text--center">
-            <h2>Error Loading Scores</h2>
+            <h2><Translate id="page.myScores.errorHeading">Error Loading Scores</Translate></h2>
             <p style={{ color: 'var(--ifm-color-danger)' }}>{error}</p>
             <button
               onClick={() => window.location.reload()}
               className="button button--primary"
             >
-              Try Again
+              <Translate id="page.myScores.tryAgain">Try Again</Translate>
             </button>
           </div>
         </main>
@@ -147,13 +148,13 @@ export default function MyScoresPage(): JSX.Element {
   const passedAttempts = attempts.filter(a => a.is_submitted && a.percentage !== null && a.percentage >= getPassingScore()).length;
 
   return (
-    <Layout title="My Scores" description="View your quiz scores and progress">
+    <Layout title={translate({ message: 'My Scores', id: 'page.myScores.layoutTitle' })} description={translate({ message: 'View your quiz scores and progress', id: 'page.myScores.layoutDescription' })}>
       <main className="container margin-vert--lg">
         <div className="row">
           <div className="col col--10 col--offset-1">
-            <h1>My Quiz Scores</h1>
+            <h1><Translate id="page.myScores.heading">My Quiz Scores</Translate></h1>
             <p style={{ color: 'var(--ifm-color-emphasis-700)', marginBottom: '2rem' }}>
-              Track your progress across all weekly quizzes.
+              <Translate id="page.myScores.subheading">Track your progress across all weekly quizzes.</Translate>
             </p>
 
             {/* Summary Stats */}
@@ -176,7 +177,7 @@ export default function MyScoresPage(): JSX.Element {
                 <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--ifm-color-primary)' }}>
                   {Object.keys(attemptsByQuiz).length}
                 </div>
-                <div style={{ color: 'var(--ifm-color-emphasis-700)' }}>Quizzes Attempted</div>
+                <div style={{ color: 'var(--ifm-color-emphasis-700)' }}><Translate id="page.myScores.stat.quizzesAttempted">Quizzes Attempted</Translate></div>
               </div>
 
               <div
@@ -190,7 +191,7 @@ export default function MyScoresPage(): JSX.Element {
                 <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--ifm-color-success)' }}>
                   {passedAttempts}
                 </div>
-                <div style={{ color: 'var(--ifm-color-emphasis-700)' }}>Quizzes Passed</div>
+                <div style={{ color: 'var(--ifm-color-emphasis-700)' }}><Translate id="page.myScores.stat.quizzesPassed">Quizzes Passed</Translate></div>
               </div>
 
               <div
@@ -204,7 +205,7 @@ export default function MyScoresPage(): JSX.Element {
                 <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--ifm-color-emphasis-800)' }}>
                   {totalAttempts}
                 </div>
-                <div style={{ color: 'var(--ifm-color-emphasis-700)' }}>Total Attempts</div>
+                <div style={{ color: 'var(--ifm-color-emphasis-700)' }}><Translate id="page.myScores.stat.totalAttempts">Total Attempts</Translate></div>
               </div>
             </div>
 
@@ -219,12 +220,12 @@ export default function MyScoresPage(): JSX.Element {
                 }}
               >
                 <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📝</div>
-                <h3>No Quiz Attempts Yet</h3>
+                <h3><Translate id="page.myScores.empty.heading">No Quiz Attempts Yet</Translate></h3>
                 <p style={{ color: 'var(--ifm-color-emphasis-600)' }}>
-                  You haven't taken any quizzes yet. Start learning and test your knowledge!
+                  <Translate id="page.myScores.empty.description">You haven't taken any quizzes yet. Start learning and test your knowledge!</Translate>
                 </p>
                 <Link to="/assessments" className="button button--primary button--lg">
-                  View Available Quizzes
+                  <Translate id="page.myScores.empty.viewQuizzes">View Available Quizzes</Translate>
                 </Link>
               </div>
             ) : (
@@ -265,7 +266,7 @@ export default function MyScoresPage(): JSX.Element {
                               gap: '0.5rem',
                             }}
                           >
-                            <span style={{ color: 'var(--ifm-color-emphasis-600)' }}>Best Score:</span>
+                            <span style={{ color: 'var(--ifm-color-emphasis-600)' }}><Translate id="page.myScores.bestScore">Best Score:</Translate></span>
                             <span
                               style={{
                                 fontWeight: 700,
@@ -286,10 +287,10 @@ export default function MyScoresPage(): JSX.Element {
                         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                           <thead>
                             <tr style={{ borderBottom: '1px solid var(--ifm-color-emphasis-200)' }}>
-                              <th style={{ padding: '0.75rem 1.5rem', textAlign: 'left' }}>Attempt</th>
-                              <th style={{ padding: '0.75rem 1.5rem', textAlign: 'left' }}>Date</th>
-                              <th style={{ padding: '0.75rem 1.5rem', textAlign: 'center' }}>Score</th>
-                              <th style={{ padding: '0.75rem 1.5rem', textAlign: 'center' }}>Status</th>
+                              <th style={{ padding: '0.75rem 1.5rem', textAlign: 'left' }}><Translate id="page.myScores.table.attempt">Attempt</Translate></th>
+                              <th style={{ padding: '0.75rem 1.5rem', textAlign: 'left' }}><Translate id="page.myScores.table.date">Date</Translate></th>
+                              <th style={{ padding: '0.75rem 1.5rem', textAlign: 'center' }}><Translate id="page.myScores.table.score">Score</Translate></th>
+                              <th style={{ padding: '0.75rem 1.5rem', textAlign: 'center' }}><Translate id="page.myScores.table.status">Status</Translate></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -306,7 +307,7 @@ export default function MyScoresPage(): JSX.Element {
                                   <td style={{ padding: '0.75rem 1.5rem', color: 'var(--ifm-color-emphasis-600)' }}>
                                     {attempt.submitted_at
                                       ? formatDate(attempt.submitted_at)
-                                      : formatDate(attempt.started_at) + ' (In Progress)'}
+                                      : formatDate(attempt.started_at) + ' (' + translate({ message: 'In Progress', id: 'page.myScores.status.inProgress' }) + ')'}
                                   </td>
                                   <td style={{ padding: '0.75rem 1.5rem', textAlign: 'center' }}>
                                     {attempt.is_submitted && attempt.percentage !== null ? (
@@ -338,7 +339,7 @@ export default function MyScoresPage(): JSX.Element {
                                           color: '#5a4a00',
                                         }}
                                       >
-                                        In Progress
+                                        <Translate id="page.myScores.status.inProgress">In Progress</Translate>
                                       </span>
                                     ) : attempt.percentage !== null && attempt.percentage >= getPassingScore() ? (
                                       <span
@@ -350,7 +351,7 @@ export default function MyScoresPage(): JSX.Element {
                                           color: 'var(--ifm-color-success-darkest)',
                                         }}
                                       >
-                                        Passed
+                                        <Translate id="page.myScores.status.passed">Passed</Translate>
                                       </span>
                                     ) : (
                                       <span
@@ -362,7 +363,7 @@ export default function MyScoresPage(): JSX.Element {
                                           color: 'var(--ifm-color-danger-darkest)',
                                         }}
                                       >
-                                        Not Passed
+                                        <Translate id="page.myScores.status.notPassed">Not Passed</Translate>
                                       </span>
                                     )}
                                   </td>
@@ -379,7 +380,7 @@ export default function MyScoresPage(): JSX.Element {
             {/* Back to Assessments */}
             <div style={{ marginTop: '2rem', textAlign: 'center' }}>
               <Link to="/assessments" className="button button--secondary">
-                View All Assessments
+                <Translate id="page.myScores.viewAllAssessments">View All Assessments</Translate>
               </Link>
             </div>
           </div>

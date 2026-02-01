@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '@theme/Layout';
+import Translate, { translate } from '@docusaurus/Translate';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useAuth } from '../components/AuthContext';
 
@@ -27,12 +28,12 @@ export default function ResetPassword(): JSX.Element {
     setError(null);
 
     if (password.length < 8) {
-      setError('Password must be at least 8 characters');
+      setError(translate({ message: 'Password must be at least 8 characters', id: 'page.resetPassword.error.tooShort' }));
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(translate({ message: 'Passwords do not match', id: 'page.resetPassword.error.mismatch' }));
       return;
     }
 
@@ -42,7 +43,7 @@ export default function ResetPassword(): JSX.Element {
       await updatePassword(password);
       setSuccess(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to update password');
+      setError(err instanceof Error ? err.message : translate({ message: 'Failed to update password', id: 'page.resetPassword.error.updateFailed' }));
     } finally {
       setIsSubmitting(false);
     }
@@ -50,7 +51,7 @@ export default function ResetPassword(): JSX.Element {
 
   if (!ready) {
     return (
-      <Layout title="Reset Password">
+      <Layout title={translate({ message: 'Reset Password', id: 'page.resetPassword.title' })}>
         <main className="container margin-vert--lg">
           <div className="text--center">
             <div
@@ -65,7 +66,7 @@ export default function ResetPassword(): JSX.Element {
               }}
             />
             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-            <p>Processing reset link...</p>
+            <p><Translate id="page.resetPassword.processing">Processing reset link...</Translate></p>
           </div>
         </main>
       </Layout>
@@ -74,16 +75,16 @@ export default function ResetPassword(): JSX.Element {
 
   if (!currentUser) {
     return (
-      <Layout title="Reset Password">
+      <Layout title={translate({ message: 'Reset Password', id: 'page.resetPassword.title' })}>
         <main className="container margin-vert--lg">
           <div className="row">
             <div className="col col--6 col--offset-3" style={{ textAlign: 'center' }}>
-              <h2>Invalid or Expired Link</h2>
+              <h2><Translate id="page.resetPassword.invalidLink.heading">Invalid or Expired Link</Translate></h2>
               <p style={{ color: 'var(--ifm-color-emphasis-600)' }}>
-                This password reset link is invalid or has expired. Please request a new one.
+                <Translate id="page.resetPassword.invalidLink.message">This password reset link is invalid or has expired. Please request a new one.</Translate>
               </p>
               <a href={useBaseUrl('/forgot-password')} className="button button--primary">
-                Request New Link
+                <Translate id="page.resetPassword.requestNewLink">Request New Link</Translate>
               </a>
             </div>
           </div>
@@ -94,7 +95,7 @@ export default function ResetPassword(): JSX.Element {
 
   if (success) {
     return (
-      <Layout title="Password Updated">
+      <Layout title={translate({ message: 'Password Updated', id: 'page.resetPassword.updatedTitle' })}>
         <main className="container margin-vert--lg">
           <div className="row">
             <div className="col col--6 col--offset-3" style={{ textAlign: 'center' }}>
@@ -114,10 +115,10 @@ export default function ResetPassword(): JSX.Element {
               >
                 &#10003;
               </div>
-              <h2>Password Updated</h2>
-              <p>Your password has been successfully changed. You can now sign in with your new password.</p>
+              <h2><Translate id="page.resetPassword.success.heading">Password Updated</Translate></h2>
+              <p><Translate id="page.resetPassword.success.message">Your password has been successfully changed. You can now sign in with your new password.</Translate></p>
               <a href={signinUrl} className="button button--primary" style={{ marginTop: '1rem' }}>
-                Sign In
+                <Translate id="page.resetPassword.signIn">Sign In</Translate>
               </a>
             </div>
           </div>
@@ -127,13 +128,13 @@ export default function ResetPassword(): JSX.Element {
   }
 
   return (
-    <Layout title="Set New Password" description="Set your new password">
+    <Layout title={translate({ message: 'Set New Password', id: 'page.resetPassword.setNewTitle' })} description={translate({ message: 'Set your new password', id: 'page.resetPassword.setNewDescription' })}>
       <main className="container margin-vert--lg">
         <div className="row">
           <div className="col col--6 col--offset-3">
-            <h2>Set New Password</h2>
+            <h2><Translate id="page.resetPassword.form.heading">Set New Password</Translate></h2>
             <p style={{ color: 'var(--ifm-color-emphasis-600)' }}>
-              Enter your new password below.
+              <Translate id="page.resetPassword.form.instructions">Enter your new password below.</Translate>
             </p>
 
             <form onSubmit={handleSubmit}>
@@ -144,7 +145,7 @@ export default function ResetPassword(): JSX.Element {
               )}
 
               <div className="form-group">
-                <label htmlFor="password">New Password</label>
+                <label htmlFor="password"><Translate id="page.resetPassword.newPasswordLabel">New Password</Translate></label>
                 <input
                   type="password"
                   id="password"
@@ -153,12 +154,12 @@ export default function ResetPassword(): JSX.Element {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={8}
-                  placeholder="At least 8 characters"
+                  placeholder={translate({ message: 'At least 8 characters', id: 'page.resetPassword.newPasswordPlaceholder' })}
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm New Password</label>
+                <label htmlFor="confirmPassword"><Translate id="page.resetPassword.confirmPasswordLabel">Confirm New Password</Translate></label>
                 <input
                   type="password"
                   id="confirmPassword"
@@ -167,7 +168,7 @@ export default function ResetPassword(): JSX.Element {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   minLength={8}
-                  placeholder="Repeat your new password"
+                  placeholder={translate({ message: 'Repeat your new password', id: 'page.resetPassword.confirmPasswordPlaceholder' })}
                 />
               </div>
 
@@ -176,7 +177,7 @@ export default function ResetPassword(): JSX.Element {
                 className="button button--primary button--lg"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? 'Updating...' : 'Update Password'}
+                {isSubmitting ? translate({ message: 'Updating...', id: 'page.resetPassword.updating' }) : translate({ message: 'Update Password', id: 'page.resetPassword.submit' })}
               </button>
             </form>
           </div>

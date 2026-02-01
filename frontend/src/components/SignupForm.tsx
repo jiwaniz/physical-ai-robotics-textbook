@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import { useHistory } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Translate, { translate } from '@docusaurus/Translate';
 
 const SignupForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,7 +24,7 @@ const SignupForm: React.FC = () => {
       // Redirect to email verification pending page
       history.push(verifyPendingUrl);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Signup failed');
+      setError(err instanceof Error ? err.message : translate({ message: 'Signup failed', id: 'component.signupForm.errorFallback' }));
     } finally {
       setIsSubmitting(false);
     }
@@ -31,7 +32,7 @@ const SignupForm: React.FC = () => {
 
   return (
     <div className="signup-form-container">
-      <h2>Create Your Account</h2>
+      <h2><Translate id="component.signupForm.heading">Create Your Account</Translate></h2>
       <form onSubmit={handleSubmit} className="signup-form">
         {error && (
           <div className="alert alert-danger" role="alert">
@@ -40,7 +41,7 @@ const SignupForm: React.FC = () => {
         )}
 
         <div className="form-group">
-          <label htmlFor="name">Full Name</label>
+          <label htmlFor="name"><Translate id="component.signupForm.nameLabel">Full Name</Translate></label>
           <input
             type="text"
             id="name"
@@ -48,12 +49,12 @@ const SignupForm: React.FC = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            placeholder="Enter your full name"
+            placeholder={translate({ message: 'Enter your full name', id: 'component.signupForm.namePlaceholder' })}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="email">Email Address</label>
+          <label htmlFor="email"><Translate id="component.signupForm.emailLabel">Email Address</Translate></label>
           <input
             type="email"
             id="email"
@@ -61,12 +62,12 @@ const SignupForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="your.email@example.com"
+            placeholder={translate({ message: 'your.email@example.com', id: 'component.signupForm.emailPlaceholder' })}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password"><Translate id="component.signupForm.passwordLabel">Password</Translate></label>
           <input
             type="password"
             id="password"
@@ -75,10 +76,10 @@ const SignupForm: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={8}
-            placeholder="At least 8 characters"
+            placeholder={translate({ message: 'At least 8 characters', id: 'component.signupForm.passwordPlaceholder' })}
           />
           <small className="form-text text-muted">
-            Password must be at least 8 characters and contain uppercase, lowercase, and numbers.
+            <Translate id="component.signupForm.passwordHint">Password must be at least 8 characters and contain uppercase, lowercase, and numbers.</Translate>
           </small>
         </div>
 
@@ -87,11 +88,11 @@ const SignupForm: React.FC = () => {
           className="button button--primary button--lg"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Creating Account...' : 'Sign Up'}
+          {isSubmitting ? <Translate id="component.signupForm.submitting">Creating Account...</Translate> : <Translate id="component.signupForm.submit">Sign Up</Translate>}
         </button>
 
         <p className="mt-3">
-          Already have an account? <a href={useBaseUrl('/signin')}>Sign in here</a>
+          <Translate id="component.signupForm.hasAccount">Already have an account?</Translate>{' '}<a href={useBaseUrl('/signin')}><Translate id="component.signupForm.signinLink">Sign in here</Translate></a>
         </p>
       </form>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import { useHistory, useLocation } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Translate, { translate } from '@docusaurus/Translate';
 
 const SigninForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -38,7 +39,7 @@ const SigninForm: React.FC = () => {
       const destination = redirectUrl ? decodeURIComponent(redirectUrl) : baseUrl;
       history.push(destination);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Signin failed');
+      setError(err instanceof Error ? err.message : translate({ message: 'Signin failed', id: 'component.signinForm.errorFallback' }));
     } finally {
       setIsSubmitting(false);
     }
@@ -46,7 +47,7 @@ const SigninForm: React.FC = () => {
 
   return (
     <div className="signin-form-container">
-      <h2>Sign In to Your Account</h2>
+      <h2><Translate id="component.signinForm.heading">Sign In to Your Account</Translate></h2>
       <form onSubmit={handleSubmit} className="signin-form">
         {error && (
           <div className="alert alert-danger" role="alert">
@@ -55,7 +56,7 @@ const SigninForm: React.FC = () => {
         )}
 
         <div className="form-group">
-          <label htmlFor="email">Email Address</label>
+          <label htmlFor="email"><Translate id="component.signinForm.emailLabel">Email Address</Translate></label>
           <input
             type="email"
             id="email"
@@ -63,12 +64,12 @@ const SigninForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="your.email@example.com"
+            placeholder={translate({ message: 'your.email@example.com', id: 'component.signinForm.emailPlaceholder' })}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password"><Translate id="component.signinForm.passwordLabel">Password</Translate></label>
           <input
             type="password"
             id="password"
@@ -76,13 +77,13 @@ const SigninForm: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="Enter your password"
+            placeholder={translate({ message: 'Enter your password', id: 'component.signinForm.passwordPlaceholder' })}
           />
         </div>
 
         <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
           <a href={useBaseUrl('/forgot-password')} style={{ fontSize: '0.9rem' }}>
-            Forgot password?
+            <Translate id="component.signinForm.forgotPassword">Forgot password?</Translate>
           </a>
         </div>
 
@@ -91,11 +92,11 @@ const SigninForm: React.FC = () => {
           className="button button--primary button--lg"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Signing In...' : 'Sign In'}
+          {isSubmitting ? <Translate id="component.signinForm.submitting">Signing In...</Translate> : <Translate id="component.signinForm.submit">Sign In</Translate>}
         </button>
 
         <p className="mt-3">
-          Don't have an account? <a href={useBaseUrl('/signup')}>Sign up here</a>
+          <Translate id="component.signinForm.noAccount">Don't have an account?</Translate>{' '}<a href={useBaseUrl('/signup')}><Translate id="component.signinForm.signupLink">Sign up here</Translate></a>
         </p>
       </form>
     </div>

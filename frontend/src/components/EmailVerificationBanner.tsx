@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
+import Translate, { translate } from '@docusaurus/Translate';
 
 export default function EmailVerificationBanner(): JSX.Element | null {
   const { currentUser, resendVerification } = useAuth();
@@ -20,7 +21,7 @@ export default function EmailVerificationBanner(): JSX.Element | null {
       await resendVerification(currentUser.email);
       setResent(true);
     } catch (err) {
-      setError('Failed to resend verification email. Please try again.');
+      setError(translate({ message: 'Failed to resend verification email. Please try again.', id: 'component.emailVerificationBanner.resendError' }));
     } finally {
       setResending(false);
     }
@@ -45,12 +46,13 @@ export default function EmailVerificationBanner(): JSX.Element | null {
         }}
       >
         <span style={{ color: 'var(--ifm-color-warning-darker)' }}>
-          <strong>Please verify your email address.</strong> Check your inbox for a verification link.
+          <strong><Translate id="component.emailVerificationBanner.pleaseVerify">Please verify your email address.</Translate></strong>{' '}
+          <Translate id="component.emailVerificationBanner.checkInbox">Check your inbox for a verification link.</Translate>
         </span>
 
         {resent ? (
           <span style={{ color: 'var(--ifm-color-success-darker)' }}>
-            Verification email sent!
+            <Translate id="component.emailVerificationBanner.sent">Verification email sent!</Translate>
           </span>
         ) : (
           <button
@@ -67,7 +69,7 @@ export default function EmailVerificationBanner(): JSX.Element | null {
               opacity: resending ? 0.7 : 1,
             }}
           >
-            {resending ? 'Sending...' : 'Resend Email'}
+            {resending ? <Translate id="component.emailVerificationBanner.sending">Sending...</Translate> : <Translate id="component.emailVerificationBanner.resend">Resend Email</Translate>}
           </button>
         )}
 

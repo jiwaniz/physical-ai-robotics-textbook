@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Layout from '@theme/Layout';
+import Translate, { translate } from '@docusaurus/Translate';
 import { useHistory } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useAuth } from '../components/AuthContext';
@@ -10,7 +11,7 @@ export default function VerifyEmailPage(): JSX.Element {
   const onboardingUrl = useBaseUrl('/onboarding');
   const signinUrl = useBaseUrl('/signin');
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
-  const [message, setMessage] = useState('Verifying your email...');
+  const [message, setMessage] = useState(translate({ message: 'Verifying your email...', id: 'page.verifyEmail.verifying' }));
   const hasChecked = useRef(false);
   const checkCount = useRef(0);
 
@@ -34,7 +35,7 @@ export default function VerifyEmailPage(): JSX.Element {
       if (currentUser?.email_confirmed_at) {
         hasChecked.current = true;
         setStatus('success');
-        setMessage('Your email has been verified successfully! Redirecting to onboarding...');
+        setMessage(translate({ message: 'Your email has been verified successfully! Redirecting to onboarding...', id: 'page.verifyEmail.success' }));
         setTimeout(() => {
           history.push(onboardingUrl);
         }, 2000);
@@ -45,7 +46,7 @@ export default function VerifyEmailPage(): JSX.Element {
       if (currentUser && !currentUser.email_confirmed_at) {
         hasChecked.current = true;
         setStatus('error');
-        setMessage('Email verification is still pending. Please click the link in your email.');
+        setMessage(translate({ message: 'Email verification is still pending. Please click the link in your email.', id: 'page.verifyEmail.pending' }));
         return;
       }
 
@@ -59,7 +60,7 @@ export default function VerifyEmailPage(): JSX.Element {
       // After waiting, still no user
       hasChecked.current = true;
       setStatus('error');
-      setMessage('Please sign in to verify your email.');
+      setMessage(translate({ message: 'Please sign in to verify your email.', id: 'page.verifyEmail.signInRequired' }));
     };
 
     // Initial delay to let Supabase process URL hash
@@ -68,7 +69,7 @@ export default function VerifyEmailPage(): JSX.Element {
   }, [isLoading, currentUser, history, onboardingUrl, status]);
 
   return (
-    <Layout title="Email Verification">
+    <Layout title={translate({ message: 'Email Verification', id: 'page.verifyEmail.title' })}>
       <main className="container margin-vert--xl">
         <div className="row">
           <div className="col col--6 col--offset-3">
@@ -158,9 +159,9 @@ export default function VerifyEmailPage(): JSX.Element {
               )}
 
               <h2 style={{ marginBottom: '1rem' }}>
-                {status === 'loading' && 'Verifying Email'}
-                {status === 'success' && 'Email Verified!'}
-                {status === 'error' && 'Verification Issue'}
+                {status === 'loading' && <Translate id="page.verifyEmail.heading.loading">Verifying Email</Translate>}
+                {status === 'success' && <Translate id="page.verifyEmail.heading.success">Email Verified!</Translate>}
+                {status === 'error' && <Translate id="page.verifyEmail.heading.error">Verification Issue</Translate>}
               </h2>
 
               <p style={{ color: 'var(--ifm-color-emphasis-700)', marginBottom: '2rem' }}>
@@ -172,7 +173,7 @@ export default function VerifyEmailPage(): JSX.Element {
                   onClick={() => history.push(onboardingUrl)}
                   className="button button--primary button--lg"
                 >
-                  Continue to Onboarding Now
+                  <Translate id="page.verifyEmail.continueButton">Continue to Onboarding Now</Translate>
                 </button>
               )}
 
@@ -182,13 +183,13 @@ export default function VerifyEmailPage(): JSX.Element {
                     onClick={() => history.push(signinUrl)}
                     className="button button--secondary button--lg"
                   >
-                    Sign In
+                    <Translate id="page.verifyEmail.signInButton">Sign In</Translate>
                   </button>
                   <button
                     onClick={() => history.push('/')}
                     className="button button--primary button--lg"
                   >
-                    Go Home
+                    <Translate id="page.verifyEmail.goHomeButton">Go Home</Translate>
                   </button>
                 </div>
               )}
