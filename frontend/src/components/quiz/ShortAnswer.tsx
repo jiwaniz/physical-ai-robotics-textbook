@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Translate, { translate } from '@docusaurus/Translate';
 import { useQuiz } from './QuizContext';
 import styles from './Quiz.module.css';
 
@@ -51,11 +52,16 @@ const ShortAnswer: React.FC<ShortAnswerProps> = ({
           className={styles.answerTextarea}
           value={text}
           onChange={handleChange}
-          placeholder="Type your answer here..."
+          placeholder={translate({ message: 'Type your answer here...', id: 'component.quiz.shortAnswer.placeholder' })}
           rows={6}
         />
         <div className={styles.charCount}>
-          {text.length} / {maxLength} characters
+          <Translate
+            id="component.quiz.shortAnswer.charCount"
+            values={{ current: text.length, max: maxLength }}
+          >
+            {'{current} / {max} characters'}
+          </Translate>
         </div>
       </div>
     </div>

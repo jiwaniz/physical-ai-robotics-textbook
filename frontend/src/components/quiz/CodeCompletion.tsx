@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Translate, { translate } from '@docusaurus/Translate';
 import { useQuiz } from './QuizContext';
 import styles from './Quiz.module.css';
 
@@ -49,7 +50,9 @@ const CodeCompletion: React.FC<CodeCompletionProps> = ({
               className={styles.hintToggle}
               onClick={() => setShowHints(!showHints)}
             >
-              {showHints ? 'Hide Hints' : 'Show Hints'}
+              {showHints
+                ? translate({ message: 'Hide Hints', id: 'component.quiz.codeCompletion.hideHints' })
+                : translate({ message: 'Show Hints', id: 'component.quiz.codeCompletion.showHints' })}
             </button>
           )}
         </div>
@@ -64,7 +67,7 @@ const CodeCompletion: React.FC<CodeCompletionProps> = ({
 
         {showHints && hints.length > 0 && (
           <div className={styles.hintsContainer}>
-            <strong>Hints:</strong>
+            <strong><Translate id="component.quiz.codeCompletion.hintsLabel">Hints:</Translate></strong>
             <ul>
               {hints.map((hint, idx) => (
                 <li key={idx}>{hint}</li>

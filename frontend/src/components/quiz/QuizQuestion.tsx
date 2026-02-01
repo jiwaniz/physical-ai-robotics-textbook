@@ -1,4 +1,5 @@
 import React from 'react';
+import Translate, { translate } from '@docusaurus/Translate';
 import { Question } from './QuizContext';
 import MultipleChoice from './MultipleChoice';
 import styles from './Quiz.module.css';
@@ -22,17 +23,17 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({ question, questionNumber })
         />
       );
     }
-    return <p>Unsupported question type: {question.question_type}</p>;
+    return <p><Translate id="component.quiz.question.unsupportedType">Unsupported question type:</Translate> {question.question_type}</p>;
   };
 
   const getCategoryLabel = () => {
     switch (question.category) {
       case 'conceptual':
-        return 'Conceptual';
+        return translate({ message: 'Conceptual', id: 'component.quiz.question.categoryConceptual' });
       case 'code_comprehension':
-        return 'Code Comprehension';
+        return translate({ message: 'Code Comprehension', id: 'component.quiz.question.categoryCodeComprehension' });
       case 'troubleshooting':
-        return 'Troubleshooting';
+        return translate({ message: 'Troubleshooting', id: 'component.quiz.question.categoryTroubleshooting' });
       default:
         return question.category;
     }
@@ -41,9 +42,9 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({ question, questionNumber })
   return (
     <div className={styles.questionContainer}>
       <div className={styles.questionHeader}>
-        <span className={styles.questionNumber}>Question {questionNumber}</span>
+        <span className={styles.questionNumber}><Translate id="component.quiz.question.questionLabel">Question</Translate> {questionNumber}</span>
         <span className={styles.questionCategory}>{getCategoryLabel()}</span>
-        <span className={styles.questionPoints}>{question.points} pts</span>
+        <span className={styles.questionPoints}>{question.points} <Translate id="component.quiz.question.pts">pts</Translate></span>
       </div>
       {renderQuestion()}
     </div>

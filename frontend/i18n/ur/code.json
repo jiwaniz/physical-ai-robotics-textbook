@@ -360,5 +360,681 @@
   "theme.tags.tagsPageTitle": {
     "message": "ٹیگز",
     "description": "The title of the tag list page"
+  },
+
+  "component.navbarUserMenu.loading": {
+    "message": "لوڈ ہو رہا ہے..."
+  },
+  "component.navbarUserMenu.signOut": {
+    "message": "سائن آؤٹ"
+  },
+  "component.navbarUserMenu.signIn": {
+    "message": "سائن ان"
+  },
+  "component.navbarUserMenu.signUp": {
+    "message": "سائن اپ"
+  },
+  "component.navbarUserMenu.defaultName": {
+    "message": "صارف"
+  },
+
+  "component.signinForm.heading": {
+    "message": "اپنے اکاؤنٹ میں سائن ان کریں"
+  },
+  "component.signinForm.emailLabel": {
+    "message": "ای میل ایڈریس"
+  },
+  "component.signinForm.emailPlaceholder": {
+    "message": "your.email@example.com"
+  },
+  "component.signinForm.passwordLabel": {
+    "message": "پاس ورڈ"
+  },
+  "component.signinForm.passwordPlaceholder": {
+    "message": "اپنا پاس ورڈ درج کریں"
+  },
+  "component.signinForm.forgotPassword": {
+    "message": "پاس ورڈ بھول گئے؟"
+  },
+  "component.signinForm.submit": {
+    "message": "سائن ان"
+  },
+  "component.signinForm.submitting": {
+    "message": "سائن ان ہو رہا ہے..."
+  },
+  "component.signinForm.noAccount": {
+    "message": "اکاؤنٹ نہیں ہے؟"
+  },
+  "component.signinForm.signupLink": {
+    "message": "یہاں سائن اپ کریں"
+  },
+  "component.signinForm.errorFallback": {
+    "message": "سائن ان ناکام ہو گیا"
+  },
+
+  "component.signupForm.heading": {
+    "message": "اپنا اکاؤنٹ بنائیں"
+  },
+  "component.signupForm.nameLabel": {
+    "message": "پورا نام"
+  },
+  "component.signupForm.namePlaceholder": {
+    "message": "اپنا پورا نام درج کریں"
+  },
+  "component.signupForm.emailLabel": {
+    "message": "ای میل ایڈریس"
+  },
+  "component.signupForm.emailPlaceholder": {
+    "message": "your.email@example.com"
+  },
+  "component.signupForm.passwordLabel": {
+    "message": "پاس ورڈ"
+  },
+  "component.signupForm.passwordPlaceholder": {
+    "message": "کم از کم 8 حروف"
+  },
+  "component.signupForm.passwordHint": {
+    "message": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے اور اس میں بڑے، چھوٹے حروف اور نمبر ہونے چاہییں۔"
+  },
+  "component.signupForm.submit": {
+    "message": "سائن اپ"
+  },
+  "component.signupForm.submitting": {
+    "message": "اکاؤنٹ بنایا جا رہا ہے..."
+  },
+  "component.signupForm.hasAccount": {
+    "message": "پہلے سے اکاؤنٹ ہے؟"
+  },
+  "component.signupForm.signinLink": {
+    "message": "یہاں سائن ان کریں"
+  },
+  "component.signupForm.errorFallback": {
+    "message": "سائن اپ ناکام ہو گیا"
+  },
+
+  "component.emailVerificationBanner.pleaseVerify": {
+    "message": "براہ کرم اپنا ای میل ایڈریس تصدیق کریں۔"
+  },
+  "component.emailVerificationBanner.checkInbox": {
+    "message": "تصدیقی لنک کے لیے اپنا ان باکس چیک کریں۔"
+  },
+  "component.emailVerificationBanner.sent": {
+    "message": "تصدیقی ای میل بھیج دی گئی!"
+  },
+  "component.emailVerificationBanner.sending": {
+    "message": "بھیجا جا رہا ہے..."
+  },
+  "component.emailVerificationBanner.resend": {
+    "message": "ای میل دوبارہ بھیجیں"
+  },
+  "component.emailVerificationBanner.resendError": {
+    "message": "تصدیقی ای میل دوبارہ بھیجنے میں ناکامی۔ براہ کرم دوبارہ کوشش کریں۔"
+  },
+
+  "page.signin.title": {
+    "message": "سائن ان"
+  },
+  "page.signin.description": {
+    "message": "ذاتی نوعیت کی تعلیم تک رسائی کے لیے اپنے اکاؤنٹ میں سائن ان کریں"
+  },
+  "page.signup.title": {
+    "message": "سائن اپ"
+  },
+  "page.signup.description": {
+    "message": "Physical AI اور Humanoid Robotics کی نصابی کتاب تک رسائی کے لیے اکاؤنٹ بنائیں"
+  },
+
+  "page.onboarding.title": {
+    "message": "اپنا پروفائل مکمل کریں"
+  },
+  "page.onboarding.description": {
+    "message": "اپنے سیکھنے کے تجربے کو ذاتی بنانے کے لیے اپنے پس منظر کے بارے میں بتائیں"
+  },
+  "component.onboardingForm.heading": {
+    "message": "اپنے پس منظر کے بارے میں بتائیں"
+  },
+  "component.onboardingForm.subheading": {
+    "message": "آپ کے سیکھنے کے تجربے کو ذاتی بنانے میں ہماری مدد کریں"
+  },
+  "component.onboardingForm.softwareLabel": {
+    "message": "سافٹ ویئر ڈیولپمنٹ کا تجربہ"
+  },
+  "component.onboardingForm.hardwareLabel": {
+    "message": "ہارڈ ویئر / روبوٹکس کا تجربہ"
+  },
+  "component.onboardingForm.topicsLabel": {
+    "message": "وہ موضوعات اور ٹیکنالوجیز جن سے آپ واقف ہیں"
+  },
+  "component.onboardingForm.topicsHint": {
+    "message": "تمام متعلقہ آپشنز منتخب کریں (اختیاری)"
+  },
+  "component.onboardingForm.selectLevel": {
+    "message": "اپنے تجربے کی سطح منتخب کریں"
+  },
+  "component.onboardingForm.software.beginner": {
+    "message": "مبتدی - پروگرامنگ میں نئے ہیں"
+  },
+  "component.onboardingForm.software.intermediate": {
+    "message": "درمیانی - کچھ پروگرامنگ کا تجربہ"
+  },
+  "component.onboardingForm.software.advanced": {
+    "message": "ماہر - تجربہ کار ڈویلپر"
+  },
+  "component.onboardingForm.hardware.beginner": {
+    "message": "مبتدی - ہارڈ ویئر / روبوٹکس میں نئے ہیں"
+  },
+  "component.onboardingForm.hardware.intermediate": {
+    "message": "درمیانی - کچھ ہارڈ ویئر / روبوٹکس کا تجربہ"
+  },
+  "component.onboardingForm.hardware.advanced": {
+    "message": "ماہر - ہارڈ ویئر / روبوٹکس میں تجربہ کار"
+  },
+  "component.onboardingForm.saving": {
+    "message": "محفوظ ہو رہا ہے..."
+  },
+  "component.onboardingForm.submit": {
+    "message": "آن بورڈنگ مکمل کریں"
+  },
+  "component.onboardingForm.skip": {
+    "message": "ابھی چھوڑ دیں"
+  },
+  "component.onboardingForm.error.selectBoth": {
+    "message": "براہ کرم سافٹ ویئر اور ہارڈ ویئر دونوں تجربے کی سطح منتخب کریں"
+  },
+  "component.onboardingForm.error.saveFailed": {
+    "message": "پروفائل محفوظ کرنے میں ناکامی"
+  },
+
+  "page.forgotPassword.title": {
+    "message": "پاس ورڈ بھول گئے"
+  },
+  "page.forgotPassword.description": {
+    "message": "اپنا پاس ورڈ ری سیٹ کریں"
+  },
+  "page.forgotPassword.heading": {
+    "message": "اپنا پاس ورڈ ری سیٹ کریں"
+  },
+  "page.forgotPassword.instructions": {
+    "message": "اپنا ای میل ایڈریس درج کریں اور ہم آپ کو پاس ورڈ ری سیٹ کا لنک بھیجیں گے۔"
+  },
+  "page.forgotPassword.emailLabel": {
+    "message": "ای میل ایڈریس"
+  },
+  "page.forgotPassword.emailPlaceholder": {
+    "message": "your.email@example.com"
+  },
+  "page.forgotPassword.submit": {
+    "message": "ری سیٹ لنک بھیجیں"
+  },
+  "page.forgotPassword.sending": {
+    "message": "بھیجا جا رہا ہے..."
+  },
+  "page.forgotPassword.rememberPassword": {
+    "message": "پاس ورڈ یاد ہے؟ {signInLink}"
+  },
+  "page.forgotPassword.signInLink": {
+    "message": "یہاں سائن ان کریں"
+  },
+  "page.forgotPassword.sent.heading": {
+    "message": "اپنا ای میل چیک کریں"
+  },
+  "page.forgotPassword.sent.message": {
+    "message": "ہم نے {email} پر پاس ورڈ ری سیٹ کا لنک بھیج دیا ہے۔"
+  },
+  "page.forgotPassword.sent.instructions": {
+    "message": "نیا پاس ورڈ سیٹ کرنے کے لیے ای میل میں لنک پر کلک کریں۔ لنک 1 گھنٹے میں ختم ہو جائے گا۔"
+  },
+  "page.forgotPassword.backToSignIn": {
+    "message": "سائن ان پر واپس جائیں"
+  },
+  "page.forgotPassword.error.sendFailed": {
+    "message": "ری سیٹ ای میل بھیجنے میں ناکامی"
+  },
+
+  "page.resetPassword.title": {
+    "message": "پاس ورڈ ری سیٹ کریں"
+  },
+  "page.resetPassword.updatedTitle": {
+    "message": "پاس ورڈ اپ ڈیٹ ہو گیا"
+  },
+  "page.resetPassword.setNewTitle": {
+    "message": "نیا پاس ورڈ سیٹ کریں"
+  },
+  "page.resetPassword.setNewDescription": {
+    "message": "اپنا نیا پاس ورڈ سیٹ کریں"
+  },
+  "page.resetPassword.processing": {
+    "message": "ری سیٹ لنک پر عمل ہو رہا ہے..."
+  },
+  "page.resetPassword.invalidLink.heading": {
+    "message": "غلط یا ختم شدہ لنک"
+  },
+  "page.resetPassword.invalidLink.message": {
+    "message": "یہ پاس ورڈ ری سیٹ لنک غلط ہے یا ختم ہو چکا ہے۔ براہ کرم نیا لنک حاصل کریں۔"
+  },
+  "page.resetPassword.requestNewLink": {
+    "message": "نیا لنک حاصل کریں"
+  },
+  "page.resetPassword.success.heading": {
+    "message": "پاس ورڈ اپ ڈیٹ ہو گیا"
+  },
+  "page.resetPassword.success.message": {
+    "message": "آپ کا پاس ورڈ کامیابی سے تبدیل ہو گیا ہے۔ اب آپ نئے پاس ورڈ سے سائن ان کر سکتے ہیں۔"
+  },
+  "page.resetPassword.signIn": {
+    "message": "سائن ان"
+  },
+  "page.resetPassword.form.heading": {
+    "message": "نیا پاس ورڈ سیٹ کریں"
+  },
+  "page.resetPassword.form.instructions": {
+    "message": "نیچے اپنا نیا پاس ورڈ درج کریں۔"
+  },
+  "page.resetPassword.newPasswordLabel": {
+    "message": "نیا پاس ورڈ"
+  },
+  "page.resetPassword.confirmPasswordLabel": {
+    "message": "نئے پاس ورڈ کی تصدیق"
+  },
+  "page.resetPassword.newPasswordPlaceholder": {
+    "message": "کم از کم 8 حروف"
+  },
+  "page.resetPassword.confirmPasswordPlaceholder": {
+    "message": "اپنا نیا پاس ورڈ دہرائیں"
+  },
+  "page.resetPassword.submit": {
+    "message": "پاس ورڈ اپ ڈیٹ کریں"
+  },
+  "page.resetPassword.updating": {
+    "message": "اپ ڈیٹ ہو رہا ہے..."
+  },
+  "page.resetPassword.error.tooShort": {
+    "message": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے"
+  },
+  "page.resetPassword.error.mismatch": {
+    "message": "پاس ورڈ مماثل نہیں ہیں"
+  },
+  "page.resetPassword.error.updateFailed": {
+    "message": "پاس ورڈ اپ ڈیٹ کرنے میں ناکامی"
+  },
+
+  "page.verifyEmail.title": {
+    "message": "ای میل کی تصدیق"
+  },
+  "page.verifyEmail.verifying": {
+    "message": "آپ کی ای میل کی تصدیق ہو رہی ہے..."
+  },
+  "page.verifyEmail.success": {
+    "message": "آپ کی ای میل کامیابی سے تصدیق ہو گئی! آن بورڈنگ پر ری ڈائریکٹ ہو رہا ہے..."
+  },
+  "page.verifyEmail.pending": {
+    "message": "ای میل کی تصدیق ابھی باقی ہے۔ براہ کرم اپنی ای میل میں لنک پر کلک کریں۔"
+  },
+  "page.verifyEmail.signInRequired": {
+    "message": "اپنی ای میل کی تصدیق کے لیے براہ کرم سائن ان کریں۔"
+  },
+  "page.verifyEmail.heading.loading": {
+    "message": "ای میل کی تصدیق ہو رہی ہے"
+  },
+  "page.verifyEmail.heading.success": {
+    "message": "ای میل تصدیق شدہ!"
+  },
+  "page.verifyEmail.heading.error": {
+    "message": "تصدیق کا مسئلہ"
+  },
+  "page.verifyEmail.continueButton": {
+    "message": "ابھی آن بورڈنگ جاری رکھیں"
+  },
+  "page.verifyEmail.signInButton": {
+    "message": "سائن ان"
+  },
+  "page.verifyEmail.goHomeButton": {
+    "message": "ہوم پر جائیں"
+  },
+
+  "page.verifyEmailPending.title": {
+    "message": "اپنی ای میل تصدیق کریں"
+  },
+  "page.verifyEmailPending.resendSuccess": {
+    "message": "تصدیقی ای میل بھیج دی گئی! براہ کرم اپنا ان باکس چیک کریں۔"
+  },
+  "page.verifyEmailPending.resendError": {
+    "message": "دوبارہ بھیجنے میں ناکامی۔ براہ کرم بعد میں کوشش کریں۔"
+  },
+  "page.verifyEmailPending.heading": {
+    "message": "اپنا ای میل چیک کریں"
+  },
+  "page.verifyEmailPending.sentMessage": {
+    "message": "ہم نے تصدیقی لنک بھیج دیا ہے:"
+  },
+  "page.verifyEmailPending.fallbackEmail": {
+    "message": "آپ کا ای میل ایڈریس"
+  },
+  "page.verifyEmailPending.instructions": {
+    "message": "اکاؤنٹ کی تصدیق اور کورس تک رسائی کے لیے ای میل میں لنک پر کلک کریں۔ لنک 24 گھنٹوں میں ختم ہو جائے گا۔"
+  },
+  "page.verifyEmailPending.didntReceive": {
+    "message": "ای میل نہیں ملا؟"
+  },
+  "page.verifyEmailPending.sending": {
+    "message": "بھیجا جا رہا ہے..."
+  },
+  "page.verifyEmailPending.resendButton": {
+    "message": "ای میل دوبارہ بھیجیں"
+  },
+  "page.verifyEmailPending.backToSignIn": {
+    "message": "سائن ان پر واپس جائیں"
+  },
+  "page.verifyEmailPending.checkSpam": {
+    "message": "اگر ان باکس میں ای میل نظر نہ آئے تو اپنا سپیم فولڈر چیک کریں۔"
+  },
+
+  "page.home.layoutTitle": {
+    "message": "خوش آمدید {siteConfig.title}"
+  },
+  "page.home.layoutDescription": {
+    "message": "بنیادی باتوں سے لے کر جدید موضوعات تک Physical AI اور Humanoid Robotics سیکھیں"
+  },
+  "page.home.loading": {
+    "message": "لوڈ ہو رہا ہے..."
+  },
+  "page.home.welcomeBack": {
+    "message": "واپسی پر خوش آمدید، {name}! 👋"
+  },
+  "page.home.continueLearning": {
+    "message": "سیکھنا جاری رکھیں 📚"
+  },
+  "page.home.signOut": {
+    "message": "سائن آؤٹ"
+  },
+  "page.home.getStarted": {
+    "message": "شروع کریں 🚀"
+  },
+  "page.home.signIn": {
+    "message": "سائن ان"
+  },
+  "page.home.feature.physicalAI.title": {
+    "message": "🤖 Physical AI"
+  },
+  "page.home.feature.physicalAI.description": {
+    "message": "فزیکل دنیا کے ساتھ تعامل کرنے والے ذہین روبوٹک سسٹمز بنانا سیکھیں۔"
+  },
+  "page.home.feature.humanoidRobotics.title": {
+    "message": "🦾 Humanoid Robotics"
+  },
+  "page.home.feature.humanoidRobotics.description": {
+    "message": "انسان نما روبوٹ کے ڈیزائن، کنٹرول اور پروگرامنگ کی بنیادی باتیں سیکھیں۔"
+  },
+  "page.home.feature.curriculum.title": {
+    "message": "📖 مکمل نصاب"
+  },
+  "page.home.feature.curriculum.description": {
+    "message": "ROS2 کی بنیادی باتوں سے لے کر Isaac Sim اور Gazebo کے ساتھ جدید سمیولیشن تک۔"
+  },
+
+  "page.quiz.error.noIdOrWeek": {
+    "message": "کوئی کوئز ID یا ہفتے کا نمبر فراہم نہیں کیا گیا"
+  },
+  "page.quiz.error.failedLoad": {
+    "message": "کوئز لوڈ کرنے میں ناکامی"
+  },
+  "page.quiz.layoutTitleLoading": {
+    "message": "کوئز لوڈ ہو رہا ہے..."
+  },
+  "page.quiz.layoutTitleError": {
+    "message": "کوئز میں خرابی"
+  },
+  "page.quiz.layoutTitleNotFound": {
+    "message": "کوئز نہیں ملا"
+  },
+  "page.quiz.loadingQuiz": {
+    "message": "کوئز لوڈ ہو رہا ہے..."
+  },
+  "page.quiz.unableToLoad": {
+    "message": "کوئز لوڈ کرنے سے قاصر"
+  },
+  "page.quiz.goBack": {
+    "message": "واپس جائیں"
+  },
+  "page.quiz.notFoundHeading": {
+    "message": "کوئز نہیں ملا"
+  },
+  "page.quiz.notFoundDescription": {
+    "message": "مطلوبہ کوئز نہیں مل سکا۔"
+  },
+  "page.quiz.viewAllAssessments": {
+    "message": "تمام جائزے دیکھیں"
+  },
+  "page.quiz.meta.questions": {
+    "message": "سوالات"
+  },
+  "page.quiz.meta.passingScore": {
+    "message": "کامیابی کے نمبر"
+  },
+  "page.quiz.meta.attemptsLeft": {
+    "message": "باقی کوششیں"
+  },
+  "page.quiz.yourBestScore": {
+    "message": "آپ کا بہترین اسکور:"
+  },
+  "page.quiz.status.passed": {
+    "message": "کامیاب"
+  },
+  "page.quiz.status.notPassed": {
+    "message": "ناکام"
+  },
+  "page.quiz.startQuiz": {
+    "message": "کوئز شروع کریں"
+  },
+  "page.quiz.noAttemptsRemaining": {
+    "message": "کوئی کوشش باقی نہیں"
+  },
+  "page.quiz.beforeYouStart": {
+    "message": "شروع کرنے سے پہلے:"
+  },
+  "page.quiz.tip.stableConnection": {
+    "message": "یقینی بنائیں کہ آپ کا انٹرنیٹ کنکشن مستحکم ہے"
+  },
+  "page.quiz.tip.autoSaved": {
+    "message": "آپ کے جوابات خود بخود محفوظ ہو جاتے ہیں"
+  },
+  "page.quiz.tip.navigateFreely": {
+    "message": "آپ سوالات کے درمیان آزادی سے نیویگیٹ کر سکتے ہیں"
+  },
+  "page.quiz.tip.submitQuiz": {
+    "message": "مکمل ہونے پر آخری سوال پر \"کوئز جمع کرائیں\" پر کلک کریں"
+  },
+
+  "page.myScores.layoutTitle": {
+    "message": "میرے اسکور"
+  },
+  "page.myScores.layoutDescription": {
+    "message": "اپنے کوئز اسکور اور پیش رفت دیکھیں"
+  },
+  "page.myScores.error.failedLoadAttempts": {
+    "message": "کوئز کی کوششیں لوڈ کرنے میں ناکامی"
+  },
+  "page.myScores.error.failedLoad": {
+    "message": "کوششیں لوڈ کرنے میں ناکامی"
+  },
+  "page.myScores.loadingScores": {
+    "message": "آپ کے اسکور لوڈ ہو رہے ہیں..."
+  },
+  "page.myScores.errorHeading": {
+    "message": "اسکور لوڈ کرنے میں خرابی"
+  },
+  "page.myScores.tryAgain": {
+    "message": "دوبارہ کوشش کریں"
+  },
+  "page.myScores.heading": {
+    "message": "میرے کوئز اسکور"
+  },
+  "page.myScores.subheading": {
+    "message": "تمام ہفتہ وار کوئزز میں اپنی پیش رفت دیکھیں۔"
+  },
+  "page.myScores.stat.quizzesAttempted": {
+    "message": "کوئزز کی کوشش"
+  },
+  "page.myScores.stat.quizzesPassed": {
+    "message": "کامیاب کوئزز"
+  },
+  "page.myScores.stat.totalAttempts": {
+    "message": "کل کوششیں"
+  },
+  "page.myScores.empty.heading": {
+    "message": "ابھی تک کوئی کوئز نہیں دیا"
+  },
+  "page.myScores.empty.description": {
+    "message": "آپ نے ابھی تک کوئی کوئز نہیں دیا۔ سیکھنا شروع کریں اور اپنے علم کی جانچ کریں!"
+  },
+  "page.myScores.empty.viewQuizzes": {
+    "message": "دستیاب کوئزز دیکھیں"
+  },
+  "page.myScores.bestScore": {
+    "message": "بہترین اسکور:"
+  },
+  "page.myScores.table.attempt": {
+    "message": "کوشش"
+  },
+  "page.myScores.table.date": {
+    "message": "تاریخ"
+  },
+  "page.myScores.table.score": {
+    "message": "اسکور"
+  },
+  "page.myScores.table.status": {
+    "message": "حالت"
+  },
+  "page.myScores.status.inProgress": {
+    "message": "جاری ہے"
+  },
+  "page.myScores.status.passed": {
+    "message": "کامیاب"
+  },
+  "page.myScores.status.notPassed": {
+    "message": "ناکام"
+  },
+  "page.myScores.viewAllAssessments": {
+    "message": "تمام جائزے دیکھیں"
+  },
+
+  "component.quiz.player.loading": {
+    "message": "کوئز لوڈ ہو رہا ہے..."
+  },
+  "component.quiz.player.confirmUnanswered": {
+    "message": "آپ کے {unanswered} سوال(ات) کے جواب نہیں دیے گئے۔ کیا آپ واقعی جمع کرانا چاہتے ہیں؟"
+  },
+  "component.quiz.player.confirmSubmit": {
+    "message": "کیا آپ واقعی جمع کرانا چاہتے ہیں؟ جمع کرانے کے بعد آپ اپنے جوابات تبدیل نہیں کر سکتے۔"
+  },
+  "component.quiz.player.submitError": {
+    "message": "کوئز جمع کرانے میں ناکامی"
+  },
+  "component.quiz.player.errorHeading": {
+    "message": "خرابی"
+  },
+  "component.quiz.player.errorHeading2": {
+    "message": "خرابی"
+  },
+  "component.quiz.player.goBack": {
+    "message": "واپس جائیں"
+  },
+  "component.quiz.player.goBack2": {
+    "message": "واپس جائیں"
+  },
+  "component.quiz.player.loadFailed": {
+    "message": "کوئز کے سوالات لوڈ کرنے میں ناکامی"
+  },
+  "component.quiz.player.previous": {
+    "message": "پچھلا"
+  },
+  "component.quiz.player.next": {
+    "message": "اگلا"
+  },
+  "component.quiz.player.submitting": {
+    "message": "جمع ہو رہا ہے..."
+  },
+  "component.quiz.player.submitButton": {
+    "message": "کوئز جمع کرائیں"
+  },
+
+  "component.quiz.question.unsupportedType": {
+    "message": "غیر تعاون یافتہ سوال کی قسم:"
+  },
+  "component.quiz.question.categoryConceptual": {
+    "message": "تصوراتی"
+  },
+  "component.quiz.question.categoryCodeComprehension": {
+    "message": "کوڈ کی سمجھ"
+  },
+  "component.quiz.question.categoryTroubleshooting": {
+    "message": "خرابی کی تشخیص"
+  },
+  "component.quiz.question.questionLabel": {
+    "message": "سوال"
+  },
+  "component.quiz.question.pts": {
+    "message": "نمبر"
+  },
+
+  "component.quiz.results.congratulations": {
+    "message": "مبارک ہو!"
+  },
+  "component.quiz.results.keepPracticing": {
+    "message": "مشق جاری رکھیں!"
+  },
+  "component.quiz.results.scoreLabel": {
+    "message": "اسکور"
+  },
+  "component.quiz.results.pointsEarned": {
+    "message": "حاصل کردہ نمبر"
+  },
+  "component.quiz.results.passingScore": {
+    "message": "کامیابی کے نمبر"
+  },
+  "component.quiz.results.statusLabel": {
+    "message": "حالت"
+  },
+  "component.quiz.results.passed": {
+    "message": "کامیاب"
+  },
+  "component.quiz.results.notPassed": {
+    "message": "ناکام"
+  },
+  "component.quiz.results.noteLabel": {
+    "message": "نوٹ:"
+  },
+  "component.quiz.results.pendingGrading": {
+    "message": "{count} سوال(ات) کو دستی جائزے کی ضرورت ہے۔ جائزے کے بعد آپ کا حتمی اسکور تبدیل ہو سکتا ہے۔"
+  },
+  "component.quiz.results.reviewContent": {
+    "message": "مواد کا جائزہ لیں"
+  },
+  "component.quiz.results.viewAllAssessments": {
+    "message": "تمام جائزے دیکھیں"
+  },
+
+  "component.quiz.progress.questionOf": {
+    "message": "سوال {current} از {total}"
+  },
+  "component.quiz.progress.answered": {
+    "message": "{answered} جوابات دیے ({percentage}%)"
+  },
+
+  "component.quiz.shortAnswer.placeholder": {
+    "message": "یہاں اپنا جواب ٹائپ کریں..."
+  },
+  "component.quiz.shortAnswer.charCount": {
+    "message": "{current} / {max} حروف"
+  },
+
+  "component.quiz.codeCompletion.hideHints": {
+    "message": "اشارے چھپائیں"
+  },
+  "component.quiz.codeCompletion.showHints": {
+    "message": "اشارے دکھائیں"
+  },
+  "component.quiz.codeCompletion.hintsLabel": {
+    "message": "اشارے:"
   }
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '@theme/Layout';
+import Translate, { translate } from '@docusaurus/Translate';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useAuth } from '../components/AuthContext';
 
@@ -20,14 +21,14 @@ export default function ForgotPassword(): JSX.Element {
       await resetPassword(email);
       setSent(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to send reset email');
+      setError(err instanceof Error ? err.message : translate({ message: 'Failed to send reset email', id: 'page.forgotPassword.error.sendFailed' }));
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <Layout title="Forgot Password" description="Reset your password">
+    <Layout title={translate({ message: 'Forgot Password', id: 'page.forgotPassword.title' })} description={translate({ message: 'Reset your password', id: 'page.forgotPassword.description' })}>
       <main className="container margin-vert--lg">
         <div className="row">
           <div className="col col--6 col--offset-3">
@@ -49,22 +50,24 @@ export default function ForgotPassword(): JSX.Element {
                 >
                   &#9993;
                 </div>
-                <h2>Check Your Email</h2>
+                <h2><Translate id="page.forgotPassword.sent.heading">Check Your Email</Translate></h2>
                 <p>
-                  We sent a password reset link to <strong>{email}</strong>.
+                  <Translate id="page.forgotPassword.sent.message" values={{ email: <strong>{email}</strong> }}>
+                    {'We sent a password reset link to {email}.'}
+                  </Translate>
                 </p>
                 <p style={{ color: 'var(--ifm-color-emphasis-600)' }}>
-                  Click the link in the email to set a new password. The link expires in 1 hour.
+                  <Translate id="page.forgotPassword.sent.instructions">Click the link in the email to set a new password. The link expires in 1 hour.</Translate>
                 </p>
                 <a href={signinUrl} className="button button--secondary" style={{ marginTop: '1rem' }}>
-                  Back to Sign In
+                  <Translate id="page.forgotPassword.backToSignIn">Back to Sign In</Translate>
                 </a>
               </div>
             ) : (
               <div>
-                <h2>Reset Your Password</h2>
+                <h2><Translate id="page.forgotPassword.heading">Reset Your Password</Translate></h2>
                 <p style={{ color: 'var(--ifm-color-emphasis-600)' }}>
-                  Enter your email address and we'll send you a link to reset your password.
+                  <Translate id="page.forgotPassword.instructions">Enter your email address and we'll send you a link to reset your password.</Translate>
                 </p>
 
                 <form onSubmit={handleSubmit}>
@@ -75,7 +78,7 @@ export default function ForgotPassword(): JSX.Element {
                   )}
 
                   <div className="form-group">
-                    <label htmlFor="email">Email Address</label>
+                    <label htmlFor="email"><Translate id="page.forgotPassword.emailLabel">Email Address</Translate></label>
                     <input
                       type="email"
                       id="email"
@@ -83,7 +86,7 @@ export default function ForgotPassword(): JSX.Element {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      placeholder="your.email@example.com"
+                      placeholder={translate({ message: 'your.email@example.com', id: 'page.forgotPassword.emailPlaceholder' })}
                     />
                   </div>
 
@@ -92,11 +95,13 @@ export default function ForgotPassword(): JSX.Element {
                     className="button button--primary button--lg"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Reset Link'}
+                    {isSubmitting ? translate({ message: 'Sending...', id: 'page.forgotPassword.sending' }) : translate({ message: 'Send Reset Link', id: 'page.forgotPassword.submit' })}
                   </button>
 
                   <p className="mt-3">
-                    Remember your password? <a href={signinUrl}>Sign in here</a>
+                    <Translate id="page.forgotPassword.rememberPassword" values={{ signInLink: <a href={signinUrl}>{translate({ message: 'Sign in here', id: 'page.forgotPassword.signInLink' })}</a> }}>
+                      {'Remember your password? {signInLink}'}
+                    </Translate>
                   </p>
                 </form>
               </div>

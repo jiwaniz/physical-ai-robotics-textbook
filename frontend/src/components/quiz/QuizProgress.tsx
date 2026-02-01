@@ -1,4 +1,5 @@
 import React from 'react';
+import Translate from '@docusaurus/Translate';
 import styles from './Quiz.module.css';
 
 interface QuizProgressProps {
@@ -14,10 +15,20 @@ const QuizProgress: React.FC<QuizProgressProps> = ({ current, total, answered })
     <div className={styles.progress}>
       <div className={styles.progressText}>
         <span>
-          Question {current} of {total}
+          <Translate
+            id="component.quiz.progress.questionOf"
+            values={{ current, total }}
+          >
+            {'Question {current} of {total}'}
+          </Translate>
         </span>
         <span className={styles.progressAnswered}>
-          {answered} answered ({percentage}%)
+          <Translate
+            id="component.quiz.progress.answered"
+            values={{ answered, percentage }}
+          >
+            {'{answered} answered ({percentage}%)'}
+          </Translate>
         </span>
       </div>
       <div className={styles.progressBar}>

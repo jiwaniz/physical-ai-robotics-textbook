@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
+import Translate, { translate } from '@docusaurus/Translate';
 import { useHistory, useLocation } from '@docusaurus/router';
 import { useAuth } from '../components/AuthContext';
 import QuizPlayer from '../components/quiz/QuizPlayer';
@@ -53,7 +54,7 @@ export default function QuizPage(): JSX.Element {
         } else if (weekNumber) {
           endpoint = `${apiBaseUrl}/api/quizzes/week/${weekNumber}`;
         } else {
-          setError('No quiz ID or week number provided');
+          setError(translate({ message: 'No quiz ID or week number provided', id: 'page.quiz.error.noIdOrWeek' }));
           setLoading(false);
           return;
         }
@@ -67,13 +68,13 @@ export default function QuizPage(): JSX.Element {
 
         if (!response.ok) {
           const data = await response.json();
-          throw new Error(data.detail || 'Failed to load quiz');
+          throw new Error(data.detail || translate({ message: 'Failed to load quiz', id: 'page.quiz.error.failedLoad' }));
         }
 
         const data = await response.json();
         setQuizInfo(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load quiz');
+        setError(err instanceof Error ? err.message : translate({ message: 'Failed to load quiz', id: 'page.quiz.error.failedLoad' }));
       } finally {
         setLoading(false);
       }
@@ -86,7 +87,7 @@ export default function QuizPage(): JSX.Element {
 
   if (authLoading || loading) {
     return (
-      <Layout title="Loading Quiz...">
+      <Layout title={translate({ message: 'Loading Quiz...', id: 'page.quiz.layoutTitleLoading' })}>
         <main className="container margin-vert--lg">
           <div className="text--center">
             <div
@@ -103,7 +104,7 @@ export default function QuizPage(): JSX.Element {
             <style>
               {`@keyframes spin { to { transform: rotate(360deg); } }`}
             </style>
-            <p>Loading quiz...</p>
+            <p><Translate id="page.quiz.loadingQuiz">Loading quiz...</Translate></p>
           </div>
         </main>
       </Layout>
@@ -116,16 +117,16 @@ export default function QuizPage(): JSX.Element {
 
   if (error) {
     return (
-      <Layout title="Quiz Error">
+      <Layout title={translate({ message: 'Quiz Error', id: 'page.quiz.layoutTitleError' })}>
         <main className="container margin-vert--lg">
           <div className="text--center">
-            <h2>Unable to Load Quiz</h2>
+            <h2><Translate id="page.quiz.unableToLoad">Unable to Load Quiz</Translate></h2>
             <p style={{ color: 'var(--ifm-color-danger)' }}>{error}</p>
             <button
               onClick={() => history.goBack()}
               className="button button--secondary"
             >
-              Go Back
+              <Translate id="page.quiz.goBack">Go Back</Translate>
             </button>
           </div>
         </main>
@@ -135,16 +136,16 @@ export default function QuizPage(): JSX.Element {
 
   if (!quizInfo) {
     return (
-      <Layout title="Quiz Not Found">
+      <Layout title={translate({ message: 'Quiz Not Found', id: 'page.quiz.layoutTitleNotFound' })}>
         <main className="container margin-vert--lg">
           <div className="text--center">
-            <h2>Quiz Not Found</h2>
-            <p>The requested quiz could not be found.</p>
+            <h2><Translate id="page.quiz.notFoundHeading">Quiz Not Found</Translate></h2>
+            <p><Translate id="page.quiz.notFoundDescription">The requested quiz could not be found.</Translate></p>
             <button
               onClick={() => history.push('/assessments')}
               className="button button--primary"
             >
-              View All Assessments
+              <Translate id="page.quiz.viewAllAssessments">View All Assessments</Translate>
             </button>
           </div>
         </main>
@@ -228,7 +229,7 @@ export default function QuizPage(): JSX.Element {
                     {quizInfo.question_count}
                   </div>
                   <div style={{ fontSize: '0.875rem', color: 'var(--ifm-color-emphasis-600)' }}>
-                    Questions
+                    <Translate id="page.quiz.meta.questions">Questions</Translate>
                   </div>
                 </div>
 
@@ -244,7 +245,7 @@ export default function QuizPage(): JSX.Element {
                     {quizInfo.passing_score}%
                   </div>
                   <div style={{ fontSize: '0.875rem', color: 'var(--ifm-color-emphasis-600)' }}>
-                    Passing Score
+                    <Translate id="page.quiz.meta.passingScore">Passing Score</Translate>
                   </div>
                 </div>
 
@@ -270,7 +271,7 @@ export default function QuizPage(): JSX.Element {
                     {attemptsRemaining}
                   </div>
                   <div style={{ fontSize: '0.875rem', color: 'var(--ifm-color-emphasis-600)' }}>
-                    Attempts Left
+                    <Translate id="page.quiz.meta.attemptsLeft">Attempts Left</Translate>
                   </div>
                 </div>
               </div>
@@ -284,14 +285,14 @@ export default function QuizPage(): JSX.Element {
                     marginBottom: '1.5rem',
                   }}
                 >
-                  <strong>Your Best Score:</strong> {Math.round(quizInfo.user_best_score)}%
+                  <strong><Translate id="page.quiz.yourBestScore">Your Best Score:</Translate></strong> {Math.round(quizInfo.user_best_score)}%
                   {quizInfo.user_best_score >= quizInfo.passing_score ? (
                     <span style={{ color: 'var(--ifm-color-success)', marginLeft: '0.5rem' }}>
-                      (Passed)
+                      (<Translate id="page.quiz.status.passed">Passed</Translate>)
                     </span>
                   ) : (
                     <span style={{ color: 'var(--ifm-color-warning-darker)', marginLeft: '0.5rem' }}>
-                      (Not Passed)
+                      (<Translate id="page.quiz.status.notPassed">Not Passed</Translate>)
                     </span>
                   )}
                 </div>
@@ -302,7 +303,7 @@ export default function QuizPage(): JSX.Element {
                   onClick={() => history.goBack()}
                   className="button button--secondary button--lg"
                 >
-                  Go Back
+                  <Translate id="page.quiz.goBack">Go Back</Translate>
                 </button>
 
                 {attemptsRemaining > 0 ? (
@@ -310,7 +311,7 @@ export default function QuizPage(): JSX.Element {
                     onClick={() => setStarted(true)}
                     className="button button--primary button--lg"
                   >
-                    Start Quiz
+                    <Translate id="page.quiz.startQuiz">Start Quiz</Translate>
                   </button>
                 ) : (
                   <button
@@ -318,7 +319,7 @@ export default function QuizPage(): JSX.Element {
                     className="button button--secondary button--lg"
                     style={{ cursor: 'not-allowed', opacity: 0.6 }}
                   >
-                    No Attempts Remaining
+                    <Translate id="page.quiz.noAttemptsRemaining">No Attempts Remaining</Translate>
                   </button>
                 )}
               </div>
@@ -333,12 +334,12 @@ export default function QuizPage(): JSX.Element {
                   color: 'var(--ifm-color-warning-contrast-foreground, #333)',
                 }}
               >
-                <strong style={{ color: '#5a4a00' }}>Before you start:</strong>
+                <strong style={{ color: '#5a4a00' }}><Translate id="page.quiz.beforeYouStart">Before you start:</Translate></strong>
                 <ul style={{ margin: '0.5rem 0 0 1rem', padding: 0, color: '#5a4a00' }}>
-                  <li>Make sure you have a stable internet connection</li>
-                  <li>Your answers are auto-saved as you go</li>
-                  <li>You can navigate between questions freely</li>
-                  <li>Click "Submit Quiz" on the last question when done</li>
+                  <li><Translate id="page.quiz.tip.stableConnection">Make sure you have a stable internet connection</Translate></li>
+                  <li><Translate id="page.quiz.tip.autoSaved">Your answers are auto-saved as you go</Translate></li>
+                  <li><Translate id="page.quiz.tip.navigateFreely">You can navigate between questions freely</Translate></li>
+                  <li><Translate id="page.quiz.tip.submitQuiz">Click "Submit Quiz" on the last question when done</Translate></li>
                 </ul>
               </div>
             </div>

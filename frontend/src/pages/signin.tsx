@@ -1,12 +1,13 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import { translate } from '@docusaurus/Translate';
 import SigninForm from '../components/SigninForm';
 
 export default function Signin(): JSX.Element {
   return (
     <Layout
-      title="Sign In"
-      description="Sign in to your account to access personalized learning"
+      title={translate({ message: 'Sign In', id: 'page.signin.title' })}
+      description={translate({ message: 'Sign in to your account to access personalized learning', id: 'page.signin.description' })}
     >
       <main className="container margin-vert--lg">
         <div className="row">

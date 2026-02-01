@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from './AuthContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Translate, { translate } from '@docusaurus/Translate';
 
 export default function NavbarUserMenu(): JSX.Element {
   const { currentUser, isLoading, signout } = useAuth();
@@ -19,12 +20,12 @@ export default function NavbarUserMenu(): JSX.Element {
   };
 
   if (isLoading) {
-    return <span className="navbar__item">Loading...</span>;
+    return <span className="navbar__item"><Translate id="component.navbarUserMenu.loading">Loading...</Translate></span>;
   }
 
   if (currentUser) {
     // Supabase stores user name in user_metadata from signup
-    const displayName = currentUser.user_metadata?.name || currentUser.email?.split('@')[0] || 'User';
+    const displayName = currentUser.user_metadata?.name || currentUser.email?.split('@')[0] || translate({ message: 'User', id: 'component.navbarUserMenu.defaultName' });
 
     return (
       <div className="navbar__item dropdown dropdown--hoverable dropdown--right">
@@ -45,7 +46,7 @@ export default function NavbarUserMenu(): JSX.Element {
                 padding: '0.5rem 1rem',
               }}
             >
-              Sign Out
+              <Translate id="component.navbarUserMenu.signOut">Sign Out</Translate>
             </button>
           </li>
         </ul>
@@ -56,11 +57,11 @@ export default function NavbarUserMenu(): JSX.Element {
   return (
     <div className="navbar__item">
       <a href={signinUrl} className="navbar__link">
-        Sign In
+        <Translate id="component.navbarUserMenu.signIn">Sign In</Translate>
       </a>
       {' / '}
       <a href={signupUrl} className="navbar__link">
-        Sign Up
+        <Translate id="component.navbarUserMenu.signUp">Sign Up</Translate>
       </a>
     </div>
   );

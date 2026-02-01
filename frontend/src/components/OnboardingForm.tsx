@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Translate, { translate } from '@docusaurus/Translate';
 import { useAuth } from './AuthContext';
 
 interface OnboardingFormProps {
@@ -43,7 +44,7 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
     setError(null);
 
     if (!softwareLevel || !hardwareLevel) {
-      setError('Please select both software and hardware experience levels');
+      setError(translate({ message: 'Please select both software and hardware experience levels', id: 'component.onboardingForm.error.selectBoth' }));
       return;
     }
 
@@ -70,13 +71,13 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.detail || 'Failed to save profile');
+        throw new Error(data.detail || translate({ message: 'Failed to save profile', id: 'component.onboardingForm.error.saveFailed' }));
       }
 
       // Redirect to home after successful profile creation
       history.push(homeUrl);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save profile');
+      setError(err instanceof Error ? err.message : translate({ message: 'Failed to save profile', id: 'component.onboardingForm.error.saveFailed' }));
     } finally {
       setIsSubmitting(false);
     }
@@ -88,8 +89,8 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
 
   return (
     <div className="onboarding-form-container">
-      <h2>Tell Us About Your Background</h2>
-      <p>Help us personalize your learning experience</p>
+      <h2><Translate id="component.onboardingForm.heading">Tell Us About Your Background</Translate></h2>
+      <p><Translate id="component.onboardingForm.subheading">Help us personalize your learning experience</Translate></p>
 
       <form onSubmit={handleSubmit} className="onboarding-form">
         {error && (
@@ -99,7 +100,7 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
         )}
 
         <div className="form-group">
-          <label htmlFor="software-level">Software Development Experience</label>
+          <label htmlFor="software-level"><Translate id="component.onboardingForm.softwareLabel">Software Development Experience</Translate></label>
           <select
             id="software-level"
             className="form-control"
@@ -107,15 +108,15 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
             onChange={(e) => setSoftwareLevel(e.target.value)}
             required
           >
-            <option value="">Select your experience level</option>
-            <option value="beginner">Beginner - New to programming</option>
-            <option value="intermediate">Intermediate - Some programming experience</option>
-            <option value="advanced">Advanced - Experienced developer</option>
+            <option value="">{translate({ message: 'Select your experience level', id: 'component.onboardingForm.selectLevel' })}</option>
+            <option value="beginner">{translate({ message: 'Beginner - New to programming', id: 'component.onboardingForm.software.beginner' })}</option>
+            <option value="intermediate">{translate({ message: 'Intermediate - Some programming experience', id: 'component.onboardingForm.software.intermediate' })}</option>
+            <option value="advanced">{translate({ message: 'Advanced - Experienced developer', id: 'component.onboardingForm.software.advanced' })}</option>
           </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="hardware-level">Hardware/Robotics Experience</label>
+          <label htmlFor="hardware-level"><Translate id="component.onboardingForm.hardwareLabel">Hardware/Robotics Experience</Translate></label>
           <select
             id="hardware-level"
             className="form-control"
@@ -123,19 +124,17 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
             onChange={(e) => setHardwareLevel(e.target.value)}
             required
           >
-            <option value="">Select your experience level</option>
-            <option value="beginner">Beginner - New to hardware/robotics</option>
-            <option value="intermediate">
-              Intermediate - Some hardware/robotics experience
-            </option>
-            <option value="advanced">Advanced - Experienced with hardware/robotics</option>
+            <option value="">{translate({ message: 'Select your experience level', id: 'component.onboardingForm.selectLevel' })}</option>
+            <option value="beginner">{translate({ message: 'Beginner - New to hardware/robotics', id: 'component.onboardingForm.hardware.beginner' })}</option>
+            <option value="intermediate">{translate({ message: 'Intermediate - Some hardware/robotics experience', id: 'component.onboardingForm.hardware.intermediate' })}</option>
+            <option value="advanced">{translate({ message: 'Advanced - Experienced with hardware/robotics', id: 'component.onboardingForm.hardware.advanced' })}</option>
           </select>
         </div>
 
         <div className="form-group">
-          <label>Topics and Technologies You're Familiar With</label>
+          <label><Translate id="component.onboardingForm.topicsLabel">Topics and Technologies You're Familiar With</Translate></label>
           <small className="form-text text-muted mb-2">
-            Select all that apply (optional)
+            <Translate id="component.onboardingForm.topicsHint">Select all that apply (optional)</Translate>
           </small>
           <div className="topics-grid">
             {availableTopics.map((topic) => (
@@ -161,7 +160,7 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
             className="button button--primary button--lg"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Saving...' : 'Complete Onboarding'}
+            {isSubmitting ? translate({ message: 'Saving...', id: 'component.onboardingForm.saving' }) : translate({ message: 'Complete Onboarding', id: 'component.onboardingForm.submit' })}
           </button>
 
           {allowSkip && (
@@ -171,7 +170,7 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ allowSkip = true }) => 
               onClick={handleSkip}
               disabled={isSubmitting}
             >
-              Skip for Now
+              <Translate id="component.onboardingForm.skip">Skip for Now</Translate>
             </button>
           )}
         </div>

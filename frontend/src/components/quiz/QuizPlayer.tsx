@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from '@docusaurus/router';
+import Translate, { translate } from '@docusaurus/Translate';
 import { useQuiz, QuizProvider, QuizResult } from './QuizContext';
 import QuizQuestion from './QuizQuestion';
 import QuizProgress from './QuizProgress';
@@ -39,8 +40,8 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
     const unanswered = state.questions.length - state.answers.size;
     const message =
       unanswered > 0
-        ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit?`
-        : 'Are you sure you want to submit? You cannot change your answers after submission.';
+        ? translate({ message: `You have ${unanswered} unanswered question(s). Are you sure you want to submit?`, id: 'component.quiz.player.confirmUnanswered' })
+        : translate({ message: 'Are you sure you want to submit? You cannot change your answers after submission.', id: 'component.quiz.player.confirmSubmit' });
 
     const confirmed = window.confirm(message);
     if (!confirmed) return;
@@ -49,7 +50,7 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
       const result = await submitQuiz();
       setResults(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to submit quiz');
+      setError(err instanceof Error ? err.message : translate({ message: 'Failed to submit quiz', id: 'component.quiz.player.submitError' }));
     }
   };
 
@@ -57,7 +58,7 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
     return (
       <div className={styles.quizLoading}>
         <div className={styles.spinner}></div>
-        <p>Loading quiz...</p>
+        <p><Translate id="component.quiz.player.loading">Loading quiz...</Translate></p>
       </div>
     );
   }
@@ -65,10 +66,10 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
   if (error) {
     return (
       <div className={styles.quizError}>
-        <h3>Error</h3>
+        <h3><Translate id="component.quiz.player.errorHeading">Error</Translate></h3>
         <p>{error}</p>
         <button onClick={() => history.goBack()} className="button button--secondary">
-          Go Back
+          <Translate id="component.quiz.player.goBack">Go Back</Translate>
         </button>
       </div>
     );
@@ -81,10 +82,10 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
   if (!state.attemptId || state.questions.length === 0) {
     return (
       <div className={styles.quizError}>
-        <h3>Error</h3>
-        <p>Failed to load quiz questions</p>
+        <h3><Translate id="component.quiz.player.errorHeading2">Error</Translate></h3>
+        <p><Translate id="component.quiz.player.loadFailed">Failed to load quiz questions</Translate></p>
         <button onClick={() => history.goBack()} className="button button--secondary">
-          Go Back
+          <Translate id="component.quiz.player.goBack2">Go Back</Translate>
         </button>
       </div>
     );
@@ -118,7 +119,7 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
           disabled={isFirstQuestion}
           className="button button--secondary"
         >
-          Previous
+          <Translate id="component.quiz.player.previous">Previous</Translate>
         </button>
 
         <div className={styles.questionDots}>
@@ -129,7 +130,7 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
               className={`${styles.questionDot} ${
                 idx === state.currentQuestionIndex ? styles.active : ''
               } ${state.answers.has(q.id) ? styles.answered : ''}`}
-              title={`Question ${idx + 1}${state.answers.has(q.id) ? ' (answered)' : ''}`}
+              title={translate({ message: `Question ${idx + 1}${state.answers.has(q.id) ? ' (answered)' : ''}`, id: 'component.quiz.player.questionDotTitle' })}
             >
               {idx + 1}
             </button>
@@ -142,11 +143,13 @@ const QuizPlayerInner: React.FC<QuizPlayerInnerProps> = ({ quizId, weekNumber })
             disabled={state.isSubmitting}
             className="button button--primary"
           >
-            {state.isSubmitting ? 'Submitting...' : 'Submit Quiz'}
+            {state.isSubmitting
+              ? translate({ message: 'Submitting...', id: 'component.quiz.player.submitting' })
+              : translate({ message: 'Submit Quiz', id: 'component.quiz.player.submitButton' })}
           </button>
         ) : (
           <button onClick={nextQuestion} className="button button--primary">
-            Next
+            <Translate id="component.quiz.player.next">Next</Translate>
           </button>
         )}
       </div>
