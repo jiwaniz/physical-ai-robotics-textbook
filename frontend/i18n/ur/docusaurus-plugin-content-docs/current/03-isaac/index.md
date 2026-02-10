@@ -2,76 +2,76 @@
 sidebar_position: 4
 ---
 
-# باب 3: AI-Robot Brain (NVIDIA Isaac™)
+# باب 3: اے آئی-روبوٹ برین (این ویڈیا آئزک™)
 
-NVIDIA Isaac پلیٹ فارم کے ساتھ perception، manipulation، اور navigation کے لیے جدید AI سے چلنے والی روبوٹکس کو دریافت کریں۔
+این ویڈیا آئزک پلیٹ فارم کے ساتھ پرسیپشن، مینیپولیشن، اور نیویگیشن کے لیے جدید اے آئی سے چلنے والی روبوٹکس کو دریافت کریں۔
 
 ## باب کا جائزہ
 
-NVIDIA Isaac ایک جامع روبوٹکس پلیٹ فارم ہے جو simulation، AI، اور deployment ٹولز کو یکجا کرتا ہے۔ جدید AI تکنیکوں سے چلنے والے ذہین robots بنانا سیکھیں۔
+این ویڈیا آئزک ایک جامع روبوٹکس پلیٹ فارم ہے جو سمیولیشن، اے آئی، اور ڈیپلائمنٹ ٹولز کو یکجا کرتا ہے۔ جدید اے آئی تکنیکوں سے چلنے والے ذہین روبوٹس بنانا سیکھیں۔
 
 ### آپ کیا سیکھیں گے
 
-**ہفتہ 8: Isaac SDK & Isaac Sim بنیادی باتیں**
-- NVIDIA Isaac پلیٹ فارم کا تعارف
-- Isaac Sim سیٹ اپ اور کنفیگریشن
-- GPU-accelerated simulation
-- AI ٹریننگ کے لیے synthetic data generation
-- Photorealistic rendering کے لیے RTX ray tracing
+**ہفتہ 8: آئزک ایس ڈی کے اور آئزک سم بنیادی باتیں**
+- این ویڈیا آئزک پلیٹ فارم کا تعارف
+- آئزک سم سیٹ اپ اور کنفیگریشن
+- جی پی یو-ایکسلریٹڈ سمیولیشن
+- اے آئی ٹریننگ کے لیے سنتھیٹک ڈیٹا جنریشن
+- فوٹو ریئلسٹک رینڈرنگ کے لیے آر ٹی ایکس رے ٹریسنگ
 
-**ہفتہ 9: Perception & Manipulation**
-- Isaac کے ساتھ computer vision
-- Object detection اور segmentation
-- 6D pose estimation
-- Robotic manipulation planning
-- Grasp synthesis اور execution
+**ہفتہ 9: پرسیپشن اور مینیپولیشن**
+- آئزک کے ساتھ کمپیوٹر ویژن
+- آبجیکٹ ڈیٹیکشن اور سیگمینٹیشن
+- 6ڈی پوز ایسٹیمیشن
+- روبوٹک مینیپولیشن پلاننگ
+- گراسپ سنتھیسس اور ایگزیکیوشن
 
-**ہفتہ 10: Navigation & Sim2Real Transfer**
-- Isaac کے ساتھ autonomous navigation
-- Path planning algorithms
-- SLAM (Simultaneous Localization and Mapping)
-- Sim-to-Real transfer تکنیکیں
-- Jetson hardware پر deployment
+**ہفتہ 10: نیویگیشن اور سم ٹو ریئل ٹرانسفر**
+- آئزک کے ساتھ آٹونومس نیویگیشن
+- پاتھ پلاننگ الگورتھمز
+- ایس ایل اے ایم (سائملٹینیئس لوکلائزیشن اینڈ میپنگ)
+- سم ٹو ریئل ٹرانسفر تکنیکیں
+- جیٹسن ہارڈویئر پر ڈیپلائمنٹ
 
 ## سیکھنے کے نتائج
 
 اس باب کے اختتام تک، آپ یہ کر سکیں گے:
-- ✅ NVIDIA Isaac Sim سیٹ اپ اور استعمال کریں
-- ✅ AI models کے لیے synthetic training data تیار کریں
-- ✅ Robots کے لیے perception systems نافذ کریں
-- ✅ Autonomous navigation systems بنائیں
-- ✅ Simulation models کو حقیقی robots میں منتقل کریں
+- ✅ این ویڈیا آئزک سم سیٹ اپ اور استعمال کریں
+- ✅ اے آئی ماڈلز کے لیے سنتھیٹک ٹریننگ ڈیٹا تیار کریں
+- ✅ روبوٹس کے لیے پرسیپشن سسٹمز نافذ کریں
+- ✅ آٹونومس نیویگیشن سسٹمز بنائیں
+- ✅ سمیولیشن ماڈلز کو حقیقی روبوٹس میں منتقل کریں
 
 ## عملی پروجیکٹس
 
-- Synthetic data استعمال کرکے object detection model ٹریننگ کریں
-- Isaac Sim میں navigation نافذ کریں
-- Jetson پر perception model کو deploy کریں
+- سنتھیٹک ڈیٹا استعمال کرکے آبجیکٹ ڈیٹیکشن ماڈل ٹریننگ کریں
+- آئزک سم میں نیویگیشن نافذ کریں
+- جیٹسن پر پرسیپشن ماڈل کو ڈیپلائے کریں
 
-## Assessment
+## اسیسمنٹ
 
-**پروجیکٹ: Isaac Perception System**
-- مکمل perception pipeline بنائیں
-- Synthetic data استعمال کرکے AI models ٹریننگ کریں
-- Object detection اور pose estimation کا مظاہرہ کریں
-- Sim-to-real transfer process کی دستاویزات بنائیں
+**پروجیکٹ: آئزک پرسیپشن سسٹم**
+- مکمل پرسیپشن پائپ لائن بنائیں
+- سنتھیٹک ڈیٹا استعمال کرکے اے آئی ماڈلز ٹریننگ کریں
+- آبجیکٹ ڈیٹیکشن اور پوز ایسٹیمیشن کا مظاہرہ کریں
+- سم ٹو ریئل ٹرانسفر پراسیس کی دستاویزات بنائیں
 
-## Hardware کی ضروریات
+## ہارڈویئر کی ضروریات
 
 **تجویز کردہ:**
-- NVIDIA RTX GPU (RTX 3060 یا اس سے زیادہ)
-- Ubuntu 22.04
-- کم از کم 32GB RAM
+- این ویڈیا آر ٹی ایکس جی پی یو (آر ٹی ایکس 3060 یا اس سے زیادہ)
+- اوبنٹو 22.04
+- کم از کم 32 جی بی ریم
 
 **متبادل:**
-- NVIDIA Jetson AGX Orin / Xavier
-- Cloud GPU instances (AWS، Azure، GCP)
+- این ویڈیا جیٹسن اے جی ایکس اورن / زیویئر
+- کلاؤڈ جی پی یو انسٹینسز (اے ڈبلیو ایس، ایزور، جی سی پی)
 
 ## ٹولز اور وسائل
 
-- NVIDIA Isaac Sim 2023.1.1
-- Omniverse platform
-- Isaac ROS packages
-- Pre-trained AI models
+- این ویڈیا آئزک سم 2023.1.1
+- اومنی ورس پلیٹ فارم
+- آئزک آر او ایس پیکجز
+- پری ٹرینڈ اے آئی ماڈلز
 
-[ہفتہ 8: Isaac SDK Basics](./week-08.md) سے شروع کریں
+[ہفتہ 8: آئزک ایس ڈی کے بنیادی باتیں](./week-08.md) سے شروع کریں

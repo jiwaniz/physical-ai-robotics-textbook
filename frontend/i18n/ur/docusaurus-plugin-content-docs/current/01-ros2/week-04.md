@@ -1,38 +1,38 @@
-# ہفتہ 4: Nodes، Topics، Publishers اور Subscribers
+# ہفتہ 4: نوڈز، ٹاپکس، پبلشرز اور سبسکرائبرز
 
 ## جائزہ
 
-یہ ہفتہ pub-sub (publish-subscribe) communication pattern کو گہرائی سے دریافت کرتا ہے۔ آپ topic architectures ڈیزائن کرنا، standard message types کے ساتھ کام کرنا، Quality of Service (QoS) policies کو implement کرنا، اور sensors اور actuators کے ساتھ ایک multi-node robot سسٹم بنانا سیکھیں گے۔
+یہ ہفتہ پب-سب (پبلش-سبسکرائب) کمیونیکیشن پیٹرن کو گہرائی سے دریافت کرتا ہے۔ آپ ٹاپک آرکیٹیکچرز ڈیزائن کرنا، اسٹینڈرڈ میسج ٹائپس کے ساتھ کام کرنا، کوالٹی آف سروس (کیو او ایس) پالیسیز کو امپلیمنٹ کرنا، اور سینسرز اور ایکچویٹرز کے ساتھ ایک ملٹی نوڈ روبوٹ سسٹم بنانا سیکھیں گے۔
 
 ## سیکھنے کے مقاصد
 
 اس ہفتے کے اختتام تک، آپ یہ کر سکیں گے:
 
-- Multi-node سسٹمز کے لیے topic architectures ڈیزائن کرنا
-- Standard ROS 2 message types استعمال کرنا (`std_msgs`، `sensor_msgs`، `geometry_msgs`)
-- Custom message definitions بنانا
-- Reliability کے لیے QoS (Quality of Service) policies کو configure کرنا
-- مضبوط publisher اور subscriber nodes کو implement کرنا
-- مکمل sensor-to-actuator pipeline بنانا
+- ملٹی نوڈ سسٹمز کے لیے ٹاپک آرکیٹیکچرز ڈیزائن کرنا
+- اسٹینڈرڈ آر او ایس 2 میسج ٹائپس استعمال کرنا (`std_msgs`، `sensor_msgs`، `geometry_msgs`)
+- کسٹم میسج ڈیفینیشنز بنانا
+- ریلائبلٹی کے لیے کیو او ایس (کوالٹی آف سروس) پالیسیز کو کنفیگر کرنا
+- مضبوط پبلشر اور سبسکرائبر نوڈز کو امپلیمنٹ کرنا
+- مکمل سینسر-ٹو-ایکچویٹر پائپ لائن بنانا
 
-## Publish-Subscribe Pattern
+## پبلش-سبسکرائب پیٹرن
 
-### Pub-Sub کیوں؟
+### پب-سب کیوں؟
 
-Publish-subscribe pattern ڈیٹا کے producers اور consumers کو **decouple** کرتا ہے:
+پبلش-سبسکرائب پیٹرن ڈیٹا کے پروڈیوسرز اور کنزیومرز کو **ڈی کپل** کرتا ہے:
 
 **فوائد:**
-- **Scalability**: Publishers تبدیل کیے بغیر subscribers شامل کریں
-- **Modularity**: Nodes کو ایک دوسرے کے بارے میں جانने کی ضرورت نہیں
-- **Flexibility**: Nodes کو آسانی سے mix اور match کریں
-- **Parallel processing**: متعدد subscribers آزادانہ طور پر ڈیٹا پروسیس کرتے ہیں
+- **اسکیل ایبلٹی**: پبلشرز تبدیل کیے بغیر سبسکرائبرز شامل کریں
+- **ماڈیولیرٹی**: نوڈز کو ایک دوسرے کے بارے میں جانے کی ضرورت نہیں
+- **فلیکسیبلٹی**: نوڈز کو آسانی سے مکس اور میچ کریں
+- **پیرالل پروسیسنگ**: متعدد سبسکرائبرز آزادانہ طور پر ڈیٹا پروسیس کرتے ہیں
 
-**Trade-offs:**
-- کوئی delivery guarantees نہیں (مناسب QoS کے بغیر)
-- کوئی request-response نہیں (اس کے لیے services استعمال کریں)
-- اگر subscribers سست ہیں تو ممکنہ data overload
+**ٹریڈ-آفز:**
+- کوئی ڈیلیوری گارنٹیز نہیں (مناسب کیو او ایس کے بغیر)
+- کوئی ریکویسٹ-رسپانس نہیں (اس کے لیے سروسز استعمال کریں)
+- اگر سبسکرائبرز سست ہیں تو ممکنہ ڈیٹا اوورلوڈ
 
-### Pub-Sub Flow
+### پب-سب فلو
 
 ```
 ┌─────────────────┐
@@ -53,9 +53,9 @@ Publish-subscribe pattern ڈیٹا کے producers اور consumers کو **decoup
 └─────────────┘ └─────────────┘ └─────────────┘
 ```
 
-## Standard Message Types
+## اسٹینڈرڈ میسج ٹائپس
 
-ROS 2 standard packages میں عام message types فراہم کرتا ہے۔
+آر او ایس 2 اسٹینڈرڈ پیکیجز میں عام میسج ٹائپس فراہم کرتا ہے۔
 
 ### 1. std_msgs: بنیادی اقسام
 
@@ -80,7 +80,7 @@ float_msg.data = 3.14159
 - `Int8`، `Int16`، `Int32`، `Int64`
 - `UInt8`، `UInt16`، `UInt32`، `UInt64`
 - `Float32`، `Float64`
-- `Header` (timestamp + frame_id)
+- `Header` (ٹائم اسٹیمپ + frame_id)
 
 ### 2. geometry_msgs: مقامی ڈیٹا
 
@@ -100,12 +100,12 @@ twist.angular.z = 0.2  # Rotate at 0.2 rad/s
 ```
 
 **عام geometry_msgs اقسام:**
-- `Point`، `Point32` (3D position)
-- `Quaternion` (orientation)
-- `Pose` (position + orientation)
+- `Point`، `Point32` (3 ڈی پوزیشن)
+- `Quaternion` (اورینٹیشن)
+- `Pose` (پوزیشن + اورینٹیشن)
 - `PoseStamped` (Pose + Header)
-- `Twist` (linear + angular velocity)
-- `Transform` (translation + rotation)
+- `Twist` (لینیئر + اینگولر ویلاسٹی)
+- `Transform` (ٹرانسلیشن + روٹیشن)
 
 ### 3. sensor_msgs: سینسر ڈیٹا
 
@@ -133,9 +133,9 @@ scan.ranges = [...]  # Distance measurements
 - `Image`، `CompressedImage`
 - `CameraInfo`
 - `LaserScan`، `PointCloud2`
-- `Imu` (inertial measurement unit)
-- `JointState` (robot joint positions/velocities)
-- `NavSatFix` (GPS)
+- `Imu` (انرشل میژرمنٹ یونٹ)
+- `JointState` (روبوٹ جوائنٹ پوزیشنز/ویلاسٹیز)
+- `NavSatFix` (جی پی ایس)
 
 ### 4. nav_msgs: نیویگیشن ڈیٹا
 
@@ -153,15 +153,15 @@ odom.twist.twist.linear.x = 0.3
 ```
 
 **عام nav_msgs اقسام:**
-- `Odometry` (robot pose + velocity)
-- `Path` (poses کی تسلسل)
-- `GridCells` (occupancy grid cells)
+- `Odometry` (روبوٹ پوز + ویلاسٹی)
+- `Path` (پوزز کی تسلسل)
+- `GridCells` (آکیوپنسی گرڈ سیلز)
 
-## Custom Messages بنانا
+## کسٹم میسجز بنانا
 
-جب standard messages آپ کی ضروریات کے مطابق نہ ہوں، تو اپنی custom بنائیں۔
+جب اسٹینڈرڈ میسجز آپ کی ضروریات کے مطابق نہ ہوں، تو اپنی کسٹم بنائیں۔
 
-### قدم 1: Message متعین کریں
+### قدم 1: میسج متعین کریں
 
 `msg/RobotStatus.msg` بنائیں:
 ```
@@ -184,7 +184,7 @@ string current_task
 <member_of_group>rosidl_interface_packages</member_of_group>
 ```
 
-### قدم 3: CMakeLists.txt (C++) یا setup.py (Python) کو اپ ڈیٹ کریں
+### قدم 3: CMakeLists.txt (سی++) یا setup.py (پائتھون) کو اپ ڈیٹ کریں
 
 **ament_cmake کے لیے:**
 ```cmake
@@ -197,9 +197,9 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 ```
 
 **ament_python کے لیے:**
-آپ کو ایک الگ interface package کی ضرورت ہے (تجویز کردہ pattern: `my_pkg_interfaces`)۔
+آپ کو ایک الگ انٹرفیس پیکیج کی ضرورت ہے (تجویز کردہ پیٹرن: `my_pkg_interfaces`)۔
 
-### قدم 4: Build اور استعمال کریں
+### قدم 4: بلڈ اور استعمال کریں
 
 ```bash
 colcon build --packages-select my_robot_interfaces
@@ -219,22 +219,22 @@ msg.temperature = 42.3
 msg.is_moving = True
 ```
 
-## Quality of Service (QoS)
+## کوالٹی آف سروس (کیو او ایس)
 
-QoS policies کنٹرول کرتی ہیں کہ publishers اور subscribers کے درمیان messages کیسے deliver ہوتے ہیں۔
+کیو او ایس پالیسیز کنٹرول کرتی ہیں کہ پبلشرز اور سبسکرائبرز کے درمیان میسجز کیسے ڈیلیور ہوتے ہیں۔
 
-### QoS Parameters
+### کیو او ایس پیرامیٹرز
 
-| Policy | اختیارات | تفصیل |
+| پالیسی | اختیارات | تفصیل |
 |--------|---------|-------------|
-| **Reliability** | `RELIABLE`، `BEST_EFFORT` | Delivery کی ضمانت دیں یا packet loss کی اجازت دیں |
-| **Durability** | `VOLATILE`، `TRANSIENT_LOCAL` | دیر سے شامل ہونے والے subscribers کے لیے messages رکھیں |
-| **History** | `KEEP_LAST(n)`، `KEEP_ALL` | Messages کے لیے queue size |
-| **Deadline** | Duration | Messages کے درمیان زیادہ سے زیادہ وقت |
-| **Lifespan** | Duration | Message کے valid ہونے کا زیادہ سے زیادہ وقت |
-| **Liveliness** | `AUTOMATIC`، `MANUAL` | مردہ publishers کا پتہ لگائیں |
+| **ریلائبلٹی** | `RELIABLE`، `BEST_EFFORT` | ڈیلیوری کی ضمانت دیں یا پیکٹ لاس کی اجازت دیں |
+| **ڈیورایبلٹی** | `VOLATILE`، `TRANSIENT_LOCAL` | دیر سے شامل ہونے والے سبسکرائبرز کے لیے میسجز رکھیں |
+| **ہسٹری** | `KEEP_LAST(n)`، `KEEP_ALL` | میسجز کے لیے کیو سائز |
+| **ڈیڈ لائن** | ڈیوریشن | میسجز کے درمیان زیادہ سے زیادہ وقت |
+| **لائف اسپین** | ڈیوریشن | میسج کے ویلڈ ہونے کا زیادہ سے زیادہ وقت |
+| **لائیولینس** | `AUTOMATIC`، `MANUAL` | مردہ پبلشرز کا پتہ لگائیں |
 
-### عام QoS Profiles
+### عام کیو او ایس پروفائلز
 
 ```python
 from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSDurabilityPolicy, QoSHistoryPolicy
@@ -271,25 +271,25 @@ self.publisher_ = self.create_publisher(
 )
 ```
 
-### QoS Compatibility
+### کیو او ایس کمپیٹیبلٹی
 
-Publishers اور subscribers کے پاس **compatible** QoS ہونا ضروری ہے:
+پبلشرز اور سبسکرائبرز کے پاس **کمپیٹیبل** کیو او ایس ہونا ضروری ہے:
 
-| Publisher | Subscriber | Compatible؟ |
+| پبلشر | سبسکرائبر | کمپیٹیبل؟ |
 |-----------|------------|-------------|
 | RELIABLE | RELIABLE | ✅ ہاں |
-| RELIABLE | BEST_EFFORT | ✅ ہاں (subscriber کو best effort ملتا ہے) |
+| RELIABLE | BEST_EFFORT | ✅ ہاں (سبسکرائبر کو بیسٹ ایفرٹ ملتا ہے) |
 | BEST_EFFORT | RELIABLE | ❌ نہیں |
 | BEST_EFFORT | BEST_EFFORT | ✅ ہاں |
 
 **اصول:**
-- Sensors → `BEST_EFFORT` (reliability سے زیادہ رفتار)
-- Control → `RELIABLE` (commands نہیں کھونے چاہیئں)
-- Status → `RELIABLE` (robot کی state جاننا ضروری ہے)
+- سینسرز → `BEST_EFFORT` (ریلائبلٹی سے زیادہ رفتار)
+- کنٹرول → `RELIABLE` (کمانڈز نہیں کھونے چاہیئں)
+- اسٹیٹس → `RELIABLE` (روبوٹ کی اسٹیٹ جاننا ضروری ہے)
 
-## Multi-Node Robot سسٹم بنانا
+## ملٹی نوڈ روبوٹ سسٹم بنانا
 
-آئیے sensor اور motor nodes کے ساتھ ایک سادہ mobile robot بنائیں۔
+آئیے سینسر اور موٹر نوڈز کے ساتھ ایک سادہ موبائل روبوٹ بنائیں۔
 
 ### سسٹم آرکیٹیکچر
 
@@ -308,7 +308,7 @@ Publishers اور subscribers کے پاس **compatible** QoS ہونا ضروری
                                           └──────────────┘
 ```
 
-### Node 1: Distance Sensor Simulator
+### نوڈ 1: ڈسٹنس سینسر سمیولیٹر
 
 **`distance_sensor_node.py`:**
 
@@ -387,7 +387,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### Node 2: Obstacle Detector
+### نوڈ 2: آبسٹیکل ڈیٹیکٹر
 
 **`obstacle_detector_node.py`:**
 
@@ -481,7 +481,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### Node 3: Motor Controller
+### نوڈ 3: موٹر کنٹرولر
 
 **`motor_controller_node.py`:**
 
@@ -569,7 +569,7 @@ ros2 topic echo /motor/cmd
 
 ## بہترین طریقے
 
-### 1. Topic ناموں کے کنونشنز
+### 1. ٹاپک ناموں کے کنونشنز
 ```
 /robot_name/sensor_type/data_type
 /robot1/camera/image_raw
@@ -577,7 +577,7 @@ ros2 topic echo /motor/cmd
 /robot1/motor/cmd_vel
 ```
 
-### 2. Timestamps کے لیے Headers استعمال کریں
+### 2. ٹائم اسٹیمپس کے لیے ہیڈرز استعمال کریں
 ```python
 from std_msgs.msg import Header
 
@@ -586,7 +586,7 @@ header.stamp = self.get_clock().now().to_msg()
 header.frame_id = 'base_link'
 ```
 
-### 3. Subscription Lifecycle کو Handle کریں
+### 3. سبسکرپشن لائف سائیکل کو ہینڈل کریں
 ```python
 def __init__(self):
     # ...
@@ -599,7 +599,7 @@ def check_timeout(self):
         self.get_logger().warn('No messages received for 2 seconds!')
 ```
 
-### 4. Fine-Grained Control کے لیے rclpy.spin_once استعمال کریں
+### 4. فائن-گرینڈ کنٹرول کے لیے rclpy.spin_once استعمال کریں
 ```python
 while rclpy.ok():
     rclpy.spin_once(node, timeout_sec=0.1)
@@ -608,59 +608,59 @@ while rclpy.ok():
 
 ## ہفتہ 4 کا عملی پراجیکٹ
 
-**کام**: ایک "Line Follower" simulation بنائیں
+**کام**: ایک "لائن فالوور" سمیولیشن بنائیں
 
 **ضروریات:**
-1. **Sensor node**: Simulated line position publish کرتا ہے (-1.0 سے 1.0، بائیں سے دائیں)
-2. **Controller node**: Sensor کو subscribe کرتا ہے، steering commands publish کرتا ہے
-3. **Visualizer node**: Robot path کو file میں log کرتا ہے
-4. Custom message `LinePosition` استعمال کریں جس میں fields ہوں: `header`، `position`، `confidence`
-5. QoS policies کو مناسب طریقے سے implement کریں
-6. PID controller gains کے لیے parameter tuning شامل کریں
+1. **سینسر نوڈ**: سمیولیٹڈ لائن پوزیشن پبلش کرتا ہے (-1.0 سے 1.0، بائیں سے دائیں)
+2. **کنٹرولر نوڈ**: سینسر کو سبسکرائب کرتا ہے، اسٹیئرنگ کمانڈز پبلش کرتا ہے
+3. **ویژولائزر نوڈ**: روبوٹ پاتھ کو فائل میں لاگ کرتا ہے
+4. کسٹم میسج `LinePosition` استعمال کریں جس میں فیلڈز ہوں: `header`، `position`، `confidence`
+5. کیو او ایس پالیسیز کو مناسب طریقے سے امپلیمنٹ کریں
+6. پی آئی ڈی کنٹرولر گینز کے لیے پیرامیٹر ٹیوننگ شامل کریں
 
-**بونس**: تمام nodes کو بیک وقت شروع کرنے کے لیے launch file بنائیں (اگلے ہفتے covered)۔
+**بونس**: تمام نوڈز کو بیک وقت شروع کرنے کے لیے لانچ فائل بنائیں (اگلے ہفتے کور کیا جائے گا)۔
 
 ## کوئز کے سوالات
 
-1. `RELIABLE` اور `BEST_EFFORT` QoS میں کیا فرق ہے؟
-2. `TRANSIENT_LOCAL` durability کب استعمال کرنی چاہیے؟
-3. Messages میں headers کیوں اہم ہیں؟
-4. آپ کیسے چیک کرتے ہیں کہ publisher اور subscriber کے پاس compatible QoS ہے؟
-5. کیا ہوتا ہے اگر subscriber، publisher سے سست ہو؟
+1. `RELIABLE` اور `BEST_EFFORT` کیو او ایس میں کیا فرق ہے؟
+2. `TRANSIENT_LOCAL` ڈیورایبلٹی کب استعمال کرنی چاہیے؟
+3. میسجز میں ہیڈرز کیوں اہم ہیں؟
+4. آپ کیسے چیک کرتے ہیں کہ پبلشر اور سبسکرائبر کے پاس کمپیٹیبل کیو او ایس ہے؟
+5. کیا ہوتا ہے اگر سبسکرائبر، پبلشر سے سست ہو؟
 
-## Troubleshooting
+## ٹربل شوٹنگ
 
-**مسئلہ**: Subscriber کو messages موصول نہیں ہو رہے
+**مسئلہ**: سبسکرائبر کو میسجز موصول نہیں ہو رہے
 ```bash
 # Check QoS compatibility
 ros2 topic info /topic_name --verbose
 ```
 
-**مسئلہ**: Messages بے ترتیبی سے پہنچ رہے ہیں
-**حل**: History `KEEP_ALL` کے ساتھ `RELIABLE` QoS استعمال کریں
+**مسئلہ**: میسجز بے ترتیبی سے پہنچ رہے ہیں
+**حل**: ہسٹری `KEEP_ALL` کے ساتھ `RELIABLE` کیو او ایس استعمال کریں
 
-**مسئلہ**: Memory کا استعمال بڑھ رہا ہے
-**حل**: History depth کو `KEEP_LAST(n)` سے محدود کریں
+**مسئلہ**: میموری کا استعمال بڑھ رہا ہے
+**حل**: ہسٹری ڈیپتھ کو `KEEP_LAST(n)` سے محدود کریں
 
 ## اگلے قدم
 
-بہترین کام! اب آپ ROS 2 میں pub-sub communication کو سمجھتے ہیں۔
+بہترین کام! اب آپ آر او ایس 2 میں پب-سب کمیونیکیشن کو سمجھتے ہیں۔
 
-اگلا ہفتہ: [ہفتہ 5: Services، Actions، اور Parameters](week-05.md)
+اگلا ہفتہ: [ہفتہ 5: سروسز، ایکشنز، اور پیرامیٹرز](week-05.md)
 
-ہم synchronous communication patterns دریافت کریں گے اور ایک مکمل robot control سسٹم بنائیں گے!
+ہم سینکرونس کمیونیکیشن پیٹرنز دریافت کریں گے اور ایک مکمل روبوٹ کنٹرول سسٹم بنائیں گے!
 
 ## وسائل
 
-- [ROS 2 Topics Tutorial](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html)
-- [About QoS Settings](https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html)
-- [Common Interfaces (Message Types)](https://github.com/ros2/common_interfaces)
-- [Creating Custom Messages](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
+- [آر او ایس 2 ٹاپکس ٹیوٹوریل](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html)
+- [کیو او ایس سیٹنگز کے بارے میں](https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html)
+- [عام انٹرفیسز (میسج ٹائپس)](https://github.com/ros2/common_interfaces)
+- [کسٹم میسجز بنانا](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
 
 ---
 
 ## 📝 ہفتہ وار کوئز
 
-اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز multiple choice ہے، خودکار طریقے سے اسکور کیا جاتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
+اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز ملٹیپل چوائس ہے، خودکار طریقے سے اسکور کیا جاتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
 
 **[ہفتہ 4 کوئز لیں →](/quiz?week=4)**

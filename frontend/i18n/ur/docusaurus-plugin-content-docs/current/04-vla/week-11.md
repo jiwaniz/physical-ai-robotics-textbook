@@ -1,36 +1,36 @@
-# Week 11: Vision-Language-Action بنیادیں
+# ہفتہ 11: ویژن-لینگویج-ایکشن بنیادیں
 
 ## خلاصہ
 
-حتمی ماڈیول میں خوش آمدید! یہ ہفتہ Vision-Language-Action (VLA) ماڈلز متعارف کراتا ہے، جو Physical AI کی جدید ترین صورت ہے۔ آپ سیکھیں گے کہ کیسے ملٹی موڈل transformers روبوٹس کو بصری مناظر سمجھنے، قدرتی زبان کے احکامات کی تشریح کرنے، اور مناسب actions پیدا کرنے کے قابل بناتے ہیں۔
+حتمی ماڈیول میں خوش آمدید! یہ ہفتہ ویژن-لینگویج-ایکشن (وی ایل اے) ماڈلز متعارف کراتا ہے، جو فزیکل اے آئی کی جدید ترین صورت ہے۔ آپ سیکھیں گے کہ کیسے ملٹی موڈل ٹرانسفارمرز روبوٹس کو بصری مناظر سمجھنے، قدرتی زبان کے احکامات کی تشریح کرنے، اور مناسب ایکشنز پیدا کرنے کے قابل بناتے ہیں۔
 
 ## سیکھنے کے مقاصد
 
 اس ہفتے کے اختتام تک، آپ یہ کر سکیں گے:
 
-- VLA ماڈل آرکیٹیکچر اور اس کے اجزاء کو سمجھنا
-- وضاحت کرنا کہ vision، language، اور action modalities کو کیسے یکجا کیا جاتا ہے
-- پہلے سے تربیت یافتہ ماڈلز کے ساتھ ایک سادہ VLA pipeline نافذ کرنا
-- مخصوص روبوٹک کاموں کے لیے VLA ماڈلز کو fine-tune کرنا
-- VLA ماڈلز کو ROS 2 اور simulators کے ساتھ انٹیگریٹ کرنا
-- VLA ماڈل کی کارکردگی کا مقداری طور پر جائزہ لینا
+- وی ایل اے ماڈل آرکیٹیکچر اور اس کے اجزاء کو سمجھنا
+- وضاحت کرنا کہ ویژن، لینگویج، اور ایکشن موڈالیٹیز کو کیسے یکجا کیا جاتا ہے
+- پہلے سے تربیت یافتہ ماڈلز کے ساتھ ایک سادہ وی ایل اے پائپ لائن نافذ کرنا
+- مخصوص روبوٹک کاموں کے لیے وی ایل اے ماڈلز کو فائن ٹیون کرنا
+- وی ایل اے ماڈلز کو آر او ایس 2 اور سمیولیٹرز کے ساتھ انٹیگریٹ کرنا
+- وی ایل اے ماڈل کی کارکردگی کا مقداری طور پر جائزہ لینا
 
-## VLA ماڈلز کیا ہیں؟
+## وی ایل اے ماڈلز کیا ہیں؟
 
-**Vision-Language-Action (VLA)** ماڈلز ملٹی موڈل transformers ہیں جو یہ map کرتے ہیں:
-- **Vision** (camera تصاویر، depth، point clouds)
-- **Language** (قدرتی زبان کی ہدایات)
-→ **Actions** (robot motor commands، trajectories)
+**ویژن-لینگویج-ایکشن (وی ایل اے)** ماڈلز ملٹی موڈل ٹرانسفارمرز ہیں جو یہ میپ کرتے ہیں:
+- **ویژن** (کیمرہ تصاویر، ڈیپتھ، پوائنٹ کلاؤڈز)
+- **لینگویج** (قدرتی زبان کی ہدایات)
+→ **ایکشنز** (روبوٹ موٹر کمانڈز، ٹریجیکٹریز)
 
-### VLA ماڈلز کیوں؟
+### وی ایل اے ماڈلز کیوں؟
 
-**روایتی روبوٹکس pipeline:**
+**روایتی روبوٹکس پائپ لائن:**
 ```
 Perception → State Estimation → Planning → Control
 (علیحدہ modules، ہاتھ سے بنائے گئے interfaces)
 ```
 
-**VLA approach:**
+**وی ایل اے اپروچ:**
 ```
 Vision + Language → Transformer → Actions
 (end-to-end learning، unified representation)
@@ -38,21 +38,21 @@ Vision + Language → Transformer → Actions
 
 **فوائد:**
 - **عمومیت**: واحد ماڈل متنوع کاموں کو سنبھالتا ہے
-- **قدرتی interaction**: زبان کی ہدایات قبول کرتا ہے
-- **Transfer learning**: انٹرنیٹ سکیل vision-language ڈیٹا سے فائدہ اٹھاتا ہے
-- **سادگی**: ہاتھ سے بنائے گئے perception/planning modules کی ضرورت نہیں
+- **قدرتی انٹریکشن**: زبان کی ہدایات قبول کرتا ہے
+- **ٹرانسفر لرننگ**: انٹرنیٹ اسکیل ویژن-لینگویج ڈیٹا سے فائدہ اٹھاتا ہے
+- **سادگی**: ہاتھ سے بنائے گئے پرسیپشن/پلاننگ ماڈیولز کی ضرورت نہیں
 
-### حقیقی دنیا کے VLA سسٹمز
+### حقیقی دنیا کے وی ایل اے سسٹمز
 
-| Model | Organization | Key Achievement |
+| ماڈل | آرگنائزیشن | اہم کامیابی |
 |-------|-------------|-----------------|
-| **RT-1** | Google DeepMind | حقیقی روبوٹس پر 700 کام |
-| **RT-2** | Google DeepMind | Vision-language model → actions |
-| **PaLM-E** | Google | 540B parameter embodied AI |
-| **RoboFlamingo** | Open source | Open-weights VLA |
-| **OpenVLA** | Open source | 7B parameter open model |
+| **آر ٹی-1** | گوگل ڈیپ مائنڈ | حقیقی روبوٹس پر 700 کام |
+| **آر ٹی-2** | گوگل ڈیپ مائنڈ | ویژن-لینگویج ماڈل → ایکشنز |
+| **پام-ای** | گوگل | 540 بی پیرامیٹر ایمباڈیڈ اے آئی |
+| **روبو فلیمنگو** | اوپن سورس | اوپن-ویٹس وی ایل اے |
+| **اوپن وی ایل اے** | اوپن سورس | 7 بی پیرامیٹر اوپن ماڈل |
 
-## VLA آرکیٹیکچر
+## وی ایل اے آرکیٹیکچر
 
 ### اعلیٰ سطحی ڈھانچہ
 
@@ -78,9 +78,9 @@ Vision + Language → Transformer → Actions
 
 ### جزو کی تفصیلات
 
-#### 1. Vision Encoder
+#### 1. ویژن انکوڈر
 
-تصاویر کو token embeddings میں تبدیل کرتا ہے:
+تصاویر کو ٹوکن ایمبیڈنگز میں تبدیل کرتا ہے:
 
 ```python
 from transformers import CLIPVisionModel, CLIPProcessor
@@ -108,15 +108,15 @@ class VisionEncoder:
         return vision_tokens.squeeze(0)  # (N_patches, 768)
 ```
 
-**کلیدی architectures:**
-- **ViT (Vision Transformer)**: Patch-based image encoding
-- **CLIP**: Vision-language contrastive learning
-- **DinoV2**: Self-supervised vision features
-- **R3M**: Robot-specific vision representations
+**کلیدی آرکیٹیکچرز:**
+- **وی آئی ٹی (ویژن ٹرانسفارمر)**: پیچ بیسڈ امیج انکوڈنگ
+- **کلپ**: ویژن-لینگویج کنٹراسٹیو لرننگ
+- **ڈینو وی 2**: سیلف-سپروائزڈ ویژن فیچرز
+- **آر 3 ایم**: روبوٹ-سپیسیفک ویژن ریپریزنٹیشنز
 
-#### 2. Language Encoder
+#### 2. لینگویج انکوڈر
 
-متن کی ہدایات کو encode کرتا ہے:
+متن کی ہدایات کو انکوڈ کرتا ہے:
 
 ```python
 from transformers import T5Tokenizer, T5EncoderModel
@@ -143,15 +143,15 @@ class LanguageEncoder:
         return language_tokens.squeeze(0)  # (seq_len, 768)
 ```
 
-**عام encoders:**
-- **T5**: Text-to-text transformer
-- **BERT**: Bidirectional language model
-- **LLaMA/GPT**: Large language models
-- **CLIP Text**: Vision کے ساتھ aligned
+**عام انکوڈرز:**
+- **ٹی 5**: ٹیکسٹ ٹو ٹیکسٹ ٹرانسفارمر
+- **برٹ**: بائی ڈائریکشنل لینگویج ماڈل
+- **لاما/جی پی ٹی**: لارج لینگویج ماڈلز
+- **کلپ ٹیکسٹ**: ویژن کے ساتھ الائنڈ
 
-#### 3. Transformer Core
+#### 3. ٹرانسفارمر کور
 
-Vision اور language کو fuse کرتا ہے، action representations output کرتا ہے:
+ویژن اور لینگویج کو فیوز کرتا ہے، ایکشن ریپریزنٹیشنز آؤٹ پٹ کرتا ہے:
 
 ```python
 import torch
@@ -197,9 +197,9 @@ class VLATransformer(nn.Module):
         return fused_features
 ```
 
-#### 4. Action Decoder
+#### 4. ایکشن ڈیکوڈر
 
-Fused features سے robot actions کی پیشین گوئی کرتا ہے:
+فیوزڈ فیچرز سے روبوٹ ایکشنز کی پیشین گوئی کرتا ہے:
 
 ```python
 class ActionDecoder(nn.Module):
@@ -249,7 +249,7 @@ class ActionDecoder(nn.Module):
         return actions
 ```
 
-### مکمل VLA ماڈل
+### مکمل وی ایل اے ماڈل
 
 ```python
 class VLAModel(nn.Module):
@@ -288,7 +288,7 @@ class VLAModel(nn.Module):
         return actions
 ```
 
-## VLA ماڈلز کی تربیت
+## وی ایل اے ماڈلز کی تربیت
 
 ### ڈیٹاسیٹ کے تقاضے
 
@@ -302,7 +302,7 @@ class VLAModel(nn.Module):
 }
 ```
 
-**مثال کا trajectory:**
+**مثال کا ٹریجیکٹری:**
 ```python
 trajectory = {
     "task": "pick up the red block",
@@ -330,7 +330,7 @@ trajectory = {
 }
 ```
 
-### تربیتی Loop
+### تربیتی لوپ
 
 ```python
 import torch
@@ -374,9 +374,9 @@ def train_vla(model, dataloader, num_epochs=10):
 
 ### ڈیٹا اکٹھا کرنے کی حکمت عملی
 
-#### 1. Teleoperation
+#### 1. ٹیلی آپریشن
 
-انسان VR/keyboard کے ذریعے کاموں کا مظاہرہ کرتا ہے:
+انسان وی آر/کی بورڈ کے ذریعے کاموں کا مظاہرہ کرتا ہے:
 ```python
 def collect_teleop_data(robot, num_episodes=100):
     """Collect data via human teleoperation."""
@@ -399,7 +399,7 @@ def collect_teleop_data(robot, num_episodes=100):
     return dataset
 ```
 
-#### 2. Simulation (Isaac Sim)
+#### 2. سمیولیشن (آئزک سم)
 
 خودکار طور پر ڈیٹا پیدا کریں:
 ```python
@@ -436,9 +436,9 @@ def collect_sim_data(env, policy, num_episodes=10000):
     return dataset
 ```
 
-#### 3. Co-Training (Sim + Real)
+#### 3. کو-ٹریننگ (سم + ریئل)
 
-Simulated اور حقیقی ڈیٹا کو ملائیں:
+سمیولیٹڈ اور حقیقی ڈیٹا کو ملائیں:
 ```python
 # 90% sim, 10% real
 dataset = combine_datasets(
@@ -448,9 +448,9 @@ dataset = combine_datasets(
 )
 ```
 
-## پہلے سے تربیت یافتہ VLA ماڈلز کا استعمال
+## پہلے سے تربیت یافتہ وی ایل اے ماڈلز کا استعمال
 
-### OpenVLA (7B Parameters)
+### اوپن وی ایل اے (7 بی پیرامیٹرز)
 
 ```python
 from transformers import AutoModel, AutoProcessor
@@ -471,7 +471,7 @@ actions = outputs.actions  # (1, action_horizon, 7)
 robot.execute(actions[0, 0])  # First timestep action
 ```
 
-### RT-2 (بذریعہ Hugging Face)
+### آر ٹی-2 (بذریعہ ہگنگ فیس)
 
 ```python
 # RT-2 is not publicly released, but similar models:
@@ -484,7 +484,7 @@ action = model.predict(image=image, instruction=instruction)
 robot.move_to(action)
 ```
 
-## ROS 2 کے ساتھ VLA کو انٹیگریٹ کرنا
+## آر او ایس 2 کے ساتھ وی ایل اے کو انٹیگریٹ کرنا
 
 ```python
 #!/usr/bin/env python3
@@ -567,43 +567,43 @@ if __name__ == '__main__':
     main()
 ```
 
-## Week 11 عملی مشق
+## ہفتہ 11 عملی مشق
 
-**کام**: روبوٹ manipulation کے لیے پہلے سے تربیت یافتہ vision encoder کو fine-tune کریں
+**کام**: روبوٹ مینیپولیشن کے لیے پہلے سے تربیت یافتہ ویژن انکوڈر کو فائن ٹیون کریں
 
 **تقاضے:**
-1. RT-1 یا OpenVLA demo dataset ڈاؤن لوڈ کریں (100 trajectories)
-2. روبوٹ تصاویر پر CLIP vision encoder کو fine-tune کریں
-3. سادہ action prediction head (MLP) نافذ کریں
-4. 10 epochs کے لیے تربیت دیں
-5. Action prediction کی درستگی کا جائزہ لیں
-6. پیشین گوئی شدہ بمقابلہ ground-truth actions کو visualize کریں
+1. آر ٹی-1 یا اوپن وی ایل اے ڈیمو ڈیٹاسیٹ ڈاؤن لوڈ کریں (100 ٹریجیکٹریز)
+2. روبوٹ تصاویر پر کلپ ویژن انکوڈر کو فائن ٹیون کریں
+3. سادہ ایکشن پریڈکشن ہیڈ (ایم ایل پی) نافذ کریں
+4. 10 ایپوکس کے لیے تربیت دیں
+5. ایکشن پریڈکشن کی درستگی کا جائزہ لیں
+6. پیشین گوئی شدہ بمقابلہ گراؤنڈ-ٹروتھ ایکشنز کو ویژولائز کریں
 
-**Bonus:**
-- Language conditioning شامل کریں
-- Isaac Sim environment پر ٹیسٹ کریں
-- Action chunking نافذ کریں (10 قدم آگے کی پیشین گوئی)
+**بونس:**
+- لینگویج کنڈیشننگ شامل کریں
+- آئزک سم انوائرنمنٹ پر ٹیسٹ کریں
+- ایکشن چنکنگ نافذ کریں (10 قدم آگے کی پیشین گوئی)
 
 ## وسائل
 
-- [RT-1 Paper](https://arxiv.org/abs/2212.06817) - Robotics Transformer for Real-World Control
-- [RT-2 Paper](https://arxiv.org/abs/2307.15818) - Vision-Language-Action Models
-- [OpenVLA](https://openvla.github.io/) - Open-source 7B VLA model
-- [RoboFlamingo](https://roboflamingo.github.io/) - Open-weights VLA
-- [PaLM-E Paper](https://arxiv.org/abs/2303.03378) - Embodied Multimodal Language Model
+- [آر ٹی-1 پیپر](https://arxiv.org/abs/2212.06817) - روبوٹکس ٹرانسفارمر فار ریئل-ورلڈ کنٹرول
+- [آر ٹی-2 پیپر](https://arxiv.org/abs/2307.15818) - ویژن-لینگویج-ایکشن ماڈلز
+- [اوپن وی ایل اے](https://openvla.github.io/) - اوپن سورس 7 بی وی ایل اے ماڈل
+- [روبو فلیمنگو](https://roboflamingo.github.io/) - اوپن-ویٹس وی ایل اے
+- [پام-ای پیپر](https://arxiv.org/abs/2303.03378) - ایمباڈیڈ ملٹی موڈل لینگویج ماڈل
 
 ## اگلے قدم
 
-شاندار کام! اب آپ VLA آرکیٹیکچر کو سمجھتے ہیں اور پہلے سے تربیت یافتہ ماڈلز کے ساتھ کام کر سکتے ہیں۔
+شاندار کام! اب آپ وی ایل اے آرکیٹیکچر کو سمجھتے ہیں اور پہلے سے تربیت یافتہ ماڈلز کے ساتھ کام کر سکتے ہیں۔
 
-اگلا ہفتہ: [Week 12: Advanced VLA Applications](week-12.md)
+اگلا ہفتہ: [ہفتہ 12: اعلیٰ درجے کے وی ایل اے ایپلیکیشنز](week-12.md)
 
-ہم action chunking، multi-task learning، اور حقیقی روبوٹس پر VLA ماڈلز کی تعیناتی کو تلاش کریں گے!
+ہم ایکشن چنکنگ، ملٹی ٹاسک لرننگ، اور حقیقی روبوٹس پر وی ایل اے ماڈلز کی تعیناتی کو تلاش کریں گے!
 
 ---
 
-## 📝 ہفتہ وار Quiz
+## 📝 ہفتہ وار کوئز
 
-اس ہفتے کے مواد کی اپنی سمجھ کو ٹیسٹ کریں! Quiz multiple choice ہے، خودکار طور پر scored ہے، اور آپ کے پاس 2 attempts ہیں۔
+اس ہفتے کے مواد کی اپنی سمجھ کو ٹیسٹ کریں! کوئز ملٹیپل چوائس ہے، خودکار طور پر اسکورڈ ہے، اور آپ کے پاس 2 اٹیمپٹس ہیں۔
 
-**[Week 11 Quiz لیں →](/quiz?week=11)**
+**[ہفتہ 11 کوئز لیں →](/quiz?week=11)**

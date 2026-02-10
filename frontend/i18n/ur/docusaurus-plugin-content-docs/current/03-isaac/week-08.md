@@ -1,81 +1,81 @@
-# ہفتہ 8: NVIDIA Isaac Sim - تعارف اور سیٹ اپ
+# ہفتہ 8: این ویڈیا آئزک سم - تعارف اور سیٹ اپ
 
 ## جائزہ
 
-باب 3 میں خوش آمدید! یہ ہفتہ NVIDIA Isaac Sim کا تعارف پیش کرتا ہے، جو NVIDIA Omniverse پر بنایا گیا ایک GPU-accelerated robotics simulator ہے۔ آپ سیکھیں گے کہ Isaac Sim Physical AI کے لیے کیوں انقلابی ہے، پلیٹ فارم کو انسٹال کریں، اپنی پہلی simulation بنائیں، اور ROS 2 کے ساتھ integrate کریں۔
+باب 3 میں خوش آمدید! یہ ہفتہ این ویڈیا آئزک سم کا تعارف پیش کرتا ہے، جو این ویڈیا اومنی ورس پر بنایا گیا ایک جی پی یو-ایکسلریٹڈ روبوٹکس سمیولیٹر ہے۔ آپ سیکھیں گے کہ آئزک سم فزیکل اے آئی کے لیے کیوں انقلابی ہے، پلیٹ فارم کو انسٹال کریں، اپنی پہلی سمیولیشن بنائیں، اور آر او ایس 2 کے ساتھ انٹیگریٹ کریں۔
 
 ## سیکھنے کے مقاصد
 
 اس ہفتے کے اختتام تک، آپ یہ کر سکیں گے:
 
-- سمجھیں کہ Isaac Sim کو Gazebo سے کیا مختلف بناتا ہے
-- NVIDIA Isaac Sim اور Omniverse انسٹال کریں
-- Isaac Sim interface میں navigate کریں
-- 3D assets (USD format) import اور manipulate کریں
-- Physics کے ساتھ بنیادی robot simulations بنائیں
-- Isaac Sim کو ROS 2 کے ساتھ integrate کریں
-- Automation کے لیے Isaac Sim Python API استعمال کریں
+- سمجھیں کہ آئزک سم کو گزیبو سے کیا مختلف بناتا ہے
+- این ویڈیا آئزک سم اور اومنی ورس انسٹال کریں
+- آئزک سم انٹرفیس میں نیویگیٹ کریں
+- 3ڈی ایسٹس (یو ایس ڈی فارمیٹ) امپورٹ اور مینیپولیٹ کریں
+- فزکس کے ساتھ بنیادی روبوٹ سمیولیشنز بنائیں
+- آئزک سم کو آر او ایس 2 کے ساتھ انٹیگریٹ کریں
+- آٹومیشن کے لیے آئزک سم پائتھون اے پی آئی استعمال کریں
 
-## NVIDIA Isaac Sim کیا ہے؟
+## این ویڈیا آئزک سم کیا ہے؟
 
-**Isaac Sim** ایک robotics simulation platform ہے جو NVIDIA Omniverse پر بنایا گیا ہے، اور یہ فائدے اٹھاتا ہے:
+**آئزک سم** ایک روبوٹکس سمیولیشن پلیٹ فارم ہے جو این ویڈیا اومنی ورس پر بنایا گیا ہے، اور یہ فائدے اٹھاتا ہے:
 
-- **PhysX 5**: GPU-accelerated physics engine (CPU سے 1000x تیز)
-- **RTX Ray Tracing**: Vision AI کے لیے photorealistic rendering
-- **USD (Universal Scene Description)**: Industry-standard 3D format (Pixar)
-- **Python API**: مکمل programmatic control
-- **ROS 2 Integration**: ROS topics/services کے لیے native bridges
-- **Synthetic Data Generation**: ML کے لیے خودکار dataset creation
+- **فزکس ایکس 5**: جی پی یو-ایکسلریٹڈ فزکس انجن (سی پی یو سے 1000 گنا تیز)
+- **آر ٹی ایکس رے ٹریسنگ**: ویژن اے آئی کے لیے فوٹو ریئلسٹک رینڈرنگ
+- **یو ایس ڈی (یونیورسل سین ڈسکرپشن)**: انڈسٹری-اسٹینڈرڈ 3ڈی فارمیٹ (پکسار)
+- **پائتھون اے پی آئی**: مکمل پروگرامیٹک کنٹرول
+- **آر او ایس 2 انٹیگریشن**: آر او ایس ٹاپکس/سروسز کے لیے نیٹو برجز
+- **سنتھیٹک ڈیٹا جنریشن**: ایم ایل کے لیے خودکار ڈیٹاسیٹ کریئیشن
 
-### Isaac Sim بمقابلہ Gazebo Classic
+### آئزک سم بمقابلہ گزیبو کلاسک
 
-| خصوصیت | Gazebo Classic | Isaac Sim |
+| خصوصیت | گزیبو کلاسک | آئزک سم |
 |---------|---------------|-----------|
-| **Physics Engine** | ODE/Bullet (CPU) | PhysX 5 (GPU) |
-| **Rendering** | OGRE (بنیادی) | RTX ray tracing (photorealistic) |
-| **Parallel Simulations** | محدود | GPU پر ہزاروں |
-| **AI/ML Integration** | بیرونی | Native (Isaac Gym، Replicator) |
-| **Sensor Simulation** | آسان کیا ہوا | جسمانی طور پر درست (cameras، lidar) |
-| **Scene Format** | SDF/URDF | USD (Universal Scene Description) |
-| **Extensibility** | C++ plugins | Python API |
-| **License** | Open source | تحقیق/تعلیم کے لیے مفت |
+| **فزکس انجن** | او ڈی ای/بلٹ (سی پی یو) | فزکس ایکس 5 (جی پی یو) |
+| **رینڈرنگ** | او جی آر ای (بنیادی) | آر ٹی ایکس رے ٹریسنگ (فوٹو ریئلسٹک) |
+| **پیرالل سمیولیشنز** | محدود | جی پی یو پر ہزاروں |
+| **اے آئی/ایم ایل انٹیگریشن** | بیرونی | نیٹو (آئزک جم، ریپلیکیٹر) |
+| **سینسر سمیولیشن** | آسان کیا ہوا | جسمانی طور پر درست (کیمرے، لائیڈار) |
+| **سین فارمیٹ** | ایس ڈی ایف/یو آر ڈی ایف | یو ایس ڈی (یونیورسل سین ڈسکرپشن) |
+| **ایکسٹینسیبیلیٹی** | سی++ پلگ انز | پائتھون اے پی آئی |
+| **لائسنس** | اوپن سورس | تحقیق/تعلیم کے لیے مفت |
 
-**Isaac Sim کب استعمال کریں:**
-- Synthetic data کے ساتھ ML models ٹریننگ کرنا
-- Photorealistic vision datasets
-- بہت زیادہ parallel RL (Isaac Gym)
-- High-fidelity physics (deformables، fluids)
-- Industrial digital twins
+**آئزک سم کب استعمال کریں:**
+- سنتھیٹک ڈیٹا کے ساتھ ایم ایل ماڈلز ٹریننگ کرنا
+- فوٹو ریئلسٹک ویژن ڈیٹاسیٹس
+- بہت زیادہ پیرالل آر ایل (آئزک جم)
+- ہائی-فیڈیلیٹی فزکس (ڈیفارمیبلز، فلوئڈز)
+- انڈسٹریل ڈیجیٹل ٹوِنز
 
-**Gazebo کب استعمال کریں:**
-- GPU کے بغیر فوری prototyping
-- Legacy ROS 1 workflows
-- Open-source ضروریات
-- ہلکے وزن simulations
+**گزیبو کب استعمال کریں:**
+- جی پی یو کے بغیر فوری پروٹو ٹائپنگ
+- لیگیسی آر او ایس 1 ورک فلوز
+- اوپن سورس ضروریات
+- ہلکے وزن سمیولیشنز
 
 ## سسٹم کی ضروریات
 
 ### کم از کم ضروریات
-- **GPU**: NVIDIA RTX 2060 یا اس سے زیادہ (6GB VRAM)
-- **CPU**: Intel i7 یا AMD Ryzen 7
-- **RAM**: 32GB
-- **Storage**: 50GB SSD خالی جگہ
-- **OS**: Ubuntu 20.04/22.04 یا Windows 10/11
+- **جی پی یو**: این ویڈیا آر ٹی ایکس 2060 یا اس سے زیادہ (6 جی بی وی ریم)
+- **سی پی یو**: انٹیل آئی 7 یا اے ایم ڈی رائزن 7
+- **ریم**: 32 جی بی
+- **اسٹوریج**: 50 جی بی ایس ایس ڈی خالی جگہ
+- **او ایس**: اوبنٹو 20.04/22.04 یا ونڈوز 10/11
 
 ### تجویز کردہ ضروریات
-- **GPU**: NVIDIA RTX 3080 یا اس سے زیادہ (12GB+ VRAM)
-- **CPU**: Intel i9 یا AMD Ryzen 9
-- **RAM**: 64GB
-- **Storage**: 100GB NVMe SSD
+- **جی پی یو**: این ویڈیا آر ٹی ایکس 3080 یا اس سے زیادہ (12 جی بی+ وی ریم)
+- **سی پی یو**: انٹیل آئی 9 یا اے ایم ڈی رائزن 9
+- **ریم**: 64 جی بی
+- **اسٹوریج**: 100 جی بی این وی ایم ای ایس ایس ڈی
 
-### Cloud اختیارات (اگر مقامی GPU نہیں ہے)
-- **AWS**: g5.xlarge (A10G GPU, $1.006/hr)
-- **GCP**: n1-standard-4 + T4 GPU ($0.70/hr)
-- **NVIDIA Omniverse Cloud**: Streaming option (قیمت مختلف ہوتی ہے)
+### کلاؤڈ اختیارات (اگر مقامی جی پی یو نہیں ہے)
+- **اے ڈبلیو ایس**: g5.xlarge (اے 10 جی جی پی یو، $1.006/گھنٹہ)
+- **جی سی پی**: n1-standard-4 + ٹی 4 جی پی یو ($0.70/گھنٹہ)
+- **این ویڈیا اومنی ورس کلاؤڈ**: اسٹریمنگ آپشن (قیمت مختلف ہوتی ہے)
 
-## NVIDIA Isaac Sim انسٹال کرنا
+## این ویڈیا آئزک سم انسٹال کرنا
 
-### مرحلہ 1: NVIDIA Driver اور CUDA
+### مرحلہ 1: این ویڈیا ڈرائیور اور کوڈا
 
 ```bash
 # موجودہ driver چیک کریں
@@ -96,15 +96,15 @@ sudo apt update
 sudo apt install cuda-toolkit-12-2 -y
 ```
 
-### مرحلہ 2: NVIDIA اکاؤنٹ بنائیں
+### مرحلہ 2: این ویڈیا اکاؤنٹ بنائیں
 
 1. [https://developer.nvidia.com/isaac-sim](https://developer.nvidia.com/isaac-sim) دیکھیں
-2. "Get Started" → Sign in/Create account پر کلک کریں
-3. NVIDIA Developer Program میں شامل ہوں (مفت)
+2. "گیٹ اسٹارٹڈ" → سائن ان/اکاؤنٹ بنائیں پر کلک کریں
+3. این ویڈیا ڈویلپر پروگرام میں شامل ہوں (مفت)
 
-### مرحلہ 3: Omniverse Launcher انسٹال کریں
+### مرحلہ 3: اومنی ورس لانچر انسٹال کریں
 
-**Linux:**
+**لینکس:**
 ```bash
 # Launcher ڈاؤن لوڈ کریں
 wget https://install.launcher.omniverse.nvidia.com/installers/omniverse-launcher-linux.AppImage
@@ -116,30 +116,30 @@ chmod +x omniverse-launcher-linux.AppImage
 ./omniverse-launcher-linux.AppImage
 ```
 
-**Windows:**
-[https://www.nvidia.com/en-us/omniverse/download/](https://www.nvidia.com/en-us/omniverse/download/) سے installer ڈاؤن لوڈ کریں
+**ونڈوز:**
+[https://www.nvidia.com/en-us/omniverse/download/](https://www.nvidia.com/en-us/omniverse/download/) سے انسٹالر ڈاؤن لوڈ کریں
 
-### مرحلہ 4: Launcher کے ذریعے Isaac Sim انسٹال کریں
+### مرحلہ 4: لانچر کے ذریعے آئزک سم انسٹال کریں
 
-1. Omniverse Launcher کھولیں
-2. **Exchange** ٹیب پر جائیں
-3. "Isaac Sim" تلاش کریں
-4. **Install** پر کلک کریں (version 2023.1.1 یا تازہ ترین منتخب کریں)
-5. انسٹالیشن میں ~20-30 منٹ لگتے ہیں (20GB download)
+1. اومنی ورس لانچر کھولیں
+2. **ایکسچینج** ٹیب پر جائیں
+3. "آئزک سم" تلاش کریں
+4. **انسٹال** پر کلک کریں (ورژن 2023.1.1 یا تازہ ترین منتخب کریں)
+5. انسٹالیشن میں ~20-30 منٹ لگتے ہیں (20 جی بی ڈاؤن لوڈ)
 
-### مرحلہ 5: Isaac Sim شروع کریں
+### مرحلہ 5: آئزک سم شروع کریں
 
-1. Launcher میں، **Library** ٹیب پر جائیں
-2. "Isaac Sim" تلاش کریں
-3. **Launch** پر کلک کریں
-4. پہلی شروعات میں 5-10 منٹ لگتے ہیں (shader compilation)
+1. لانچر میں، **لائبریری** ٹیب پر جائیں
+2. "آئزک سم" تلاش کریں
+3. **لانچ** پر کلک کریں
+4. پہلی شروعات میں 5-10 منٹ لگتے ہیں (شیڈر کمپائلیشن)
 
 **تصدیق:**
-- Isaac Sim window کھلنی چاہیے
-- آپ کو welcome screen نظر آنی چاہیے
-- Console میں کوئی error messages نہیں ہونے چاہیے
+- آئزک سم ونڈو کھلنی چاہیے
+- آپ کو ویلکم اسکرین نظر آنی چاہیے
+- کنسول میں کوئی ایرر میسجز نہیں ہونے چاہیے
 
-### مرحلہ 6: ROS 2 Bridge انسٹال کریں
+### مرحلہ 6: آر او ایس 2 برج انسٹال کریں
 
 ```bash
 # Isaac Sim directory میں navigate کریں
@@ -152,68 +152,68 @@ cd ~/.local/share/ov/pkg/isaac_sim-2023.1.1
 ./install_ros2_humble.sh
 ```
 
-## Isaac Sim Interface کا جائزہ
+## آئزک سم انٹرفیس کا جائزہ
 
 ### اہم اجزاء
 
-1. **Viewport**: 3D scene visualization
-2. **Stage**: آبجیکٹس کی hierarchy (USD prims)
-3. **Property Panel**: آبجیکٹ properties اور settings
-4. **Content Browser**: Asset library
-5. **Console**: Python scripts اور logs
+1. **ویو پورٹ**: 3ڈی سین ویژولائزیشن
+2. **سٹیج**: آبجیکٹس کی ہائرارکی (یو ایس ڈی پرمز)
+3. **پراپرٹی پینل**: آبجیکٹ پراپرٹیز اور سیٹنگز
+4. **کنٹینٹ براؤزر**: ایسٹ لائبریری
+5. **کنسول**: پائتھون اسکرپٹس اور لاگز
 
-### Navigation Controls
+### نیویگیشن کنٹرولز
 
 | عمل | کنٹرول |
 |--------|---------|
-| **Orbit camera** | Middle mouse drag |
-| **Pan camera** | Shift + Middle mouse drag |
-| **Zoom** | Mouse wheel |
-| **Select object** | Left click |
-| **Multi-select** | Ctrl + Left click |
-| **Focus on object** | F key |
-| **Frame all** | A key |
+| **آربٹ کیمرا** | مِڈل ماؤس ڈریگ |
+| **پین کیمرا** | شفٹ + مِڈل ماؤس ڈریگ |
+| **زوم** | ماؤس وہیل |
+| **آبجیکٹ سلیکٹ** | لیفٹ کلک |
+| **ملٹی-سلیکٹ** | کنٹرول + لیفٹ کلک |
+| **آبجیکٹ پر فوکس** | ایف کی |
+| **سب فریم** | اے کی |
 
-### Viewport Modes
+### ویو پورٹ موڈز
 
-- **Lit**: روشنیوں کے ساتھ realistic rendering
-- **Wireframe**: Polygon edges دکھائیں
-- **Physics Debug**: Collision shapes کو visualize کریں
-- **Bounds**: Bounding boxes دکھائیں
+- **لِٹ**: روشنیوں کے ساتھ ریئلسٹک رینڈرنگ
+- **وائر فریم**: پولیگون ایجز دکھائیں
+- **فزکس ڈیبگ**: کولیژن شیپس کو ویژولائز کریں
+- **باؤنڈز**: باؤنڈنگ باکسز دکھائیں
 
-## USD: Universal Scene Description
+## یو ایس ڈی: یونیورسل سین ڈسکرپشن
 
-Isaac Sim **USD (Universal Scene Description)** استعمال کرتا ہے، Pixar کا open-source 3D format۔
+آئزک سم **یو ایس ڈی (یونیورسل سین ڈسکرپشن)** استعمال کرتا ہے، پکسار کا اوپن سورس 3ڈی فارمیٹ۔
 
-### USD تصورات
+### یو ایس ڈی تصورات
 
-**Prims (Primitives)**: Scene میں ہر چیز ایک prim ہے
-- `Xform`: Transform node (position، rotation، scale)
-- `Mesh`: 3D geometry
+**پرمز (پرمیٹوز)**: سین میں ہر چیز ایک پرم ہے
+- `Xform`: ٹرانسفارم نوڈ (پوزیشن، روٹیشن، سکیل)
+- `Mesh`: 3ڈی جیومیٹری
 - `Material`: ظاہری خصوصیات
 - `Light`: روشنی کے ذرائع
 - `Camera`: نقطہ نظر
 
-**Stage**: تمام prims کے لیے container (scene)
+**سٹیج**: تمام پرمز کے لیے کنٹینر (سین)
 
-**Layers**: غیر تباہ کن edits (Photoshop کی تہوں کی طرح)
+**لیئرز**: غیر تباہ کن ایڈٹس (فوٹوشاپ کی تہوں کی طرح)
 
-### GUI کے ذریعے آبجیکٹس بنانا
+### جی یو آئی کے ذریعے آبجیکٹس بنانا
 
-1. **Create → Mesh → Cube**
-   - Origin پر cube بناتا ہے
-   - Stage panel میں `/World/Cube` کے طور پر نظر آتا ہے
+1. **کریئیٹ → میش → کیوب**
+   - اوریجن پر کیوب بناتا ہے
+   - سٹیج پینل میں `/World/Cube` کے طور پر نظر آتا ہے
 
-2. **Property Panel → Transform**
-   - Position: X، Y، Z coordinates
-   - Rotation: Euler angles یا quaternion
-   - Scale: X، Y، Z scaling
+2. **پراپرٹی پینل → ٹرانسفارم**
+   - پوزیشن: ایکس، وائی، زیڈ کوآرڈینیٹس
+   - روٹیشن: یولر اینگلز یا کواٹرنین
+   - سکیل: ایکس، وائی، زیڈ اسکیلنگ
 
-3. **Property Panel → Physics**
-   - **Rigid Body** component شامل کریں
-   - Mass، collision shape، friction سیٹ کریں
+3. **پراپرٹی پینل → فزکس**
+   - **رِجِڈ باڈی** کمپوننٹ شامل کریں
+   - ماس، کولیژن شیپ، فرکشن سیٹ کریں
 
-### مثال: ایک سادہ Scene بنائیں
+### مثال: ایک سادہ سین بنائیں
 
 **کام:** اشیاء کے ساتھ میز بنائیں
 
@@ -225,7 +225,7 @@ Isaac Sim **USD (Universal Scene Description)** استعمال کرتا ہے، P
 2. Create → Mesh → Cylinder (میز کی ٹانگ)
    - Scale: (0.1, 0.1, 1)
    - Position: (0.8, 0.4, 0)
-   - 4 ٹانگوں کے لیے 3 بار مزید duplicate کریں
+   - 4 ٹانگوں کے لیے 3 بار مزید ڈپلیکیٹ کریں
 
 3. Create → Mesh → Sphere (میز پر گیند)
    - Radius: 0.1
@@ -234,27 +234,27 @@ Isaac Sim **USD (Universal Scene Description)** استعمال کرتا ہے، P
 
 4. Create → Physics → Ground Plane
 
-5. Physics چلانے کے لیے Play (نچلے toolbar) پر کلک کریں
+5. فزکس چلانے کے لیے پلے (نچلے ٹول بار) پر کلک کریں
 ```
 
-## Isaac Sim میں Python Scripting
+## آئزک سم میں پائتھون اسکرپٹنگ
 
-Isaac Sim میں مکمل API تک رسائی کے ساتھ ایک built-in Python interpreter ہے۔
+آئزک سم میں مکمل اے پی آئی تک رسائی کے ساتھ ایک بلٹ ان پائتھون انٹرپریٹر ہے۔
 
-### Python Scripts چلانا
+### پائتھون اسکرپٹس چلانا
 
-**طریقہ 1: Script Editor (GUI)**
-1. Window → Script Editor
-2. Python code لکھیں
-3. **Run** پر کلک کریں
+**طریقہ 1: اسکرپٹ ایڈیٹر (جی یو آئی)**
+1. ونڈو → اسکرپٹ ایڈیٹر
+2. پائتھون کوڈ لکھیں
+3. **رن** پر کلک کریں
 
-**طریقہ 2: Standalone Python Script**
+**طریقہ 2: اسٹینڈ الون پائتھون اسکرپٹ**
 ```bash
 # Isaac Sim directory سے
 ./python.sh /path/to/script.py
 ```
 
-### Hello World Script
+### ہیلو ورلڈ اسکرپٹ
 
 ```python
 # hello_isaac.py
@@ -301,31 +301,31 @@ cd ~/.local/share/ov/pkg/isaac_sim-2023.1.1
 ./python.sh hello_isaac.py
 ```
 
-## Robots کو Isaac Sim میں Import کرنا
+## روبوٹس کو آئزک سم میں امپورٹ کرنا
 
-### طریقہ 1: URDF Import کریں
+### طریقہ 1: یو آر ڈی ایف امپورٹ کریں
 
-Isaac Sim ROS URDF فائلیں import کر سکتا ہے:
+آئزک سم آر او ایس یو آر ڈی ایف فائلیں امپورٹ کر سکتا ہے:
 
-1. **File → Import → URDF**
+1. **فائل → امپورٹ → یو آر ڈی ایف**
 2. اپنی `.urdf` فائل منتخب کریں
-3. Import settings configure کریں:
-   - **Fix Base Link**: مقررہ robots کے لیے check کریں
-   - **Joint Drive Type**: Position/Velocity/Effort
-   - **Create Physics Scene**: خودکار طور پر physics شامل کریں
-4. **Import** پر کلک کریں
+3. امپورٹ سیٹنگز کنفیگر کریں:
+   - **فکس بیس لنک**: مقررہ روبوٹس کے لیے چیک کریں
+   - **جوائنٹ ڈرائیو ٹائپ**: پوزیشن/ویلاسیٹی/ایفرٹ
+   - **کریئیٹ فزکس سین**: خودکار طور پر فزکس شامل کریں
+4. **امپورٹ** پر کلک کریں
 
-Robot configured joints کے ساتھ scene میں ظاہر ہوتا ہے!
+روبوٹ کنفیگرڈ جوائنٹس کے ساتھ سین میں ظاہر ہوتا ہے!
 
-### طریقہ 2: Pre-Built Assets استعمال کریں
+### طریقہ 2: پری بلٹ ایسٹس استعمال کریں
 
-Isaac Sim میں robots شامل ہیں:
+آئزک سم میں روبوٹس شامل ہیں:
 
-1. **Content Browser** → Isaac → Robots
-2. Robot (مثلاً، Franka، Jetbot، Carter) کو scene میں drag کریں
-3. Robot physics کے ساتھ استعمال کے لیے تیار ہے
+1. **کنٹینٹ براؤزر** → آئزک → روبوٹس
+2. روبوٹ (مثلاً، فرینکا، جیٹ بوٹ، کارٹر) کو سین میں ڈریگ کریں
+3. روبوٹ فزکس کے ساتھ استعمال کے لیے تیار ہے
 
-### طریقہ 3: Python API Import
+### طریقہ 3: پائتھون اے پی آئی امپورٹ
 
 ```python
 from omni.isaac.core.utils.extensions import get_extension_path_from_name
@@ -348,34 +348,34 @@ result, prim_path = urdf_interface.parse_urdf(urdf_path, import_config)
 print(f"Robot imported at: {prim_path}")
 ```
 
-## ROS 2 Integration
+## آر او ایس 2 انٹیگریشن
 
-Isaac Sim میں bridges کے ذریعے native ROS 2 support ہے۔
+آئزک سم میں برجز کے ذریعے نیٹو آر او ایس 2 سپورٹ ہے۔
 
-### ROS 2 Bridge فعال کرنا
+### آر او ایس 2 برج فعال کرنا
 
-**طریقہ 1: GUI**
-1. Window → Extensions
-2. "ROS2" تلاش کریں
-3. **omni.isaac.ros2_bridge** فعال کریں
+**طریقہ 1: جی یو آئی**
+1. ونڈو → ایکسٹینشنز
+2. "آر او ایس 2" تلاش کریں
+3. **`omni.isaac.ros2_bridge`** فعال کریں
 
-**طریقہ 2: Python**
+**طریقہ 2: پائتھون**
 ```python
 import omni.isaac.core.utils.extensions as extensions
 extensions.enable_extension("omni.isaac.ros2_bridge")
 ```
 
-### ROS 2 Topics شائع کرنا
+### آر او ایس 2 ٹاپکس پبلش کرنا
 
-**مثال: Camera images شائع کریں**
+**مثال: کیمرا امیجز پبلش کریں**
 
-1. Stage میں camera منتخب کریں
-2. Right-click → Create → ROS2 → Camera
-3. Configure کریں:
-   - **Topic**: `/camera/image_raw`
-   - **Frame ID**: `camera_link`
-   - **Publish Rate**: 30 Hz
-4. Simulation چلائیں → Images شائع ہو گئیں!
+1. سٹیج میں کیمرا منتخب کریں
+2. رائٹ-کلک → کریئیٹ → آر او ایس 2 → کیمرا
+3. کنفیگر کریں:
+   - **ٹاپک**: `/camera/image_raw`
+   - **فریم آئی ڈی**: `camera_link`
+   - **پبلش ریٹ**: 30 ہرٹز
+4. سمیولیشن چلائیں → امیجز پبلش ہو گئیں!
 
 **تصدیق کریں:**
 ```bash
@@ -383,9 +383,9 @@ ros2 topic list | grep camera
 ros2 topic echo /camera/image_raw --no-arr
 ```
 
-### ROS 2 Topics Subscribe کرنا
+### آر او ایس 2 ٹاپکس سبسکرائب کرنا
 
-**مثال: /cmd_vel Subscribe کریں**
+**مثال: `/cmd_vel` سبسکرائب کریں**
 
 ```python
 from omni.isaac.core.utils.extensions import enable_extension
@@ -405,7 +405,7 @@ def cmd_vel_callback(msg: Twist):
 # نوٹ: مکمل integration کے لیے ROS2 bridge extension کی ضرورت ہے
 ```
 
-### مکمل ROS 2 Bridge مثال
+### مکمل آر او ایس 2 برج مثال
 
 ```python
 from omni.isaac.kit import SimulationApp
@@ -449,58 +449,58 @@ simulation_app.close()
 
 ## ہفتہ 8 عملی مشق
 
-**کام**: ایک سادہ pick-and-place simulation بنائیں
+**کام**: ایک سادہ پک اینڈ پلیس سمیولیشن بنائیں
 
 **ضروریات:**
-1. Ground plane اور میز کے ساتھ scene
-2. میز پر cube object (pick کرنے کا ہدف)
-3. Scene دیکھنے والا camera
-4. ROS 2 topic کو camera feed export کریں
-5. Python script جو:
-   - 500 steps کے لیے simulation چلاتی ہے
-   - Camera images کیپچر کرتی ہے
-   - 10 frames کو PNG فائلوں کے طور پر محفوظ کرتی ہے
+1. گراؤنڈ پلین اور میز کے ساتھ سین
+2. میز پر کیوب آبجیکٹ (پک کرنے کا ہدف)
+3. سین دیکھنے والا کیمرا
+4. آر او ایس 2 ٹاپک کو کیمرا فیڈ ایکسپورٹ کریں
+5. پائتھون اسکرپٹ جو:
+   - 500 سٹیپس کے لیے سمیولیشن چلاتی ہے
+   - کیمرا امیجز کیپچر کرتی ہے
+   - 10 فریمز کو پی این جی فائلوں کے طور پر محفوظ کرتی ہے
 
 **بونس:**
-- Robotic arm شامل کریں (assets سے Franka Panda)
-- Programmatically arm کی حرکت کو animate کریں
+- روبوٹک آرم شامل کریں (ایسٹس سے فرینکا پانڈا)
+- پروگرامیٹکلی آرم کی حرکت کو اینیمیٹ کریں
 
 ## عام مسائل
 
-### مسئلہ 1: Isaac Sim شروع نہیں ہوتا
-**وجہ**: غیر مطابقت پذیر driver یا VRAM بہت کم
-**حل**: Driver 535+ پر اپ ڈیٹ کریں، دوسری GPU ایپس بند کریں
+### مسئلہ 1: آئزک سم شروع نہیں ہوتا
+**وجہ**: غیر مطابقت پذیر ڈرائیور یا وی ریم بہت کم
+**حل**: ڈرائیور 535+ پر اپ ڈیٹ کریں، دوسری جی پی یو ایپس بند کریں
 
-### مسئلہ 2: "CUDA out of memory"
-**حل**: Scene کی پیچیدگی کم کریں، resolution کم کریں، دوسرے programs بند کریں
+### مسئلہ 2: "کوڈا آؤٹ آف میموری"
+**حل**: سین کی پیچیدگی کم کریں، ریزولیشن کم کریں، دوسرے پروگرامز بند کریں
 
-### مسئلہ 3: ROS 2 topics ظاہر نہیں ہو رہے
-**حل**: پہلے ROS 2 workspace source کریں، ROS2 bridge extension فعال کریں
+### مسئلہ 3: آر او ایس 2 ٹاپکس ظاہر نہیں ہو رہے
+**حل**: پہلے آر او ایس 2 ورک سپیس سورس کریں، آر او ایس 2 برج ایکسٹینشن فعال کریں
 
 ### مسئلہ 4: سست کارکردگی
-**حل**: Ray tracing غیر فعال کریں (Viewport → Rendering Mode → Lit)، physics substeps کم کریں
+**حل**: رے ٹریسنگ غیر فعال کریں (ویو پورٹ → رینڈرنگ موڈ → لِٹ)، فزکس سب سٹیپس کم کریں
 
 ## وسائل
 
-- [Isaac Sim Documentation](https://docs.omniverse.nvidia.com/isaacsim/latest/index.html)
-- [USD Official Docs](https://openusd.org/release/index.html)
-- [Isaac Sim Tutorials](https://docs.omniverse.nvidia.com/isaacsim/latest/tutorials.html)
-- [ROS 2 Bridge Guide](https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/index.html)
-- [Isaac Sim Python API](https://docs.omniverse.nvidia.com/py/isaacsim/index.html)
-- [NVIDIA Isaac Forum](https://forums.developer.nvidia.com/c/agx-autonomous-machines/isaac/67)
+- [آئزک سم دستاویزات](https://docs.omniverse.nvidia.com/isaacsim/latest/index.html)
+- [یو ایس ڈی آفیشل ڈاکس](https://openusd.org/release/index.html)
+- [آئزک سم ٹیوٹوریلز](https://docs.omniverse.nvidia.com/isaacsim/latest/tutorials.html)
+- [آر او ایس 2 برج گائیڈ](https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/index.html)
+- [آئزک سم پائتھون اے پی آئی](https://docs.omniverse.nvidia.com/py/isaacsim/index.html)
+- [این ویڈیا آئزک فورم](https://forums.developer.nvidia.com/c/agx-autonomous-machines/isaac/67)
 
 ## اگلے قدم
 
-بہترین کام! آپ نے Isaac Sim سیٹ اپ کر لیا ہے اور بنیادی باتیں سمجھ گئے ہیں۔
+بہترین کام! آپ نے آئزک سم سیٹ اپ کر لیا ہے اور بنیادی باتیں سمجھ گئے ہیں۔
 
-اگلا ہفتہ: [ہفتہ 9: Synthetic Data Generation & Isaac Gym](week-09.md)
+اگلا ہفتہ: [ہفتہ 9: سنتھیٹک ڈیٹا جنریشن اور آئزک جم](week-09.md)
 
-ہم vision models ٹریننگ کرنے کے لیے synthetic dataset creation اور Isaac Gym کے ساتھ reinforcement learning کو دریافت کریں گے!
+ہم ویژن ماڈلز ٹریننگ کرنے کے لیے سنتھیٹک ڈیٹاسیٹ کریئیشن اور آئزک جم کے ساتھ ری انفورسمنٹ لرننگ کو دریافت کریں گے!
 
 ---
 
-## 📝 ہفتہ وار Quiz
+## 📝 ہفتہ وار کوئز
 
-اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! Quiz multiple choice ہے، خودکار طور پر score ہوتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
+اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز ملٹیپل چوائس ہے، خودکار طور پر اسکور ہوتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
 
-**[ہفتہ 8 Quiz لیں →](/quiz?week=8)**
+**[ہفتہ 8 کوئز لیں →](/quiz?week=8)**

@@ -1,25 +1,25 @@
-# Week 12: اعلیٰ درجے کے VLA ایپلیکیشنز
+# ہفتہ 12: اعلیٰ درجے کے وی ایل اے ایپلیکیشنز
 
 ## خلاصہ
 
-یہ ہفتہ اعلیٰ درجے کی VLA تکنیکوں کو تلاش کرتا ہے بشمول action chunking، multi-task learning، few-shot adaptation، اور حقیقی دنیا میں تعیناتی کی حکمت عملی۔ آپ سیکھیں گے کہ VLA ماڈلز کو زیادہ مضبوط، موثر اور عمومی کیسے بنایا جائے۔
+یہ ہفتہ اعلیٰ درجے کی وی ایل اے تکنیکوں کو تلاش کرتا ہے بشمول ایکشن چنکنگ، ملٹی ٹاسک لرننگ، فیو-شاٹ ایڈاپٹیشن، اور حقیقی دنیا میں تعیناتی کی حکمت عملی۔ آپ سیکھیں گے کہ وی ایل اے ماڈلز کو زیادہ مضبوط، موثر اور عمومی کیسے بنایا جائے۔
 
 ## سیکھنے کے مقاصد
 
 اس ہفتے کے اختتام تک، آپ یہ کر سکیں گے:
 
-- وقتی طور پر مستقل پیشین گوئیوں کے لیے action chunking نافذ کرنا
-- متنوع کاموں کو سنبھالنے والے multi-task VLA ماڈلز کی تربیت کرنا
-- تیز رفتار کام کی موافقت کے لیے few-shot learning استعمال کرنا
-- اعلیٰ معیار کے action generation کے لیے diffusion policies استعمال کرنا
-- وسائل محدود روبوٹس پر VLA ماڈلز کو تعینات کرنا
-- ناکامی کے معاملات سنبھالنا اور recovery رویوں کو نافذ کرنا
+- وقتی طور پر مستقل پیشین گوئیوں کے لیے ایکشن چنکنگ نافذ کرنا
+- متنوع کاموں کو سنبھالنے والے ملٹی ٹاسک وی ایل اے ماڈلز کی تربیت کرنا
+- تیز رفتار کام کی موافقت کے لیے فیو-شاٹ لرننگ استعمال کرنا
+- اعلیٰ معیار کے ایکشن جنریشن کے لیے ڈفیوژن پالیسیز استعمال کرنا
+- وسائل محدود روبوٹس پر وی ایل اے ماڈلز کو تعینات کرنا
+- ناکامی کے معاملات سنبھالنا اور ریکوری رویوں کو نافذ کرنا
 
-## Action Chunking
+## ایکشن چنکنگ
 
-**مسئلہ**: ایک ٹائم اسٹیپ پر actions کی پیشین گوئی کرنا myopic ہے اور jittery رویے کا باعث بنتا ہے۔
+**مسئلہ**: ایک ٹائم اسٹیپ پر ایکشنز کی پیشین گوئی کرنا مایوپک ہے اور جٹری رویے کا باعث بنتا ہے۔
 
-**حل**: متعدد ٹائم اسٹیپس کا احاطہ کرنے والے action sequences (chunks) کی پیشین گوئی کریں۔
+**حل**: متعدد ٹائم اسٹیپس کا احاطہ کرنے والے ایکشن سیکوئنسز (چنکس) کی پیشین گوئی کریں۔
 
 ### نفاذ
 
@@ -61,7 +61,7 @@ class ActionChunkingVLA(nn.Module):
         return action_chunk
 ```
 
-### Action Chunking کے ساتھ عملدرآمد
+### ایکشن چنکنگ کے ساتھ عملدرآمد
 
 ```python
 class RobotController:
@@ -90,15 +90,15 @@ class RobotController:
 ```
 
 **فوائد:**
-- ہموار trajectories
+- ہموار ٹریجیکٹریز
 - بہتر وقتی استقامت
-- تیز inference (1 forward pass → 10 actions)
+- تیز انفرنس (1 فارورڈ پاس → 10 ایکشنز)
 
-**Trade-offs:**
-- تبدیلیوں کے لیے کم reactive
+**ٹریڈ آفس:**
+- تبدیلیوں کے لیے کم ری ایکٹو
 - اگر ماحول تبدیل ہو تو دوبارہ منصوبہ بندی کی ضرورت
 
-### Adaptive Re-Planning
+### اڈاپٹو ری-پلاننگ
 
 ```python
 def execute_with_replanning(robot, model, image, instruction):
@@ -129,11 +129,11 @@ def execute_with_replanning(robot, model, image, instruction):
             time.sleep(0.1)  # 10 Hz control
 ```
 
-## Multi-Task Learning
+## ملٹی ٹاسک لرننگ
 
-**ہدف**: واحد VLA ماڈل جو سینکڑوں مختلف کاموں کو سنبھالے۔
+**ہدف**: واحد وی ایل اے ماڈل جو سینکڑوں مختلف کاموں کو سنبھالے۔
 
-### Task Conditioning
+### ٹاسک کنڈیشننگ
 
 ```python
 class MultiTaskVLA(nn.Module):
@@ -175,7 +175,7 @@ class MultiTaskVLA(nn.Module):
         return action
 ```
 
-### Multi-Task Dataset کی تربیت
+### ملٹی ٹاسک ڈیٹاسیٹ کی تربیت
 
 ```python
 # Dataset with diverse tasks
@@ -205,7 +205,7 @@ for batch in dataloader:
     optimizer.step()
 ```
 
-### Task-Family Grouping
+### ٹاسک-فیملی گروپنگ
 
 ```python
 # Group related tasks for better generalization
@@ -230,11 +230,11 @@ class HierarchicalTaskEmbedding(nn.Module):
         return torch.cat([family_emb, task_emb], dim=1)  # (768,)
 ```
 
-## Few-Shot Adaptation
+## فیو-شاٹ ایڈاپٹیشن
 
 **منظر نامہ**: صرف 5-10 مظاہروں کے ساتھ نیا کام۔
 
-### Meta-Learning (MAML)
+### میٹا-لرننگ (ایم اے ایم ایل)
 
 ```python
 import learn2learn as l2l
@@ -277,7 +277,7 @@ def meta_train_vla(model, meta_train_tasks, num_iterations=10000):
     return meta_model
 ```
 
-### تیز رفتار Fine-Tuning
+### تیز رفتار فائن ٹیوننگ
 
 ```python
 def few_shot_finetune(pretrained_model, new_task_data, num_shots=10):
@@ -315,11 +315,11 @@ def few_shot_finetune(pretrained_model, new_task_data, num_shots=10):
     return pretrained_model
 ```
 
-## Diffusion Policies
+## ڈفیوژن پالیسیز
 
-**خیال**: Actions پیدا کرنے کے لیے diffusion models استعمال کریں (جیسے actions کے لیے DALL-E)۔
+**خیال**: ایکشنز پیدا کرنے کے لیے ڈفیوژن ماڈلز استعمال کریں (جیسے ایکشنز کے لیے ڈال-ای)۔
 
-### Diffusion Action Decoder
+### ڈفیوژن ایکشن ڈیکوڈر
 
 ```python
 import torch
@@ -388,9 +388,9 @@ class DiffusionActionDecoder(nn.Module):
 ```
 
 **فوائد:**
-- Multi-modal action distributions (متعدد درست actions)
+- ملٹی-موڈل ایکشن ڈسٹری بیوشنز (متعدد درست ایکشنز)
 - ابہام کو بہتر سنبھالتا ہے
-- ہموار action trajectories
+- ہموار ایکشن ٹریجیکٹریز
 
 **تربیت:**
 ```python
@@ -426,7 +426,7 @@ def train_diffusion_policy(model, dataloader):
 
 ### ماڈل کی بہتری
 
-#### 1. Quantization (ماڈل کا سائز کم کریں)
+#### 1. کوانٹائزیشن (ماڈل کا سائز کم کریں)
 
 ```python
 import torch.quantization
@@ -449,7 +449,7 @@ model_int8 = torch.quantization.quantize_dynamic(
 torch.save(model_int8.state_dict(), "vla_model_int8.pth")
 ```
 
-#### 2. Knowledge Distillation
+#### 2. نالج ڈسٹلیشن
 
 ```python
 def distill_vla(large_teacher, small_student, dataloader):
@@ -549,53 +549,53 @@ class SafeVLAController:
         return False
 ```
 
-## Week 12 عملی پروجیکٹ
+## ہفتہ 12 عملی پروجیکٹ
 
-**کام**: VLA variants کو نافذ کریں اور موازنہ کریں
+**کام**: وی ایل اے ویریئنٹس کو نافذ کریں اور موازنہ کریں
 
-**Part 1: Action Chunking (40 points)**
-- 10-step action chunks کی پیشین گوئی کے لیے baseline VLA میں ترمیم کریں
-- Pick-and-place dataset پر تربیت دیں
-- Single-step prediction کے مقابلے trajectory smoothness کا موازنہ کریں
-- رپورٹ: کامیابی کی شرح، jerkiness metric
+**حصہ 1: ایکشن چنکنگ (40 پوائنٹس)**
+- 10-اسٹیپ ایکشن چنکس کی پیشین گوئی کے لیے بیس لائن وی ایل اے میں ترمیم کریں
+- پک اینڈ پلیس ڈیٹاسیٹ پر تربیت دیں
+- سنگل-اسٹیپ پریڈکشن کے مقابلے ٹریجیکٹری سموتھنیس کا موازنہ کریں
+- رپورٹ: کامیابی کی شرح، جرکینیس میٹرک
 
-**Part 2: Multi-Task Learning (40 points)**
-- 5 مختلف کاموں کے ساتھ dataset بنائیں
-- Task conditioning کے ساتھ multi-task VLA کی تربیت کریں
-- 6ویں کام میں zero-shot transfer کا جائزہ لیں
-- رپورٹ: فی کام کارکردگی، generalization gap
+**حصہ 2: ملٹی ٹاسک لرننگ (40 پوائنٹس)**
+- 5 مختلف کاموں کے ساتھ ڈیٹاسیٹ بنائیں
+- ٹاسک کنڈیشننگ کے ساتھ ملٹی ٹاسک وی ایل اے کی تربیت کریں
+- 6ویں کام میں زیرو-شاٹ ٹرانسفر کا جائزہ لیں
+- رپورٹ: فی کام کارکردگی، جنرلائزیشن گیپ
 
-**Part 3: Deployment (20 points)**
-- ماڈل کو INT8 میں quantize کریں
-- Inference latency ناپیں (پہلے/بعد میں)
-- سادہ failure detection نافذ کریں
-- Demo video ریئل ٹائم عملدرآمد دکھاتی ہوئی
+**حصہ 3: ڈیپلائمنٹ (20 پوائنٹس)**
+- ماڈل کو آئی این ٹی 8 میں کوانٹائز کریں
+- انفرنس لیٹنسی ناپیں (پہلے/بعد میں)
+- سادہ فیلیئر ڈیٹیکشن نافذ کریں
+- ڈیمو ویڈیو ریئل ٹائم عملدرآمد دکھاتی ہوئی
 
-**Bonus (+20 points):**
-- Diffusion policy نافذ کریں
-- MAML کے ساتھ meta-learning
-- Jetson Nano یا اسی طرح کے edge device پر تعینات کریں
+**بونس (+20 پوائنٹس):**
+- ڈفیوژن پالیسی نافذ کریں
+- ایم اے ایم ایل کے ساتھ میٹا-لرننگ
+- جیٹسن نینو یا اسی طرح کے ایج ڈیوائس پر تعینات کریں
 
 ## وسائل
 
-- [Diffusion Policy Paper](https://arxiv.org/abs/2303.04137)
-- [RT-1: Robotics Transformer](https://arxiv.org/abs/2212.06817)
-- [MAML for RL](https://arxiv.org/abs/1703.03400)
-- [Action Chunking Paper](https://arxiv.org/abs/2304.13705)
-- [Quantization Guide](https://pytorch.org/docs/stable/quantization.html)
+- [ڈفیوژن پالیسی پیپر](https://arxiv.org/abs/2303.04137)
+- [آر ٹی-1: روبوٹکس ٹرانسفارمر](https://arxiv.org/abs/2212.06817)
+- [ایم اے ایم ایل فار آر ایل](https://arxiv.org/abs/1703.03400)
+- [ایکشن چنکنگ پیپر](https://arxiv.org/abs/2304.13705)
+- [کوانٹائزیشن گائیڈ](https://pytorch.org/docs/stable/quantization.html)
 
 ## اگلے قدم
 
-حیرت انگیز پیش رفت! آپ نے اعلیٰ درجے کی VLA تکنیکوں میں مہارت حاصل کر لی ہے۔
+حیرت انگیز پیش رفت! آپ نے اعلیٰ درجے کی وی ایل اے تکنیکوں میں مہارت حاصل کر لی ہے۔
 
-اگلا ہفتہ: [Week 13: Capstone Project](week-13.md)
+اگلا ہفتہ: [ہفتہ 13: کیپ سٹون پروجیکٹ](week-13.md)
 
-آخری ہفتہ! آپ ایک مکمل Physical AI سسٹم ڈیزائن اور نافذ کریں گے جو آپ نے سیکھا ہے اسے یکجا کرتے ہوئے!
+آخری ہفتہ! آپ ایک مکمل فزیکل اے آئی سسٹم ڈیزائن اور نافذ کریں گے جو آپ نے سیکھا ہے اسے یکجا کرتے ہوئے!
 
 ---
 
-## 📝 ہفتہ وار Quiz
+## 📝 ہفتہ وار کوئز
 
-اس ہفتے کے مواد کی اپنی سمجھ کو ٹیسٹ کریں! Quiz multiple choice ہے، خودکار طور پر scored ہے، اور آپ کے پاس 2 attempts ہیں۔
+اس ہفتے کے مواد کی اپنی سمجھ کو ٹیسٹ کریں! کوئز ملٹیپل چوائس ہے، خودکار طور پر اسکورڈ ہے، اور آپ کے پاس 2 اٹیمپٹس ہیں۔
 
-**[Week 12 Quiz لیں →](/quiz?week=12)**
+**[ہفتہ 12 کوئز لیں →](/quiz?week=12)**

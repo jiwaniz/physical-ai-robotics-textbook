@@ -1,37 +1,37 @@
-# ہفتہ 2: Development Environment سیٹ اپ
+# ہفتہ 2: ڈیولپمنٹ ماحول سیٹ اپ
 
 ## جائزہ
 
-یہ ہفتہ کورس کے لیے آپ کے ڈیولپمنٹ ماحول کو تیار کرنے پر مرکوز ہے۔ آپ Ubuntu 22.04 انسٹال کریں گے (ROS 2 Humble کے لیے معیار)، ضروری ٹولز سیٹ اپ کریں گے، اور ایک سادہ "Hello World" پروجیکٹ کے ساتھ اپنی تنصیب کی تصدیق کریں گے۔ مناسب ماحول کا سیٹ اپ اب بعد میں debugging کے گھنٹے بچائے گا!
+یہ ہفتہ کورس کے لیے آپ کے ڈیولپمنٹ ماحول کو تیار کرنے پر مرکوز ہے۔ آپ اوبنٹو 22.04 انسٹال کریں گے (آر او ایس 2 ہمبل کے لیے معیار)، ضروری ٹولز سیٹ اپ کریں گے، اور ایک سادہ "ہیلو ورلڈ" پروجیکٹ کے ساتھ اپنی تنصیب کی تصدیق کریں گے۔ مناسب ماحول کا سیٹ اپ اب بعد میں ڈیبگنگ کے گھنٹے بچائے گا!
 
 ## سیکھنے کے مقاصد
 
 اس ہفتے کے اختتام تک، آپ قابل ہوں گے:
 
-- Ubuntu 22.04 LTS انسٹال کریں (native، dual-boot، WSL2، یا VM)
-- ضروری ڈیولپمنٹ ٹولز کنفیگر کریں (Python، Git، VS Code)
-- Linux کی بنیادی باتیں سمجھیں (terminal، package management، file permissions)
-- Containerized ماحول کے لیے Docker انسٹال کریں
-- سادہ روبوٹکس "Hello World" کے ساتھ اپنے سیٹ اپ کی تصدیق کریں
+- اوبنٹو 22.04 ایل ٹی ایس انسٹال کریں (نیٹو، ڈوئل بوٹ، ڈبلیو ایس ایل 2، یا وی ایم)
+- ضروری ڈیولپمنٹ ٹولز کنفیگر کریں (پائتھون، گٹ، وی ایس کوڈ)
+- لینکس کی بنیادی باتیں سمجھیں (ٹرمینل، پیکیج مینجمنٹ، فائل پرمیشنز)
+- کنٹینرائزڈ ماحول کے لیے ڈاکر انسٹال کریں
+- سادہ روبوٹکس "ہیلو ورلڈ" کے ساتھ اپنے سیٹ اپ کی تصدیق کریں
 
-## Ubuntu 22.04 تنصیب
+## اوبنٹو 22.04 تنصیب
 
-ROS 2 Humble (اس کورس میں استعمال شدہ ورژن) سرکاری طور پر **Ubuntu 22.04 LTS (Jammy Jellyfish)** کو سپورٹ کرتا ہے۔ وہ تنصیب کا طریقہ منتخب کریں جو آپ کے لیے بہترین کام کرے:
+آر او ایس 2 ہمبل (اس کورس میں استعمال شدہ ورژن) سرکاری طور پر **اوبنٹو 22.04 ایل ٹی ایس (جیمی جیلی فش)** کو سپورٹ کرتا ہے۔ وہ تنصیب کا طریقہ منتخب کریں جو آپ کے لیے بہترین کام کرے:
 
-### آپشن 1: Native تنصیب (تجویز کردہ)
+### آپشن 1: نیٹو تنصیب (تجویز کردہ)
 
-**بہترین برائے**: زیادہ سے زیادہ کارکردگی، GPU رسائی، real-time صلاحیتیں
+**بہترین برائے**: زیادہ سے زیادہ کارکردگی، جی پی یو رسائی، ریئل ٹائم صلاحیتیں
 
-**ضروریات**: مخصوص مشین یا dual-boot سیٹ اپ
+**ضروریات**: مخصوص مشین یا ڈوئل بوٹ سیٹ اپ
 
 **اقدامات**:
-1. [ubuntu.com/download](https://ubuntu.com/download/desktop) سے Ubuntu 22.04 Desktop ISO ڈاؤن لوڈ کریں
-2. [Rufus](https://rufus.ie/) (Windows) یا [Etcher](https://www.balena.io/etcher/) (Mac/Linux) کے ساتھ bootable USB بنائیں
-3. USB سے boot کریں اور installation wizard کی پیروی کریں
-4. Dual-boot کے لیے "Install alongside Windows" یا مخصوص مشین کے لیے "Erase disk" منتخب کریں
+1. [ubuntu.com/download](https://ubuntu.com/download/desktop) سے اوبنٹو 22.04 ڈیسک ٹاپ آئی ایس او ڈاؤن لوڈ کریں
+2. [Rufus](https://rufus.ie/) (ونڈوز) یا [Etcher](https://www.balena.io/etcher/) (میک/لینکس) کے ساتھ بوٹ ایبل یو ایس بی بنائیں
+3. یو ایس بی سے بوٹ کریں اور انسٹالیشن وزرڈ کی پیروی کریں
+4. ڈوئل بوٹ کے لیے "ونڈوز کے ساتھ انسٹال کریں" یا مخصوص مشین کے لیے "ڈسک صاف کریں" منتخب کریں
 5. صارف کا اکاؤنٹ بنائیں اور مضبوط پاس ورڈ سیٹ کریں
 
-**Post-install**:
+**پوسٹ-انسٹال**:
 ```bash
 # سسٹم پیکجز کو اپ ڈیٹ کریں
 sudo apt update && sudo apt upgrade -y
@@ -40,11 +40,11 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install build-essential git curl wget vim -y
 ```
 
-### آپشن 2: WSL2 (Windows Subsystem for Linux)
+### آپشن 2: ڈبلیو ایس ایل 2 (ونڈوز سب سسٹم فار لینکس)
 
-**بہترین برائے**: Windows صارفین جو dual-boot کے بغیر Linux چاہتے ہیں
+**بہترین برائے**: ونڈوز صارفین جو ڈوئل بوٹ کے بغیر لینکس چاہتے ہیں
 
-**ضروریات**: Windows 10 ورژن 2004+ یا Windows 11
+**ضروریات**: ونڈوز 10 ورژن 2004+ یا ونڈوز 11
 
 **اقدامات**:
 ```bash
@@ -58,58 +58,58 @@ wsl --install -d Ubuntu-22.04
 sudo apt update && sudo apt upgrade -y
 ```
 
-**GPU سپورٹ (Isaac Sim کے لیے)**:
-- [NVIDIA CUDA on WSL2](https://docs.nvidia.com/cuda/wsl-user-guide/index.html) انسٹال کریں
-- Windows host پر NVIDIA driver 510.39.01+ کی ضرورت ہے
+**جی پی یو سپورٹ (آئزک سم کے لیے)**:
+- [این ویڈیا کوڈا آن ڈبلیو ایس ایل 2](https://docs.nvidia.com/cuda/wsl-user-guide/index.html) انسٹال کریں
+- ونڈوز ہوسٹ پر این ویڈیا ڈرائیور 510.39.01+ کی ضرورت ہے
 
 **حدود**:
-- ڈیفالٹ طور پر کوئی GUI نہیں (X11 forwarding یا VcXsrv استعمال کریں)
-- USB device passthrough محدود ہے
-- Native سے تھوڑا سست
+- ڈیفالٹ طور پر کوئی جی یو آئی نہیں (ایکس11 فارورڈنگ یا وی سی ایکس ایس آر وی استعمال کریں)
+- یو ایس بی ڈیوائس پاس تھرو محدود ہے
+- نیٹو سے تھوڑا سست
 
-### آپشن 3: Virtual Machine (VirtualBox/VMware)
+### آپشن 3: ورچوئل مشین (ورچوئل باکس/وی ایم ویئر)
 
 **بہترین برائے**: ٹیسٹنگ، سیکھنا، کم وابستگی
 
-**ضروریات**: 8GB+ RAM والی Host مشین، BIOS میں virtualization فعال
+**ضروریات**: 8 جی بی+ ریم والی ہوسٹ مشین، بائیوس میں ورچوئلائزیشن فعال
 
-**اقدامات** (VirtualBox مثال):
-1. [VirtualBox](https://www.virtualbox.org/) انسٹال کریں
-2. Ubuntu 22.04 Desktop ISO ڈاؤن لوڈ کریں
-3. نیا VM بنائیں: 4 CPU cores، 8GB RAM، 60GB dynamic disk
-4. ISO mount کریں اور Ubuntu انسٹال کریں
-5. بہتر کارکردگی کے لیے VirtualBox Guest Additions انسٹال کریں
+**اقدامات** (ورچوئل باکس مثال):
+1. [ورچوئل باکس](https://www.virtualbox.org/) انسٹال کریں
+2. اوبنٹو 22.04 ڈیسک ٹاپ آئی ایس او ڈاؤن لوڈ کریں
+3. نیا وی ایم بنائیں: 4 سی پی یو کورز، 8 جی بی ریم، 60 جی بی ڈائنامک ڈسک
+4. آئی ایس او ماؤنٹ کریں اور اوبنٹو انسٹال کریں
+5. بہتر کارکردگی کے لیے ورچوئل باکس گیسٹ ایڈیشنز انسٹال کریں
 
 **حدود**:
-- کوئی GPU passthrough نہیں (NVIDIA Isaac Sim سپورٹ نہیں)
-- Gazebo اور ہلکے simulations تک محدود
-- کارکردگی کا overhead
+- کوئی جی پی یو پاس تھرو نہیں (این ویڈیا آئزک سم سپورٹ نہیں)
+- گزیبو اور ہلکے سمیولیشنز تک محدود
+- کارکردگی کا اوور ہیڈ
 
-### آپشن 4: Cloud Instance (AWS/GCP/Azure)
+### آپشن 4: کلاؤڈ انسٹینس (اے ڈبلیو ایس/جی سی پی/ایژر)
 
-**بہترین برائے**: کوئی مقامی ہارڈویئر نہیں، طاقتور GPU کی ضرورت، عارضی استعمال
+**بہترین برائے**: کوئی مقامی ہارڈویئر نہیں، طاقتور جی پی یو کی ضرورت، عارضی استعمال
 
-**تجویز کردہ instances**:
-- **AWS**: g4dn.xlarge (T4 GPU، $0.526/hr)
-- **GCP**: n1-standard-4 + T4 GPU ($0.35/hr + $0.35/hr)
-- **Azure**: NC4as_T4_v3 (T4 GPU، $0.526/hr)
+**تجویز کردہ انسٹینسز**:
+- **اے ڈبلیو ایس**: جی4ڈی این.ایکس لارج (ٹی4 جی پی یو، $0.526/گھنٹہ)
+- **جی سی پی**: این1-سٹینڈرڈ-4 + ٹی4 جی پی یو ($0.35/گھنٹہ + $0.35/گھنٹہ)
+- **ایژر**: این سی 4 اے ایس_ٹی4_وی3 (ٹی4 جی پی یو، $0.526/گھنٹہ)
 
 **سیٹ اپ**:
-1. Ubuntu 22.04 LTS AMI/image منتخب کریں
-2. Security group کنفیگر کریں (SSH port 22، اختیاری طور پر VNC port 5900)
-3. Instance میں SSH کریں: `ssh -i key.pem ubuntu@<ip-address>`
-4. اگر ضرورت ہو تو desktop environment انسٹال کریں: `sudo apt install ubuntu-desktop`
+1. اوبنٹو 22.04 ایل ٹی ایس اے ایم آئی/امیج منتخب کریں
+2. سیکیورٹی گروپ کنفیگر کریں (ایس ایس ایچ پورٹ 22، اختیاری طور پر وی این سی پورٹ 5900)
+3. انسٹینس میں ایس ایس ایچ کریں: `ssh -i key.pem ubuntu@<ip-address>`
+4. اگر ضرورت ہو تو ڈیسک ٹاپ ماحول انسٹال کریں: `sudo apt install ubuntu-desktop`
 
 **لاگت کا انتظام**:
-- استعمال میں نہ ہونے پر instance بند کریں
-- Spot/preemptible instances استعمال کریں (70% رعایت)
-- Billing alerts سیٹ کریں
+- استعمال میں نہ ہونے پر انسٹینس بند کریں
+- اسپاٹ/پری ایمپٹیبل انسٹینسز استعمال کریں (70% رعایت)
+- بلنگ الرٹس سیٹ کریں
 
 ## ضروری ڈیولپمنٹ ٹولز
 
-### 1. Python 3.11+ سیٹ اپ
+### 1. پائتھون 3.11+ سیٹ اپ
 
-Ubuntu 22.04 Python 3.10 کے ساتھ آتا ہے۔ بہتر کارکردگی کے لیے 3.11 میں اپ گریڈ کریں:
+اوبنٹو 22.04 پائتھون 3.10 کے ساتھ آتا ہے۔ بہتر کارکردگی کے لیے 3.11 میں اپ گریڈ کریں:
 
 ```bash
 # Python 3.11 کے لیے deadsnakes PPA شامل کریں
@@ -129,7 +129,7 @@ sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 
 pip3 install pipenv poetry
 ```
 
-### 2. Git Configuration
+### 2. گٹ کنفیگریشن
 
 ```bash
 # Git انسٹال کریں
@@ -149,14 +149,14 @@ git config --global credential.helper cache
 git config --list
 ```
 
-### 3. VS Code تنصیب
+### 3. وی ایس کوڈ تنصیب
 
-**طریقہ 1: Snap (تجویز کردہ)**
+**طریقہ 1: سنیپ (تجویز کردہ)**
 ```bash
 sudo snap install code --classic
 ```
 
-**طریقہ 2: .deb Package**
+**طریقہ 2: .deb پیکیج**
 ```bash
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
@@ -165,15 +165,15 @@ sudo apt update
 sudo apt install code -y
 ```
 
-**تجویز کردہ Extensions**:
-- Python (Microsoft)
-- Pylance
-- ROS (Microsoft)
-- CMake Tools
-- Docker
-- GitLens
+**تجویز کردہ ایکسٹینشنز**:
+- پائتھون (مائیکروسافٹ)
+- پائلینس
+- آر او ایس (مائیکروسافٹ)
+- سی میک ٹولز
+- ڈاکر
+- گٹ لینز
 
-Command line کے ذریعے انسٹال کریں:
+کمانڈ لائن کے ذریعے انسٹال کریں:
 ```bash
 code --install-extension ms-python.python
 code --install-extension ms-python.vscode-pylance
@@ -183,9 +183,9 @@ code --install-extension ms-azuretools.vscode-docker
 code --install-extension eamodio.gitlens
 ```
 
-### 4. Docker تنصیب
+### 4. ڈاکر تنصیب
 
-Docker قابل تکرار ماحول کے لیے ضروری ہے اور باب 3-4 میں استعمال کیا جائے گا۔
+ڈاکر قابل تکرار ماحول کے لیے ضروری ہے اور باب 3-4 میں استعمال کیا جائے گا۔
 
 ```bash
 # Dependencies انسٹال کریں
@@ -213,9 +213,9 @@ docker --version
 docker run hello-world
 ```
 
-### 5. NVIDIA GPU سیٹ اپ (اگر قابل اطلاق ہو)
+### 5. این ویڈیا جی پی یو سیٹ اپ (اگر قابل اطلاق ہو)
 
-NVIDIA GPUs والے صارفین کے لیے (باب 3 میں Isaac Sim کے لیے ضروری):
+این ویڈیا جی پی یوز والے صارفین کے لیے (باب 3 میں آئزک سم کے لیے ضروری):
 
 ```bash
 # GPU چیک کریں
@@ -243,11 +243,11 @@ sudo systemctl restart docker
 docker run --rm --gpus all nvidia/cuda:12.0.0-base-ubuntu22.04 nvidia-smi
 ```
 
-## Linux Command Line ضروری باتیں
+## لینکس کمانڈ لائن ضروری باتیں
 
-اگر آپ Linux میں نئے ہیں، تو یہ بنیادی باتیں سیکھیں:
+اگر آپ لینکس میں نئے ہیں، تو یہ بنیادی باتیں سیکھیں:
 
-### Navigation اور File Management
+### نیویگیشن اور فائل مینجمنٹ
 ```bash
 pwd                    # موجودہ directory کو print کریں
 ls -lah                # فائلیں list کریں (تفصیلی، hidden سمیت)
@@ -263,14 +263,14 @@ rm file.txt            # فائل حذف کریں
 rm -rf directory/      # Directory کو recursively حذف کریں
 ```
 
-### File Permissions
+### فائل پرمیشنز
 ```bash
 chmod +x script.sh     # فائل کو executable بنائیں
 chmod 644 file.txt     # Permissions سیٹ کریں (owner read/write، دیگر read)
 chown user:group file  # Ownership تبدیل کریں
 ```
 
-### Package Management
+### پیکیج مینجمنٹ
 ```bash
 sudo apt update                  # Package lists کو اپ ڈیٹ کریں
 sudo apt upgrade                 # انسٹال شدہ packages کو اپ گریڈ کریں
@@ -279,7 +279,7 @@ sudo apt remove <package>        # Package ہٹائیں
 sudo apt search <keyword>        # Packages تلاش کریں
 ```
 
-### Process Management
+### پروسیس مینجمنٹ
 ```bash
 ps aux                 # تمام processes کی فہرست
 top                    # Interactive process monitor
@@ -288,16 +288,16 @@ kill <PID>             # ID کے ذریعے process کو kill کریں
 killall <name>         # نام کے ذریعے processes کو kill کریں
 ```
 
-### Text Editing
+### ٹیکسٹ ایڈیٹنگ
 ```bash
 nano file.txt          # سادہ text editor
 vim file.txt           # جدید editor (سیکھنے کا curve!)
 code file.txt          # VS Code میں کھولیں
 ```
 
-## تصدیقی "Hello World" پروجیکٹ
+## تصدیقی "ہیلو ورلڈ" پروجیکٹ
 
-آئیے ایک سادہ Python پروجیکٹ کے ساتھ اپنے سیٹ اپ کی تصدیق کریں:
+آئیے ایک سادہ پائتھون پروجیکٹ کے ساتھ اپنے سیٹ اپ کی تصدیق کریں:
 
 ### قدم 1: پروجیکٹ ڈائریکٹری بنائیں
 ```bash
@@ -305,13 +305,13 @@ mkdir -p ~/robotics_hello_world
 cd ~/robotics_hello_world
 ```
 
-### قدم 2: Virtual Environment بنائیں
+### قدم 2: ورچوئل ماحول بنائیں
 ```bash
 python3.11 -m venv venv
 source venv/bin/activate  # Virtual environment کو فعال کریں
 ```
 
-### قدم 3: Python Script بنائیں
+### قدم 3: پائتھون اسکرپٹ بنائیں
 ```bash
 code hello_robot.py  # یا nano/vim استعمال کریں
 ```
@@ -378,13 +378,13 @@ if __name__ == "__main__":
     main()
 ```
 
-### قدم 4: Script چلائیں
+### قدم 4: اسکرپٹ چلائیں
 ```bash
 chmod +x hello_robot.py
 python3 hello_robot.py
 ```
 
-**متوقع Output**:
+**متوقع آؤٹ پٹ**:
 ```
 Physical AI Course - Hello World Robot Simulation
 
@@ -410,7 +410,7 @@ Battery: 97.7%
 ✅ Hello World simulation مکمل!
 ```
 
-### قدم 5: Version Control
+### قدم 5: ورژن کنٹرول
 ```bash
 git init
 git add hello_robot.py
@@ -420,60 +420,60 @@ git commit -m "Initial commit: Hello World robot simulation"
 ## عام مسائل کا حل
 
 ### مسئلہ 1: "python3.11: command not found"
-**حل**: Python 3.11 انسٹال نہیں ہے۔ Python تنصیب کے حصے پر دوبارہ جائیں۔
+**حل**: پائتھون 3.11 انسٹال نہیں ہے۔ پائتھون تنصیب کے حصے پر دوبارہ جائیں۔
 
-### مسئلہ 2: Docker چلاتے وقت "Permission denied"
-**حل**: User docker group میں نہیں ہے۔ `sudo usermod -aG docker $USER` چلائیں اور log out/in کریں۔
+### مسئلہ 2: ڈاکر چلاتے وقت "Permission denied"
+**حل**: صارف ڈاکر گروپ میں نہیں ہے۔ `sudo usermod -aG docker $USER` چلائیں اور لاگ آؤٹ/ان کریں۔
 
-### مسئلہ 3: nvidia-smi "NVIDIA-SMI has failed" دکھاتا ہے
-**حل**: Driver انسٹال نہیں ہے یا incompatible ہے۔ `sudo apt install nvidia-driver-535` چلائیں اور reboot کریں۔
+### مسئلہ 3: `nvidia-smi` "NVIDIA-SMI has failed" دکھاتا ہے
+**حل**: ڈرائیور انسٹال نہیں ہے یا غیر موافق ہے۔ `sudo apt install nvidia-driver-535` چلائیں اور ری بوٹ کریں۔
 
-### مسئلہ 4: VS Code extensions انسٹال نہیں ہو رہے
-**حل**: انٹرنیٹ کنکشن چیک کریں۔ Extensions marketplace سے manually انسٹال کرنے کی کوشش کریں۔
+### مسئلہ 4: وی ایس کوڈ ایکسٹینشنز انسٹال نہیں ہو رہے
+**حل**: انٹرنیٹ کنکشن چیک کریں۔ ایکسٹینشنز مارکیٹ پلیس سے دستی طور پر انسٹال کرنے کی کوشش کریں۔
 
-### مسئلہ 5: VM کی سست کارکردگی
-**حل**: RAM/CPU allocation بڑھائیں، BIOS میں hardware virtualization فعال کریں، guest additions انسٹال کریں۔
+### مسئلہ 5: وی ایم کی سست کارکردگی
+**حل**: ریم/سی پی یو ایلوکیشن بڑھائیں، بائیوس میں ہارڈویئر ورچوئلائزیشن فعال کریں، گیسٹ ایڈیشنز انسٹال کریں۔
 
-## ہفتہ 2 Quiz اور تشخیص
+## ہفتہ 2 کوئز اور تشخیص
 
 اپنے ماحول کے سیٹ اپ کے علم کو جانچیں:
 
-1. ROS 2 Humble کے لیے سرکاری طور پر supported Ubuntu ورژن کیا ہے؟
-2. اس کورس کے لیے Ubuntu 24.04 کے مقابلے میں Ubuntu 22.04 LTS کیوں ترجیح دی جاتی ہے؟
-3. Python virtual environment کا مقصد کیا ہے؟
-4. آپ Linux میں یہ کیسے چیک کرتے ہیں کہ آیا آپ کا NVIDIA GPU detect ہو رہا ہے؟
+1. آر او ایس 2 ہمبل کے لیے سرکاری طور پر سپورٹڈ اوبنٹو ورژن کیا ہے؟
+2. اس کورس کے لیے اوبنٹو 24.04 کے مقابلے میں اوبنٹو 22.04 ایل ٹی ایس کیوں ترجیح دی جاتی ہے؟
+3. پائتھون ورچوئل ماحول کا مقصد کیا ہے؟
+4. آپ لینکس میں یہ کیسے چیک کرتے ہیں کہ آیا آپ کا این ویڈیا جی پی یو ڈٹیکٹ ہو رہا ہے؟
 5. `apt update` اور `apt upgrade` میں کیا فرق ہے؟
 
 **ہاتھوں سے تشخیص**:
-- "Hello World" robot script کامیابی سے چلائیں
-- GitHub repository بنائیں اور اپنا hello_robot.py push کریں
-- `nvidia-smi` output کا screenshot لیں (صرف GPU صارفین)
-- ROS extension کے ساتھ انسٹال شدہ VS Code کا screenshot جمع کرائیں
+- "ہیلو ورلڈ" روبوٹ اسکرپٹ کامیابی سے چلائیں
+- گٹ ہب ریپوزٹری بنائیں اور اپنا hello_robot.py پش کریں
+- `nvidia-smi` آؤٹ پٹ کا اسکرین شاٹ لیں (صرف جی پی یو صارفین)
+- آر او ایس ایکسٹینشن کے ساتھ انسٹال شدہ وی ایس کوڈ کا اسکرین شاٹ جمع کرائیں
 
 ## اگلے اقدامات
 
-مبارک ہو! آپ کا ڈیولپمنٹ ماحول تیار ہے۔ اگلے ہفتے، آپ **ROS 2 بنیادی باتوں** میں غوطہ لگائیں گے اور اپنا پہلا multi-node robotic نظام بنائیں گے۔
+مبارک ہو! آپ کا ڈیولپمنٹ ماحول تیار ہے۔ اگلے ہفتے، آپ **آر او ایس 2 بنیادی باتوں** میں غوطہ لگائیں گے اور اپنا پہلا ملٹی-نوڈ روبوٹک نظام بنائیں گے۔
 
 آگے بڑھنے سے پہلے:
 - ✅ تصدیق کریں کہ تمام تنصیبات کام کرتی ہیں
-- ✅ [ROS 2 Humble Documentation](https://docs.ros.org/en/humble/) کو bookmark کریں
-- ✅ کورس discussion فورم میں شامل ہوں
-- ✅ ہفتہ 2 کا quiz مکمل کریں
+- ✅ [آر او ایس 2 ہمبل ڈاکومینٹیشن](https://docs.ros.org/en/humble/) کو بک مارک کریں
+- ✅ کورس ڈسکشن فورم میں شامل ہوں
+- ✅ ہفتہ 2 کا کوئز مکمل کریں
 
-باب 1 شروع کرنے کے لیے تیار ہیں؟ [ہفتہ 3: ROS 2 Architecture & Core Concepts](../01-ros2/week-03.md) پر جاری رکھیں۔
+باب 1 شروع کرنے کے لیے تیار ہیں؟ [ہفتہ 3: آر او ایس 2 آرکیٹیکچر اور بنیادی تصورات](../01-ros2/week-03.md) پر جاری رکھیں۔
 
 ## اضافی وسائل
 
-- [Ubuntu 22.04 LTS Release Notes](https://wiki.ubuntu.com/JammyJellyfish/ReleaseNotes)
-- [Python Virtual Environments Guide](https://docs.python.org/3/tutorial/venv.html)
-- [Docker Getting Started](https://docs.docker.com/get-started/)
-- [Linux Command Line Cheat Sheet](https://www.linuxtrainingacademy.com/linux-commands-cheat-sheet/)
-- [VS Code for Python](https://code.visualstudio.com/docs/python/python-tutorial)
+- [اوبنٹو 22.04 ایل ٹی ایس ریلیز نوٹس](https://wiki.ubuntu.com/JammyJellyfish/ReleaseNotes)
+- [پائتھون ورچوئل ماحول گائیڈ](https://docs.python.org/3/tutorial/venv.html)
+- [ڈاکر شروع کرنا](https://docs.docker.com/get-started/)
+- [لینکس کمانڈ لائن چیٹ شیٹ](https://www.linuxtrainingacademy.com/linux-commands-cheat-sheet/)
+- [وی ایس کوڈ فار پائتھون](https://code.visualstudio.com/docs/python/python-tutorial)
 
 ---
 
-## 📝 ہفتہ وار Quiz
+## 📝 ہفتہ وار کوئز
 
-اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! Quiz کثیر انتخابی ہے، خودکار طور پر اسکور کیا جاتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
+اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز کثیر انتخابی ہے، خودکار طور پر اسکور کیا جاتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
 
-**[ہفتہ 2 Quiz لیں →](/quiz?week=2)**
+**[ہفتہ 2 کوئز لیں →](/quiz?week=2)**

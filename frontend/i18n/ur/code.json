@@ -481,7 +481,7 @@
     "message": "سائن اپ"
   },
   "page.signup.description": {
-    "message": "Physical AI اور Humanoid Robotics کی نصابی کتاب تک رسائی کے لیے اکاؤنٹ بنائیں"
+    "message": "فزیکل اے آئی اور ہیومنائیڈ روبوٹکس کی نصابی کتاب تک رسائی کے لیے اکاؤنٹ بنائیں"
   },
 
   "page.onboarding.title": {
@@ -733,7 +733,7 @@
     "message": "خوش آمدید {siteConfig.title}"
   },
   "page.home.layoutDescription": {
-    "message": "بنیادی باتوں سے لے کر جدید موضوعات تک Physical AI اور Humanoid Robotics سیکھیں"
+    "message": "بنیادی باتوں سے لے کر جدید موضوعات تک فزیکل اے آئی اور ہیومنائیڈ روبوٹکس سیکھیں"
   },
   "page.home.loading": {
     "message": "لوڈ ہو رہا ہے..."
@@ -754,13 +754,13 @@
     "message": "سائن ان"
   },
   "page.home.feature.physicalAI.title": {
-    "message": "🤖 Physical AI"
+    "message": "🤖 فزیکل اے آئی"
   },
   "page.home.feature.physicalAI.description": {
     "message": "فزیکل دنیا کے ساتھ تعامل کرنے والے ذہین روبوٹک سسٹمز بنانا سیکھیں۔"
   },
   "page.home.feature.humanoidRobotics.title": {
-    "message": "🦾 Humanoid Robotics"
+    "message": "🦾 ہیومنائیڈ روبوٹکس"
   },
   "page.home.feature.humanoidRobotics.description": {
     "message": "انسان نما روبوٹ کے ڈیزائن، کنٹرول اور پروگرامنگ کی بنیادی باتیں سیکھیں۔"
@@ -769,7 +769,7 @@
     "message": "📖 مکمل نصاب"
   },
   "page.home.feature.curriculum.description": {
-    "message": "ROS2 کی بنیادی باتوں سے لے کر Isaac Sim اور Gazebo کے ساتھ جدید سمیولیشن تک۔"
+    "message": "آر او ایس 2 کی بنیادی باتوں سے لے کر آئزک سم اور گزیبو کے ساتھ جدید سمیولیشن تک۔"
   },
 
   "page.quiz.error.noIdOrWeek": {
@@ -1045,7 +1045,7 @@
     "message": "چیٹ بند کریں"
   },
   "component.chatWidget.title": {
-    "message": "AI ٹیوٹر"
+    "message": "اے آئی ٹیوٹر"
   },
   "component.chatWidget.chatTab": {
     "message": "چیٹ"
@@ -1057,10 +1057,10 @@
     "message": "منتخب متن:"
   },
   "component.chatWidget.welcomeTitle": {
-    "message": "السلام علیکم! میں آپ کا AI ٹیوٹر ہوں"
+    "message": "السلام علیکم! میں آپ کا اے آئی ٹیوٹر ہوں"
   },
   "component.chatWidget.welcomeHints": {
-    "message": "ROS 2، روبوٹکس سمیولیشن، Isaac Sim، یا VLA ماڈلز کے بارے میں کچھ بھی پوچھیں۔"
+    "message": "آر او ایس 2، روبوٹکس سمیولیشن، آئزک سم، یا وی ایل اے ماڈلز کے بارے میں کچھ بھی پوچھیں۔"
   },
   "component.chatWidget.tipLabel": {
     "message": "مشورہ:"
