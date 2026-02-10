@@ -25,14 +25,18 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary')}>
       <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <h1 className="hero__title">
+          <Translate id="page.home.heroTitle">Physical AI &amp; Humanoid Robotics</Translate>
+        </h1>
+        <p className="hero__subtitle">
+          <Translate id="page.home.heroTagline">Interactive textbook with AI-powered learning assistance</Translate>
+        </p>
         <div className="margin-top--lg">
           {isLoading ? (
             <div><Translate id="page.home.loading">Loading...</Translate></div>
           ) : currentUser ? (
             <div>
-              <p><Translate id="page.home.welcomeBack" values={{ name: currentUser.name }}>{'Welcome back, {name}! 👋'}</Translate></p>
+              <p><Translate id="page.home.welcomeBack" values={{ name: currentUser.user_metadata?.name || currentUser.email?.split('@')[0] || 'User' }}>{'Welcome back, {name}! 👋'}</Translate></p>
               <div className="button-group">
                 <Link
                   className="button button--secondary button--lg margin-right--md"
