@@ -1,70 +1,70 @@
-# ہفتہ 3: ROS 2 آرکیٹیکچر اور بنیادی تصورات
+# ہفتہ 3: آر او ایس 2 آرکیٹیکچر اور بنیادی تصورات
 
 ## جائزہ
 
-باب 1 میں خوش آمدید! اس ہفتے ROS 2 (Robot Operating System 2) متعارف کرایا جاتا ہے، جو modular، distributed robotic سسٹمز بنانے کے لیے industry-standard middleware ہے۔ آپ بنیادی آرکیٹیکچر سیکھیں گے، ROS 2 Humble install کریں گے، اور اپنا پہلا ROS 2 node بنائیں گے۔
+باب 1 میں خوش آمدید! اس ہفتے آر او ایس 2 (روبوٹ آپریٹنگ سسٹم 2) متعارف کرایا جاتا ہے، جو ماڈیولر، ڈسٹریبیوٹڈ روبوٹک سسٹمز بنانے کے لیے انڈسٹری اسٹینڈرڈ مڈل ویئر ہے۔ آپ بنیادی آرکیٹیکچر سیکھیں گے، آر او ایس 2 ہمبل انسٹال کریں گے، اور اپنا پہلا آر او ایس 2 نوڈ بنائیں گے۔
 
 ## سیکھنے کے مقاصد
 
 اس ہفتے کے اختتام تک، آپ یہ کر سکیں گے:
 
-- ROS 2 کیا ہے اور جدید روبوٹکس کے لیے یہ کیوں ضروری ہے، وضاحت کرنا
-- ROS 2 آرکیٹیکچر (nodes، topics، DDS) کو سمجھنا
-- Ubuntu 22.04 پر ROS 2 Humble install کرنا
-- ایک سادہ ROS 2 Python node بنانا اور چلانا
-- بنیادی ROS 2 command-line tools استعمال کرنا (ros2 node، ros2 topic، ros2 run)
-- ROS 2 workspaces اور package structure میں navigate کرنا
+- آر او ایس 2 کیا ہے اور جدید روبوٹکس کے لیے یہ کیوں ضروری ہے، وضاحت کرنا
+- آر او ایس 2 آرکیٹیکچر (نوڈز، ٹاپکس، ڈی ڈی ایس) کو سمجھنا
+- اوبنٹو 22.04 پر آر او ایس 2 ہمبل انسٹال کرنا
+- ایک سادہ آر او ایس 2 پائتھون نوڈ بنانا اور چلانا
+- بنیادی آر او ایس 2 کمانڈ لائن ٹولز استعمال کرنا (`ros2 node`، `ros2 topic`، `ros2 run`)
+- آر او ایس 2 ورک سپیسز اور پیکیج اسٹرکچر میں نیویگیٹ کرنا
 
-## ROS 2 کیا ہے؟
+## آر او ایس 2 کیا ہے؟
 
-**ROS 2 (Robot Operating System 2)** کوئی operating system نہیں، بلکہ ایک **middleware framework** ہے جو فراہم کرتا ہے:
+**آر او ایس 2 (روبوٹ آپریٹنگ سسٹم 2)** کوئی آپریٹنگ سسٹم نہیں، بلکہ ایک **مڈل ویئر فریم ورک** ہے جو فراہم کرتا ہے:
 
-- **Communication infrastructure**: اجزاء کے درمیان message passing
-- **Hardware abstraction**: سینسرز/ایکچویٹرز کے لیے یکساں interfaces
-- **Package management**: Modular، دوبارہ استعمال کے قابل software components
-- **Build system**: پیچیدہ projects کو compile اور manage کرنا
-- **Tooling ecosystem**: Visualization (RViz)، simulation (Gazebo)، debugging
+- **کمیونیکیشن انفراسٹرکچر**: اجزاء کے درمیان میسج پاسنگ
+- **ہارڈویئر ایبسٹریکشن**: سینسرز/ایکچویٹرز کے لیے یکساں انٹرفیسز
+- **پیکیج مینجمنٹ**: ماڈیولر، دوبارہ استعمال کے قابل سافٹ ویئر کمپوننٹس
+- **بلڈ سسٹم**: پیچیدہ پراجیکٹس کو کمپائل اور مینیج کرنا
+- **ٹولنگ ایکو سسٹم**: ویژولائزیشن (آر ویز)، سمیولیشن (گزیبو)، ڈیبگنگ
 
-### ROS 1 بمقابلہ ROS 2: اپ گریڈ کیوں؟
+### آر او ایس 1 بمقابلہ آر او ایس 2: اپ گریڈ کیوں؟
 
-| Feature | ROS 1 (2007-2020) | ROS 2 (2017-موجودہ) |
+| فیچر | آر او ایس 1 (2007-2020) | آر او ایس 2 (2017-موجودہ) |
 |---------|-------------------|----------------------|
-| **Communication** | Custom TCPROS/UDPROS | DDS (industry standard) |
-| **Real-time support** | محدود | ہاں (real-time OS کے ساتھ) |
-| **Security** | کوئی نہیں | Authentication، encryption |
-| **Multi-robot** | مشکل | Native support |
-| **Embedded systems** | نہیں | ہاں (micro-ROS) |
-| **Lifecycle management** | بنیادی | Managed nodes |
-| **QoS (Quality of Service)** | کوئی نہیں | Configurable reliability |
-| **Platform support** | صرف Linux | Linux، Windows، macOS |
+| **کمیونیکیشن** | کسٹم TCPROS/UDPROS | ڈی ڈی ایس (انڈسٹری اسٹینڈرڈ) |
+| **ریئل ٹائم سپورٹ** | محدود | ہاں (ریئل ٹائم او ایس کے ساتھ) |
+| **سیکیورٹی** | کوئی نہیں | آتھینٹیکیشن، انکرپشن |
+| **ملٹی روبوٹ** | مشکل | نیٹو سپورٹ |
+| **ایمبیڈڈ سسٹمز** | نہیں | ہاں (مائیکرو-آر او ایس) |
+| **لائف سائیکل مینجمنٹ** | بنیادی | مینیجڈ نوڈز |
+| **کیو او ایس (کوالٹی آف سروس)** | کوئی نہیں | کنفیگریبل ریلائبلٹی |
+| **پلیٹ فارم سپورٹ** | صرف لینکس | لینکس، ونڈوز، میک او ایس |
 
-**ROS 2 میں اہم بہتریاں:**
-- تجارتی روبوٹس کے لیے production-ready
-- حفاظتی لحاظ سے اہم نظاموں کے لیے real-time capable
+**آر او ایس 2 میں اہم بہتریاں:**
+- تجارتی روبوٹس کے لیے پروڈکشن ریڈی
+- حفاظتی لحاظ سے اہم نظاموں کے لیے ریئل ٹائم قابل
 - نیٹ ورک شدہ روبوٹس کے لیے بہتر سیکیورٹی
-- زیادہ لچکدار communication patterns
+- زیادہ لچکدار کمیونیکیشن پیٹرنز
 
-## ROS 2 آرکیٹیکچر
+## آر او ایس 2 آرکیٹیکچر
 
-### 1. Nodes: بلڈنگ بلاکس
+### 1. نوڈز: بلڈنگ بلاکس
 
-ایک **node** ایک process ہے جو ایک مخصوص کام انجام دیتا ہے (مثلاً، camera پڑھنا، path plan کرنا، motor control کرنا)۔ Nodes، ROS 2 میں computation کی بنیادی اکائی ہیں۔
+ایک **نوڈ** ایک پروسیس ہے جو ایک مخصوص کام انجام دیتا ہے (مثلاً، کیمرا پڑھنا، پاتھ پلان کرنا، موٹر کنٹرول کرنا)۔ نوڈز، آر او ایس 2 میں کمپیوٹیشن کی بنیادی اکائی ہیں۔
 
 **اہم خصوصیات:**
-- Modular: ہر node ایک کام اچھی طرح کرتا ہے
-- Distributed: Nodes مختلف machines پر چل سکتے ہیں
-- Language-agnostic: Python، C++، یا Rust میں لکھیں
-- Lifecycle-managed: شائستگی سے start، pause، stop
+- ماڈیولر: ہر نوڈ ایک کام اچھی طرح کرتا ہے
+- ڈسٹریبیوٹڈ: نوڈز مختلف مشینز پر چل سکتے ہیں
+- لینگویج ایگناسٹک: پائتھون، سی++، یا رسٹ میں لکھیں
+- لائف سائیکل-مینیجڈ: شائستگی سے اسٹارٹ، پاز، اسٹاپ
 
-**Node ذمہ داریوں کی مثال:**
-- `camera_driver`: Camera سے images capture کرنا
-- `object_detector`: Images میں objects detect کرنا
-- `motion_planner`: Collision-free paths plan کرنا
-- `motor_controller`: Motors کو commands بھیجنا
+**نوڈ ذمہ داریوں کی مثال:**
+- `camera_driver`: کیمرا سے امیجز کیپچر کرنا
+- `object_detector`: امیجز میں آبجیکٹس ڈیٹیکٹ کرنا
+- `motion_planner`: کولیژن-فری پاتھز پلان کرنا
+- `motor_controller`: موٹرز کو کمانڈز بھیجنا
 
-### 2. Topics: Asynchronous Message Passing
+### 2. ٹاپکس: اسینکرونس میسج پاسنگ
 
-**Topics** publish-subscribe communication کو قابل بناتے ہیں:
+**ٹاپکس** پبلش-سبسکرائب کمیونیکیشن کو قابل بناتے ہیں:
 
 ```
 ┌──────────────┐         /camera/image          ┌──────────────┐
@@ -75,16 +75,16 @@
 ```
 
 **خصوصیات:**
-- **Many-to-many**: متعدد publishers، متعدد subscribers
-- **Asynchronous**: جواب کا انتظار نہیں
-- **Typed**: Messages کی متعین ساخت ہے (مثلاً، `sensor_msgs/Image`)
-- **Buffered**: QoS policies message queue کے رویے کو کنٹرول کرتی ہیں
+- **مینی-ٹو-مینی**: متعدد پبلشرز، متعدد سبسکرائبرز
+- **اسینکرونس**: جواب کا انتظار نہیں
+- **ٹائپڈ**: میسجز کی متعین ساخت ہے (مثلاً، `sensor_msgs/Image`)
+- **بفرڈ**: کیو او ایس پالیسیز میسج کیو کے رویے کو کنٹرول کرتی ہیں
 
-**استعمال کا معاملہ**: سینسر ڈیٹا سٹریمز (camera، lidar، IMU)
+**استعمال کا معاملہ**: سینسر ڈیٹا سٹریمز (کیمرا، لائیڈار، آئی ایم یو)
 
-### 3. Services: Synchronous Request-Response
+### 3. سروسز: سینکرونس ریکویسٹ-رسپانس
 
-**Services** client-server communication کو قابل بناتی ہیں:
+**سروسز** کلائنٹ-سرور کمیونیکیشن کو قابل بناتی ہیں:
 
 ```
 ┌──────────────┐      Request: "Plan path      ┌──────────────┐
@@ -96,15 +96,15 @@
 ```
 
 **خصوصیات:**
-- **One-to-one**: ایک client، ایک server
-- **Synchronous**: Client جواب کا انتظار کرتا ہے
-- **Typed**: Request اور response کی متعین ساخت ہے
+- **ون-ٹو-ون**: ایک کلائنٹ، ایک سرور
+- **سینکرونس**: کلائنٹ جواب کا انتظار کرتا ہے
+- **ٹائپڈ**: ریکویسٹ اور رسپانس کی متعین ساخت ہے
 
-**استعمال کا معاملہ**: کبھی کبھار کی computations (path planning، object recognition)
+**استعمال کا معاملہ**: کبھی کبھار کی کمپیوٹیشنز (پاتھ پلاننگ، آبجیکٹ ریکگنیشن)
 
-### 4. Actions: طویل چلنے والے کام Feedback کے ساتھ
+### 4. ایکشنز: طویل چلنے والے کام فیڈ بیک کے ساتھ
 
-**Actions** ایسے کاموں کے لیے services کو بڑھاتے ہیں جو وقت لیتے ہیں:
+**ایکشنز** ایسے کاموں کے لیے سروسز کو بڑھاتے ہیں جو وقت لیتے ہیں:
 
 ```
 ┌──────────────┐      Goal: "Navigate to X"    ┌──────────────┐
@@ -117,15 +117,15 @@
 ```
 
 **خصوصیات:**
-- **Feedback**: Execution کے دوران progress updates
-- **Cancelable**: Client goal کو cancel کر سکتا ہے
-- **Preemptable**: نئے goals پرانے کو override کر سکتے ہیں
+- **فیڈ بیک**: ایگزیکیوشن کے دوران پروگریس اپڈیٹس
+- **کینسل ایبل**: کلائنٹ گول کو کینسل کر سکتا ہے
+- **پری ایمپٹ ایبل**: نئے گولز پرانے کو اوور رائیڈ کر سکتے ہیں
 
-**استعمال کا معاملہ**: روبوٹ motions، grasping، navigation
+**استعمال کا معاملہ**: روبوٹ موشنز، گراسپنگ، نیویگیشن
 
-### 5. Parameters: Runtime Configuration
+### 5. پیرامیٹرز: رن ٹائم کنفیگریشن
 
-**Parameters** configuration values کو store کرتے ہیں جو recompiling کے بغیر تبدیل کیے جا سکتے ہیں:
+**پیرامیٹرز** کنفیگریشن ویلیوز کو اسٹور کرتے ہیں جو ری کمپائلنگ کے بغیر تبدیل کیے جا سکتے ہیں:
 
 ```python
 # Declare parameter with default value
@@ -138,28 +138,28 @@ max_speed = self.get_parameter('max_speed').value
 ros2 run my_package my_node --ros-args -p max_speed:=2.5
 ```
 
-**استعمال کا معاملہ**: Tuning، calibration، environment-specific settings
+**استعمال کا معاملہ**: ٹیوننگ، کیلیبریشن، انوائرمنٹ-اسپیسیفک سیٹنگز
 
-### 6. DDS: Communication Layer
+### 6. ڈی ڈی ایس: کمیونیکیشن لیئر
 
-ROS 2 **DDS (Data Distribution Service)** استعمال کرتا ہے، ایک پختہ middleware standard:
+آر او ایس 2 **ڈی ڈی ایس (ڈیٹا ڈسٹریبیوشن سروس)** استعمال کرتا ہے، ایک پختہ مڈل ویئر اسٹینڈرڈ:
 
 **فوائد:**
-- Industry-proven (aerospace، defense، automotive)
-- خودکار discovery (ROS 1 جیسا master node نہیں)
-- QoS policies (reliability، durability، latency)
-- Security (authentication، encryption)
+- انڈسٹری پروون (ایروسپیس، ڈیفنس، آٹوموٹو)
+- خودکار ڈسکوری (آر او ایس 1 جیسا ماسٹر نوڈ نہیں)
+- کیو او ایس پالیسیز (ریلائبلٹی، ڈیورایبلٹی، لیٹنسی)
+- سیکیورٹی (آتھینٹیکیشن، انکرپشن)
 
-**DDS implementations:**
-- Fast DDS (default، Eprosima)
-- CycloneDDS (Eclipse)
-- Connext DDS (RTI، commercial)
+**ڈی ڈی ایس امپلیمنٹیشنز:**
+- فاسٹ ڈی ڈی ایس (ڈیفالٹ، ایپروسیما)
+- سائیکلون ڈی ڈی ایس (ایکلپس)
+- کونیکٹ ڈی ڈی ایس (آر ٹی آئی، کمرشل)
 
-## ROS 2 Humble انسٹال کرنا
+## آر او ایس 2 ہمبل انسٹال کرنا
 
-ROS 2 Humble Hawksbill ایک LTS (Long-Term Support) release ہے جو مئی 2027 تک supported ہے۔
+آر او ایس 2 ہمبل ہاکسبل ایک ایل ٹی ایس (لانگ-ٹرم سپورٹ) ریلیز ہے جو مئی 2027 تک سپورٹڈ ہے۔
 
-### قدم 1: Locale سیٹ کریں
+### قدم 1: لوکیل سیٹ کریں
 
 ```bash
 locale  # Check current settings
@@ -169,7 +169,7 @@ sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 export LANG=en_US.UTF-8
 ```
 
-### قدم 2: ROS 2 Repository شامل کریں
+### قدم 2: آر او ایس 2 ریپوزٹری شامل کریں
 
 ```bash
 # Ensure Ubuntu Universe repository is enabled
@@ -184,7 +184,7 @@ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 ```
 
-### قدم 3: ROS 2 Humble انسٹال کریں
+### قدم 3: آر او ایس 2 ہمبل انسٹال کریں
 
 ```bash
 # Update package index
@@ -203,9 +203,9 @@ sudo apt install ros-dev-tools -y
 sudo apt install python3-colcon-common-extensions -y
 ```
 
-**تنصیب میں تقریباً 10 منٹ اور 2GB ڈسک جگہ لگتی ہے۔**
+**تنصیب میں تقریباً 10 منٹ اور 2 جی بی ڈسک جگہ لگتی ہے۔**
 
-### قدم 4: ROS 2 Setup کو Source کریں
+### قدم 4: آر او ایس 2 سیٹ اپ کو سورس کریں
 
 ```bash
 # Source ROS 2 environment (run in every new terminal)
@@ -230,7 +230,7 @@ ros2 run demo_nodes_cpp talker
 ros2 run demo_nodes_py listener
 ```
 
-**متوقع output:**
+**متوقع آؤٹ پٹ:**
 ```
 Terminal 1:
 [INFO] [talker]: Publishing: 'Hello World: 1'
@@ -241,13 +241,13 @@ Terminal 2:
 [INFO] [listener]: I heard: [Hello World: 2]
 ```
 
-اگر آپ nodes کے درمیان messages دیکھتے ہیں، تو ROS 2 کام کر رہا ہے!
+اگر آپ نوڈز کے درمیان میسجز دیکھتے ہیں، تو آر او ایس 2 کام کر رہا ہے!
 
-## اپنا پہلا ROS 2 Node بنانا
+## اپنا پہلا آر او ایس 2 نوڈ بنانا
 
-آئیے ایک سادہ "Hello Robot" node بنائیں۔
+آئیے ایک سادہ "ہیلو روبوٹ" نوڈ بنائیں۔
 
-### قدم 1: Workspace بنائیں
+### قدم 1: ورک سپیس بنائیں
 
 ```bash
 # Create workspace directory
@@ -255,7 +255,7 @@ mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
 ```
 
-### قدم 2: Package بنائیں
+### قدم 2: پیکیج بنائیں
 
 ```bash
 # Create Python package
@@ -278,7 +278,7 @@ hello_robot_py/
     └── __init__.py
 ```
 
-### قدم 3: Node Script بنائیں
+### قدم 3: نوڈ اسکرپٹ بنائیں
 
 ```bash
 # Create node file
@@ -365,9 +365,9 @@ if __name__ == '__main__':
     main()
 ```
 
-### قدم 4: Setup Files کو اپ ڈیٹ کریں
+### قدم 4: سیٹ اپ فائلز کو اپ ڈیٹ کریں
 
-**`setup.py` میں ترمیم کریں** - entry point شامل کریں:
+**`setup.py` میں ترمیم کریں** - انٹری پوائنٹ شامل کریں:
 
 ```python
 entry_points={
@@ -377,7 +377,7 @@ entry_points={
 },
 ```
 
-### قدم 5: Package کو Build کریں
+### قدم 5: پیکیج کو بلڈ کریں
 
 ```bash
 # Navigate to workspace root
@@ -390,7 +390,7 @@ colcon build --packages-select hello_robot_py
 source install/setup.bash
 ```
 
-### قدم 6: اپنا Node چلائیں
+### قدم 6: اپنا نوڈ چلائیں
 
 ```bash
 # Terminal 1: Run node
@@ -407,17 +407,17 @@ ros2 node info /hello_robot
 ros2 topic echo /robot_status
 ```
 
-**مبارک ہو! آپ نے اپنا پہلا ROS 2 node بنا لیا!** 🎉
+**مبارک ہو! آپ نے اپنا پہلا آر او ایس 2 نوڈ بنا لیا!** 🎉
 
-## ضروری ROS 2 Command-Line Tools
+## ضروری آر او ایس 2 کمانڈ لائن ٹولز
 
-### Node Commands
+### نوڈ کمانڈز
 ```bash
 ros2 node list                    # List running nodes
 ros2 node info /node_name         # Show node details
 ```
 
-### Topic Commands
+### ٹاپک کمانڈز
 ```bash
 ros2 topic list                   # List active topics
 ros2 topic echo /topic_name       # Print messages
@@ -426,21 +426,21 @@ ros2 topic info /topic_name       # Show publishers/subscribers
 ros2 topic pub /topic_name ...    # Publish message from CLI
 ```
 
-### Parameter Commands
+### پیرامیٹر کمانڈز
 ```bash
 ros2 param list                   # List parameters
 ros2 param get /node_name param   # Get parameter value
 ros2 param set /node_name param value  # Set parameter
 ```
 
-### عمومی Commands
+### عمومی کمانڈز
 ```bash
 ros2 pkg list                     # List installed packages
 ros2 interface show Type          # Show message definition
 ros2 doctor                       # Check ROS 2 setup
 ```
 
-## ROS 2 Workspace Structure
+## آر او ایس 2 ورک سپیس اسٹرکچر
 
 ```
 ros2_ws/                      # Workspace root
@@ -452,83 +452,83 @@ ros2_ws/                      # Workspace root
 ```
 
 **بہترین طریقے:**
-- صرف `src/` کو version control میں commit کریں
+- صرف `src/` کو ورژن کنٹرول میں کمٹ کریں
 - `build/`، `install/`، `log/` کو `.gitignore` میں شامل کریں
-- مختلف projects کے لیے الگ workspaces استعمال کریں
+- مختلف پراجیکٹس کے لیے الگ ورک سپیسز استعمال کریں
 
-## ROS 2 Packages کو سمجھنا
+## آر او ایس 2 پیکیجز کو سمجھنا
 
-ایک **package** ROS 2 میں build اور release کی سب سے چھوٹی اکائی ہے۔
+ایک **پیکیج** آر او ایس 2 میں بلڈ اور ریلیز کی سب سے چھوٹی اکائی ہے۔
 
-**Package کے اجزاء:**
-- `package.xml`: Metadata (نام، ورژن، dependencies)
-- `CMakeLists.txt` (C++) یا `setup.py` (Python): Build configuration
-- Source code: Node implementations
-- Launch files: متعدد nodes شروع کرنا
-- Config files: Parameters، URDF models
+**پیکیج کے اجزاء:**
+- `package.xml`: میٹا ڈیٹا (نام، ورژن، ڈیپنڈنسیز)
+- `CMakeLists.txt` (سی++) یا `setup.py` (پائتھون): بلڈ کنفیگریشن
+- سورس کوڈ: نوڈ امپلیمنٹیشنز
+- لانچ فائلز: متعدد نوڈز شروع کرنا
+- کنفیگ فائلز: پیرامیٹرز، یو آر ڈی ایف ماڈلز
 
-**Package کی اقسام:**
-- **ament_python**: خالص Python packages
-- **ament_cmake**: C++ packages یا mixed
-- **ament_cmake_python**: Python nodes کے ساتھ C++
+**پیکیج کی اقسام:**
+- **ament_python**: خالص پائتھون پیکیجز
+- **ament_cmake**: سی++ پیکیجز یا مکسڈ
+- **ament_cmake_python**: پائتھون نوڈز کے ساتھ سی++
 
 ## عام مسائل اور حل
 
-### مسئلہ 1: Building کے بعد "Package not found"
-**وجہ**: Workspace کو source کرنا بھول گئے
+### مسئلہ 1: بلڈنگ کے بعد "پیکیج ناٹ فاؤنڈ"
+**وجہ**: ورک سپیس کو سورس کرنا بھول گئے
 **حل**: `source ~/ros2_ws/install/setup.bash`
 
-### مسئلہ 2: Node کو messages موصول نہیں ہوتے
-**وجہ**: Publisher/subscriber کے درمیان QoS mismatch
-**حل**: یقینی بنائیں کہ دونوں compatible QoS settings استعمال کرتے ہیں (اگلے ہفتے covered)
+### مسئلہ 2: نوڈ کو میسجز موصول نہیں ہوتے
+**وجہ**: پبلشر/سبسکرائبر کے درمیان کیو او ایس مسمیچ
+**حل**: یقینی بنائیں کہ دونوں کمپیٹیبل کیو او ایس سیٹنگز استعمال کرتے ہیں (اگلے ہفتے کور کیا جائے گا)
 
 ### مسئلہ 3: "colcon: command not found"
-**وجہ**: ROS 2 dev tools انسٹال نہیں
+**وجہ**: آر او ایس 2 ڈیو ٹولز انسٹال نہیں
 **حل**: `sudo apt install python3-colcon-common-extensions`
 
-### مسئلہ 4: Python node چلاتے وقت ImportError
-**وجہ**: Package صحیح طریقے سے install نہیں
-**حل**: `colcon build --symlink-install` کے ساتھ دوبارہ build کریں
+### مسئلہ 4: پائتھون نوڈ چلاتے وقت امپورٹ ایرر
+**وجہ**: پیکیج صحیح طریقے سے انسٹال نہیں
+**حل**: `colcon build --symlink-install` کے ساتھ دوبارہ بلڈ کریں
 
 ## ہفتہ 3 کی عملی مشق
 
-**کام**: Hello Robot node میں ترمیم کریں تاکہ:
-1. ایک parameter `robot_name` قبول کرے (default: "PhysicsBot")
-2. Robot کا نام status messages میں شامل کرے
-3. قابل تشکیل rate پر publish کرے (parameter `publish_rate`، default: 1.0 Hz)
+**کام**: ہیلو روبوٹ نوڈ میں ترمیم کریں تاکہ:
+1. ایک پیرامیٹر `robot_name` قبول کرے (ڈیفالٹ: "فزکس بوٹ")
+2. روبوٹ کا نام اسٹیٹس میسجز میں شامل کرے
+3. قابل تشکیل ریٹ پر پبلش کرے (پیرامیٹر `publish_rate`، ڈیفالٹ: 1.0 ہرٹز)
 
-**بونس**: ایک دوسرا node بنائیں جو `/robot_status` کو subscribe کرے اور موصول شدہ messages کو log کرے۔
+**بونس**: ایک دوسرا نوڈ بنائیں جو `/robot_status` کو سبسکرائب کرے اور موصول شدہ میسجز کو لاگ کرے۔
 
-**جمع کرانا**: کوڈ کو GitHub پر push کریں اور repository link شیئر کریں۔
+**جمع کرانا**: کوڈ کو گٹ ہب پر پش کریں اور ریپوزٹری لنک شیئر کریں۔
 
 ## کوئز کے سوالات
 
-1. ROS 2 میں computation کی بنیادی اکائی کیا ہے؟
-2. Topics اور services کے درمیان فرق کی وضاحت کریں۔
-3. ROS 2 نے custom protocols کے بجائے DDS کیوں اپنایا؟
-4. کون سا command تمام فعال topics دکھاتا ہے؟
+1. آر او ایس 2 میں کمپیوٹیشن کی بنیادی اکائی کیا ہے؟
+2. ٹاپکس اور سروسز کے درمیان فرق کی وضاحت کریں۔
+3. آر او ایس 2 نے کسٹم پروٹوکولز کے بجائے ڈی ڈی ایس کیوں اپنایا؟
+4. کون سا کمانڈ تمام فعال ٹاپکس دکھاتا ہے؟
 5. `colcon build` کا مقصد کیا ہے؟
 
 ## اگلے قدم
 
-ہفتہ 3 مکمل کرنے پر بہترین کام! اب آپ ROS 2 آرکیٹیکچر کو سمجھتے ہیں اور آپ کے پاس ایک کام کرنے والا development environment ہے۔
+ہفتہ 3 مکمل کرنے پر بہترین کام! اب آپ آر او ایس 2 آرکیٹیکچر کو سمجھتے ہیں اور آپ کے پاس ایک کام کرنے والا ڈیولپمنٹ انوائرمنٹ ہے۔
 
-اگلا ہفتہ: [ہفتہ 4: Nodes، Topics، Publishers اور Subscribers](week-04.md)
+اگلا ہفتہ: [ہفتہ 4: نوڈز، ٹاپکس، پبلشرز اور سبسکرائبرز](week-04.md)
 
-ہم pub-sub communication میں گہرائی سے جائیں گے، message types، اور ایک multi-node robot سسٹم بنائیں گے!
+ہم پب-سب کمیونیکیشن میں گہرائی سے جائیں گے، میسج ٹائپس، اور ایک ملٹی نوڈ روبوٹ سسٹم بنائیں گے!
 
 ## وسائل
 
-- [ROS 2 Humble Documentation](https://docs.ros.org/en/humble/)
-- [ROS 2 Tutorials](https://docs.ros.org/en/humble/Tutorials.html)
-- [Understanding ROS 2 Nodes](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html)
-- [ROS 2 Design Documents](https://design.ros2.org/)
-- [DDS Specification](https://www.omg.org/spec/DDS/)
+- [آر او ایس 2 ہمبل ڈاکیومینٹیشن](https://docs.ros.org/en/humble/)
+- [آر او ایس 2 ٹیوٹوریلز](https://docs.ros.org/en/humble/Tutorials.html)
+- [آر او ایس 2 نوڈز کو سمجھنا](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html)
+- [آر او ایس 2 ڈیزائن ڈاکیومینٹس](https://design.ros2.org/)
+- [ڈی ڈی ایس سپیسیفکیشن](https://www.omg.org/spec/DDS/)
 
 ---
 
 ## 📝 ہفتہ وار کوئز
 
-اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز multiple choice ہے، خودکار طریقے سے اسکور کیا جاتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
+اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز ملٹیپل چوائس ہے، خودکار طریقے سے اسکور کیا جاتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
 
 **[ہفتہ 3 کوئز لیں →](/quiz?week=3)**

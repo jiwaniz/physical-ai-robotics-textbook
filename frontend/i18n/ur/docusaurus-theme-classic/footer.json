@@ -24,19 +24,19 @@
     "description": "The label of footer link with label=My Scores linking to /my-scores"
   },
   "link.item.label.ROS 2 Documentation": {
-    "message": "ROS 2 دستاویزات",
+    "message": "آر او ایس 2 دستاویزات",
     "description": "The label of footer link with label=ROS 2 Documentation linking to https://docs.ros.org/en/humble/"
   },
   "link.item.label.NVIDIA Isaac Sim": {
-    "message": "NVIDIA Isaac Sim",
+    "message": "این ویڈیا آئزک سم",
     "description": "The label of footer link with label=NVIDIA Isaac Sim linking to https://docs.omniverse.nvidia.com/isaacsim/latest/"
   },
   "link.item.label.GitHub": {
-    "message": "GitHub",
+    "message": "گٹ ہب",
     "description": "The label of footer link with label=GitHub linking to https://github.com/jiwaniz/physical-ai-robotics-textbook"
   },
   "copyright": {
-    "message": "کاپی رائٹ © 2026 فزیکل AI اور ہیومنائیڈ روبوٹکس کورس۔ Docusaurus سے بنایا گیا۔",
+    "message": "کاپی رائٹ © 2026 فزیکل اے آئی اور ہیومنائیڈ روبوٹکس کورس۔ ڈوکوسارس سے بنایا گیا۔",
     "description": "The footer copyright"
   }
 }

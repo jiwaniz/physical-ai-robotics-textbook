@@ -1,36 +1,36 @@
-# ہفتہ 5: Services، Actions، اور Parameters
+# ہفتہ 5: سروسز، ایکشنز، اور پیرامیٹرز
 
 ## جائزہ
 
-یہ ہفتہ synchronous communication (services)، طویل چلنے والے کام (actions)، اور runtime configuration (parameters) کو cover کر کے آپ کے ROS 2 بنیادی اصولوں کو مکمل کرتا ہے۔ آپ multi-node سسٹمز کے انتظام کے لیے launch files بھی سیکھیں گے اور باب 1 کا assessment project مکمل کریں گے۔
+یہ ہفتہ سینکرونس کمیونیکیشن (سروسز)، طویل چلنے والے کام (ایکشنز)، اور رن ٹائم کنفیگریشن (پیرامیٹرز) کو کور کر کے آپ کے آر او ایس 2 بنیادی اصولوں کو مکمل کرتا ہے۔ آپ ملٹی نوڈ سسٹمز کے انتظام کے لیے لانچ فائلز بھی سیکھیں گے اور باب 1 کا اسیسمنٹ پراجیکٹ مکمل کریں گے۔
 
 ## سیکھنے کے مقاصد
 
 اس ہفتے کے اختتام تک، آپ یہ کر سکیں گے:
 
-- Request-response communication کے لیے ROS 2 services کو implement کرنا
-- Feedback کے ساتھ طویل چلنے والے، cancelable کاموں کے لیے actions استعمال کرنا
-- Runtime configuration کے لیے parameters کا انتظام کرنا
-- پیچیدہ multi-node سسٹمز شروع کرنے کے لیے launch files لکھنا
-- مکمل robotic application بنانے کے لیے ROS 2 patterns لاگو کرنا
-- باب 1 ROS 2 project assessment مکمل کرنا
+- ریکویسٹ-رسپانس کمیونیکیشن کے لیے آر او ایس 2 سروسز کو امپلیمنٹ کرنا
+- فیڈ بیک کے ساتھ طویل چلنے والے، کینسل ایبل کاموں کے لیے ایکشنز استعمال کرنا
+- رن ٹائم کنفیگریشن کے لیے پیرامیٹرز کا انتظام کرنا
+- پیچیدہ ملٹی نوڈ سسٹمز شروع کرنے کے لیے لانچ فائلز لکھنا
+- مکمل روبوٹک ایپلیکیشن بنانے کے لیے آر او ایس 2 پیٹرنز لاگو کرنا
+- باب 1 آر او ایس 2 پراجیکٹ اسیسمنٹ مکمل کرنا
 
-## Services: Request-Response Communication
+## سروسز: ریکویسٹ-رسپانس کمیونیکیشن
 
-### Services بمقابلہ Topics کب استعمال کریں
+### سروسز بمقابلہ ٹاپکس کب استعمال کریں
 
-| Pattern | استعمال کا معاملہ | مثال |
+| پیٹرن | استعمال کا معاملہ | مثال |
 |---------|----------|---------|
-| **Topic** | مسلسل ڈیٹا سٹریمز | Camera images، lidar scans |
-| **Service** | کبھی کبھار کی computations | Path planning، object recognition |
-| **Action** | Feedback کے ساتھ طویل کام | Navigation، grasping |
+| **ٹاپک** | مسلسل ڈیٹا سٹریمز | کیمرا امیجز، لائیڈار اسکینز |
+| **سروس** | کبھی کبھار کی کمپیوٹیشنز | پاتھ پلاننگ، آبجیکٹ ریکگنیشن |
+| **ایکشن** | فیڈ بیک کے ساتھ طویل کام | نیویگیشن، گراسپنگ |
 
-### Service Definition
+### سروس ڈیفینیشن
 
-Services کے تین اجزاء ہیں:
-1. **Request**: Client سے server کو بھیجا گیا ڈیٹا
-2. **Response**: Server سے client کو واپس کیا گیا ڈیٹا
-3. **Service type**: Request اور response کی ساخت کی تعریف کرتا ہے
+سروسز کے تین اجزاء ہیں:
+1. **ریکویسٹ**: کلائنٹ سے سرور کو بھیجا گیا ڈیٹا
+2. **رسپانس**: سرور سے کلائنٹ کو واپس کیا گیا ڈیٹا
+3. **سروس ٹائپ**: ریکویسٹ اور رسپانس کی ساخت کی تعریف کرتا ہے
 
 **مثال:** `AddTwoInts.srv`
 ```
@@ -42,7 +42,7 @@ int64 b
 int64 sum
 ```
 
-### Service Server بنانا
+### سروس سرور بنانا
 
 **`add_two_ints_server.py`:**
 
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### Service Client بنانا
+### سروس کلائنٹ بنانا
 
 **`add_two_ints_client.py`:**
 
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### Services چلانا
+### سروسز چلانا
 
 ```bash
 # Terminal 1: Start server
@@ -189,7 +189,7 @@ ros2 service call /add_two_ints example_interfaces/srv/AddTwoInts "{a: 10, b: 20
 # Output: sum: 30
 ```
 
-### Custom Service Definition
+### کسٹم سروس ڈیفینیشن
 
 **`SetRobotMode.srv`:**
 ```
@@ -216,24 +216,24 @@ def set_mode_callback(self, request, response):
     return response
 ```
 
-## Actions: طویل چلنے والے کام
+## ایکشنز: طویل چلنے والے کام
 
-Actions ایسے کاموں کے لیے services کو بڑھاتے ہیں جو:
+ایکشنز ایسے کاموں کے لیے سروسز کو بڑھاتے ہیں جو:
 - کافی وقت لیتے ہیں (سیکنڈز سے منٹوں تک)
-- Progress feedback فراہم کرتے ہیں
-- Execution کے دوران cancel کیے جا سکتے ہیں
+- پروگریس فیڈ بیک فراہم کرتے ہیں
+- ایگزیکیوشن کے دوران کینسل کیے جا سکتے ہیں
 
-### Action Structure
+### ایکشن اسٹرکچر
 
 ```
 Goal     →  کون سا کام انجام دینا ہے
-Feedback →  Execution کے دوران progress updates
+Feedback →  ایگزیکیوشن کے دوران پروگریس اپڈیٹس
 Result   →  مکمل ہونے پر حتمی نتیجہ
 ```
 
-### مثال: Fibonacci Action
+### مثال: فبوناچی ایکشن
 
-**Definition:** `Fibonacci.action`
+**ڈیفینیشن:** `Fibonacci.action`
 ```
 # Goal
 int32 order
@@ -245,7 +245,7 @@ int32[] sequence
 int32[] partial_sequence
 ```
 
-### Action Server
+### ایکشن سرور
 
 ```python
 #!/usr/bin/env python3
@@ -330,7 +330,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### Action Client
+### ایکشن کلائنٹ
 
 ```python
 #!/usr/bin/env python3
@@ -411,7 +411,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### Actions کو Cancel کرنا
+### ایکشنز کو کینسل کرنا
 
 ```python
 # In action client
@@ -426,11 +426,11 @@ def cancel_done(self, future):
         self.get_logger().info('Goal successfully canceled')
 ```
 
-## Parameters: Runtime Configuration
+## پیرامیٹرز: رن ٹائم کنفیگریشن
 
-Parameters، node کے رویے کو recompiling کے بغیر تبدیل کرنے کی اجازت دیتے ہیں۔
+پیرامیٹرز، نوڈ کے رویے کو ری کمپائلنگ کے بغیر تبدیل کرنے کی اجازت دیتے ہیں۔
 
-### Parameters کا اعلان کرنا
+### پیرامیٹرز کا اعلان کرنا
 
 ```python
 def __init__(self):
@@ -451,7 +451,7 @@ def __init__(self):
     self.get_logger().info(f'Robot: {self.robot_name}, Max speed: {self.max_speed}')
 ```
 
-### Parameters سیٹ کرنا
+### پیرامیٹرز سیٹ کرنا
 
 ```bash
 # Command line (when launching node)
@@ -473,9 +473,9 @@ ros2 param dump /my_node > my_params.yaml
 ros2 run pkg node --ros-args --params-file my_params.yaml
 ```
 
-### Parameter Callbacks
+### پیرامیٹر کال بیکس
 
-Runtime پر parameter تبدیلیوں پر ردعمل ظاہر کریں:
+رن ٹائم پر پیرامیٹر تبدیلیوں پر ردعمل ظاہر کریں:
 
 ```python
 from rcl_interfaces.msg import ParameterDescriptor, SetParametersResult
@@ -505,11 +505,11 @@ def parameter_callback(self, params):
     return SetParametersResult(successful=True)
 ```
 
-## Launch Files
+## لانچ فائلز
 
-Launch files متعدد nodes کو configurations کے ساتھ شروع کرتی ہیں۔
+لانچ فائلز متعدد نوڈز کو کنفیگریشنز کے ساتھ شروع کرتی ہیں۔
 
-### Python Launch File
+### پائتھون لانچ فائل
 
 **`robot_launch.py`:**
 
@@ -589,7 +589,7 @@ def generate_launch_description():
     ])
 ```
 
-### Launch Files چلانا
+### لانچ فائلز چلانا
 
 ```bash
 # Run launch file
@@ -602,7 +602,7 @@ ros2 launch my_robot robot_launch.py robot_name:=Atlas
 ros2 launch my_robot --show-args
 ```
 
-### XML Launch Files (متبادل)
+### ایکس ایم ایل لانچ فائلز (متبادل)
 
 ```xml
 <launch>
@@ -622,55 +622,55 @@ ros2 launch my_robot --show-args
 </launch>
 ```
 
-## باب 1 Assessment Project
+## باب 1 اسیسمنٹ پراجیکٹ
 
 ### پراجیکٹ کی ضروریات
 
-**Multi-node delivery robot سسٹم** بنائیں جس میں:
+**ملٹی نوڈ ڈیلیوری روبوٹ سسٹم** بنائیں جس میں:
 
-**Nodes (کم از کم 3):**
-1. **Package tracker**: Package locations اور status کو track کرتا ہے
-2. **Route planner**: Delivery routes plan کرتا ہے (service)
-3. **Delivery executor**: Delivery tasks execute کرتا ہے (feedback کے ساتھ action)
-4. **Status monitor**: سسٹم کی status log کرتا ہے
+**نوڈز (کم از کم 3):**
+1. **پیکیج ٹریکر**: پیکیج لوکیشنز اور اسٹیٹس کو ٹریک کرتا ہے
+2. **روٹ پلانر**: ڈیلیوری روٹس پلان کرتا ہے (سروس)
+3. **ڈیلیوری ایگزیکیوٹر**: ڈیلیوری ٹاسکس ایگزیکیوٹ کرتا ہے (فیڈ بیک کے ساتھ ایکشن)
+4. **اسٹیٹس مانیٹر**: سسٹم کی اسٹیٹس لاگ کرتا ہے
 
-**Communication:**
-- Topics: Package status updates
-- Service: Route planning request/response
-- Action: Progress feedback کے ساتھ delivery task
-- Parameters: Robot configuration (speed، capacity، وغیرہ)
+**کمیونیکیشن:**
+- ٹاپکس: پیکیج اسٹیٹس اپڈیٹس
+- سروس: روٹ پلاننگ ریکویسٹ/رسپانس
+- ایکشن: پروگریس فیڈ بیک کے ساتھ ڈیلیوری ٹاسک
+- پیرامیٹرز: روبوٹ کنفیگریشن (اسپیڈ، کپیسٹی، وغیرہ)
 
 **خصوصیات:**
-- Custom message `PackageInfo` (id، destination، status)
-- Custom service `PlanRoute` (start، goal → waypoints)
-- Custom action `DeliverPackage` (package_id → feedback: distance، result: success)
-- تمام nodes شروع کرنے والی launch file
+- کسٹم میسج `PackageInfo` (آئی ڈی، ڈیسٹنیشن، اسٹیٹس)
+- کسٹم سروس `PlanRoute` (اسٹارٹ، گول → وے پوائنٹس)
+- کسٹم ایکشن `DeliverPackage` (package_id → فیڈ بیک: ڈسٹنس، رزلٹ: سکسیس)
+- تمام نوڈز شروع کرنے والی لانچ فائل
 
-**Deliverables:**
-1. مکمل ROS 2 package کے ساتھ GitHub repository
-2. Setup اور استعمال کی ہدایات کے ساتھ README
-3. Demo video (3-5 منٹ) جو سسٹم کو عمل میں دکھائے
+**ڈیلیوریبلز:**
+1. مکمل آر او ایس 2 پیکیج کے ساتھ گٹ ہب ریپوزٹری
+2. سیٹ اپ اور استعمال کی ہدایات کے ساتھ ریڈمی
+3. ڈیمو ویڈیو (3-5 منٹ) جو سسٹم کو عمل میں دکھائے
 4. آرکیٹیکچر کی وضاحت کرتی تحریری رپورٹ (2-3 صفحات)
 
-**Rubric (100 پوائنٹس):**
-- Functionality (40 pts): تمام nodes صحیح طریقے سے کام کرتے ہیں
-- Code quality (25 pts): صاف، دستاویز شدہ، بہترین طریقوں کی پیروی کرتا ہے
-- Documentation (20 pts): واضح README اور inline comments
-- Testing (15 pts): اہم اجزاء کے لیے unit tests
+**روبرک (100 پوائنٹس):**
+- فنکشنیلٹی (40 پوائنٹس): تمام نوڈز صحیح طریقے سے کام کرتے ہیں
+- کوڈ کوالٹی (25 پوائنٹس): صاف، دستاویز شدہ، بہترین طریقوں کی پیروی کرتا ہے
+- دستاویزات (20 پوائنٹس): واضح ریڈمی اور ان لائن کمنٹس
+- ٹیسٹنگ (15 پوائنٹس): اہم اجزاء کے لیے یونٹ ٹیسٹس
 
 **جمع کرانے کی آخری تاریخ**: ہفتہ 5 کا اختتام
 
 ## ہفتہ 5 کوئز
 
-1. Service کے بجائے action کب استعمال کرنا چاہیے؟
-2. Parameter کو read-only کیسے بنایا جائے؟
-3. Synchronous اور asynchronous service calls میں کیا فرق ہے؟
-4. پیچیدہ سسٹمز کے لیے launch files کیوں اہم ہیں؟
-5. Callback میں parameter values کو کیسے validate کیا جائے؟
+1. سروس کے بجائے ایکشن کب استعمال کرنا چاہیے؟
+2. پیرامیٹر کو ریڈ-اونلی کیسے بنایا جائے؟
+3. سینکرونس اور اسینکرونس سروس کالز میں کیا فرق ہے؟
+4. پیچیدہ سسٹمز کے لیے لانچ فائلز کیوں اہم ہیں؟
+5. کال بیک میں پیرامیٹر ویلیوز کو کیسے ویلیڈیٹ کیا جائے؟
 
-## عام Patterns
+## عام پیٹرنز
 
-### Pattern 1: Timeout کے ساتھ Service
+### پیٹرن 1: ٹائم آؤٹ کے ساتھ سروس
 
 ```python
 future = self.client.call_async(request)
@@ -682,7 +682,7 @@ else:
     self.get_logger().error('Service call timed out')
 ```
 
-### Pattern 2: Parameter File
+### پیٹرن 2: پیرامیٹر فائل
 
 **`robot_params.yaml`:**
 ```yaml
@@ -694,9 +694,9 @@ my_node:
     debug_mode: false
 ```
 
-### Pattern 3: Lifecycle Nodes
+### پیٹرن 3: لائف سائیکل نوڈز
 
-Production سسٹمز کے لیے، managed lifecycle nodes استعمال کریں:
+پروڈکشن سسٹمز کے لیے، مینیجڈ لائف سائیکل نوڈز استعمال کریں:
 
 ```python
 from rclpy.lifecycle import LifecycleNode, LifecycleState, TransitionCallbackReturn
@@ -715,25 +715,25 @@ class MyLifecycleNode(LifecycleNode):
 
 ## اگلے قدم
 
-باب 1 مکمل کرنے پر مبارکباد! اب آپ کے پاس مضبوط ROS 2 بنیادیں ہیں۔
+باب 1 مکمل کرنے پر مبارکباد! اب آپ کے پاس مضبوط آر او ایس 2 بنیادیں ہیں۔
 
 **اگلا کیا ہے:**
-- باب 1 کا assessment project مکمل کریں
-- باب 2 کے لیے تیاری کریں: [Gazebo اور Unity Simulation](../02-simulation/index.md)
-- ضرورت کے مطابق ROS 2 تصورات کا جائزہ لیں
+- باب 1 کا اسیسمنٹ پراجیکٹ مکمل کریں
+- باب 2 کے لیے تیاری کریں: [گزیبو اور یونٹی سمیولیشن](../02-simulation/index.md)
+- ضرورت کے مطابق آر او ایس 2 تصورات کا جائزہ لیں
 
 ## وسائل
 
-- [ROS 2 Services Tutorial](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html)
-- [ROS 2 Actions Tutorial](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html)
-- [ROS 2 Parameters Tutorial](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html)
-- [ROS 2 Launch Files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html)
-- [Lifecycle Nodes](https://design.ros2.org/articles/node_lifecycle.html)
+- [آر او ایس 2 سروسز ٹیوٹوریل](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html)
+- [آر او ایس 2 ایکشنز ٹیوٹوریل](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html)
+- [آر او ایس 2 پیرامیٹرز ٹیوٹوریل](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html)
+- [آر او ایس 2 لانچ فائلز](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html)
+- [لائف سائیکل نوڈز](https://design.ros2.org/articles/node_lifecycle.html)
 
 ---
 
 ## 📝 ہفتہ وار کوئز
 
-اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز multiple choice ہے، خودکار طریقے سے اسکور کیا جاتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
+اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز ملٹیپل چوائس ہے، خودکار طریقے سے اسکور کیا جاتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
 
 **[ہفتہ 5 کوئز لیں →](/quiz?week=5)**

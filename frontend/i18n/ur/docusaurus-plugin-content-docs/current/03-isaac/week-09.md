@@ -1,77 +1,77 @@
-# ہفتہ 9: Synthetic Data Generation & Isaac Gym
+# ہفتہ 9: سنتھیٹک ڈیٹا جنریشن اور آئزک جم
 
 ## جائزہ
 
-یہ ہفتہ Isaac Sim کی دو طاقتور صلاحیتوں کو دریافت کرتا ہے: Vision models ٹریننگ کرنے کے لیے **Synthetic Data Generation** (SDG) اور بہت زیادہ parallel reinforcement learning کے لیے **Isaac Gym**۔ آپ سیکھیں گے کہ حقیقت پسندانہ training datasets کیسے بنائیں اور robot policies کو مکمل طور پر simulation میں کیسے train کریں۔
+یہ ہفتہ آئزک سم کی دو طاقتور صلاحیتوں کو دریافت کرتا ہے: ویژن ماڈلز ٹریننگ کرنے کے لیے **سنتھیٹک ڈیٹا جنریشن** (ایس ڈی جی) اور بہت زیادہ پیرالل ری انفورسمنٹ لرننگ کے لیے **آئزک جم**۔ آپ سیکھیں گے کہ حقیقت پسندانہ ٹریننگ ڈیٹاسیٹس کیسے بنائیں اور روبوٹ پالیسیز کو مکمل طور پر سمیولیشن میں کیسے ٹرین کریں۔
 
 ## سیکھنے کے مقاصد
 
 اس ہفتے کے اختتام تک، آپ یہ کر سکیں گے:
 
-- AI/ML کے لیے synthetic data کی قدر سمجھیں
-- Dataset generation کے لیے Isaac Sim Replicator استعمال کریں
-- Domain-randomized training data بنائیں
-- Annotated datasets تیار کریں (bounding boxes، segmentation masks)
-- Reinforcement learning کے لیے Isaac Gym سیٹ اپ کریں
-- سادہ RL policy ٹریننگ کریں (reaching، grasping)
-- Sim-to-real transfer کی تیاری کا جائزہ لیں
+- اے آئی/ایم ایل کے لیے سنتھیٹک ڈیٹا کی قدر سمجھیں
+- ڈیٹاسیٹ جنریشن کے لیے آئزک سم ریپلیکیٹر استعمال کریں
+- ڈومین-رینڈمائزڈ ٹریننگ ڈیٹا بنائیں
+- اینوٹیٹڈ ڈیٹاسیٹس تیار کریں (باؤنڈنگ باکسز، سیگمینٹیشن ماسکس)
+- ری انفورسمنٹ لرننگ کے لیے آئزک جم سیٹ اپ کریں
+- سادہ آر ایل پالیسی ٹریننگ کریں (ریچنگ، گراسپنگ)
+- سم ٹو ریئل ٹرانسفر کی تیاری کا جائزہ لیں
 
-## Synthetic Data کیوں؟
+## سنتھیٹک ڈیٹا کیوں؟
 
-### Robotics میں Data کا مسئلہ
+### روبوٹکس میں ڈیٹا کا مسئلہ
 
 **روایتی طریقہ:**
-1. جسمانی robot بنائیں ($10K-$1M)
-2. دستی طور پر data جمع کریں (ہفتے/مہینے)
-3. دستی طور پر data کو label کریں (مہنگا، غلطی کا شکار)
-4. Model ٹریننگ کریں
-5. جب model نئے منظرناموں میں ناکام ہو تو دہرائیں
+1. جسمانی روبوٹ بنائیں ($10 ہزار-$10 لاکھ)
+2. دستی طور پر ڈیٹا جمع کریں (ہفتے/مہینے)
+3. دستی طور پر ڈیٹا کو لیبل کریں (مہنگا، غلطی کا شکار)
+4. ماڈل ٹریننگ کریں
+5. جب ماڈل نئے منظرناموں میں ناکام ہو تو دہرائیں
 
-**Synthetic data طریقہ:**
-1. Simulation بنائیں (دن)
-2. خودکار طور پر لاکھوں samples تیار کریں (گھنٹے)
-3. خودکار طور پر کامل labels (مفت)
-4. Model ٹریننگ کریں
-5. نئے منظرناموں کے لیے domain randomization شامل کریں
+**سنتھیٹک ڈیٹا طریقہ:**
+1. سمیولیشن بنائیں (دن)
+2. خودکار طور پر لاکھوں سیمپلز تیار کریں (گھنٹے)
+3. خودکار طور پر کامل لیبلز (مفت)
+4. ماڈل ٹریننگ کریں
+5. نئے منظرناموں کے لیے ڈومین رینڈمائزیشن شامل کریں
 
-### Synthetic Data کے فوائد
+### سنتھیٹک ڈیٹا کے فوائد
 
-| پہلو | حقیقی Data | Synthetic Data |
+| پہلو | حقیقی ڈیٹا | سنتھیٹک ڈیٹا |
 |--------|-----------|----------------|
-| **لاگت** | $$$$ (hardware، محنت) | $ (صرف compute) |
-| **رفتار** | سست (جسمانی جمع) | تیز (parallel generation) |
+| **لاگت** | $$$$ (ہارڈویئر، محنت) | $ (صرف کمپیوٹ) |
+| **رفتار** | سست (جسمانی جمع) | تیز (پیرالل جنریشن) |
 | **پیمانہ** | ہزاروں تصاویر | لاکھوں تصاویر |
-| **Labels** | دستی ($0.10-$1/image) | خودکار (مفت، کامل) |
-| **تنوع** | جسمانی سیٹ اپ سے محدود | لامحدود (domain randomization) |
+| **لیبلز** | دستی ($0.10-$1/تصویر) | خودکار (مفت، کامل) |
+| **تنوع** | جسمانی سیٹ اپ سے محدود | لامحدود (ڈومین رینڈمائزیشن) |
 | **حفاظت** | نقصان کا خطرہ | خطرے سے پاک |
-| **Edge cases** | پکڑنا مشکل | بنانا آسان |
+| **ایج کیسز** | پکڑنا مشکل | بنانا آسان |
 
 ### چیلنجز اور حل
 
-**چیلنج 1: Sim-to-Real Gap**
-- Simulated تصاویر حقیقت کے مقابلے میں "جعلی" نظر آتی ہیں
-- **حل**: Domain randomization (lighting، textures، camera params)
+**چیلنج 1: سم ٹو ریئل گیپ**
+- سمیولیٹڈ تصاویر حقیقت کے مقابلے میں "جعلی" نظر آتی ہیں
+- **حل**: ڈومین رینڈمائزیشن (لائٹنگ، ٹیکسچرز، کیمرا پیرامز)
 
-**چیلنج 2: Physics Mismatch**
-- Simulated physics حقیقی دنیا سے مختلف ہے
-- **حل**: System identification، حقیقی data پر fine-tuning
+**چیلنج 2: فزکس مسمیچ**
+- سمیولیٹڈ فزکس حقیقی دنیا سے مختلف ہے
+- **حل**: سسٹم آئیڈینٹیفکیشن، حقیقی ڈیٹا پر فائن ٹیوننگ
 
-**چیلنج 3: Simulation پر Overfitting**
-- Model sim میں کام کرتا ہے لیکن حقیقی robot پر ناکام ہوتا ہے
-- **حل**: متنوع randomization، sim-to-real transfer تکنیکیں
+**چیلنج 3: سمیولیشن پر اوور فٹنگ**
+- ماڈل سم میں کام کرتا ہے لیکن حقیقی روبوٹ پر ناکام ہوتا ہے
+- **حل**: متنوع رینڈمائزیشن، سم ٹو ریئل ٹرانسفر تکنیکیں
 
-## Isaac Sim Replicator
+## آئزک سم ریپلیکیٹر
 
-**Replicator** Isaac Sim کا synthetic data generation framework ہے۔
+**ریپلیکیٹر** آئزک سم کا سنتھیٹک ڈیٹا جنریشن فریم ورک ہے۔
 
 ### اہم صلاحیتیں
 
-- **Randomization**: Materials، lighting، camera params، object poses
-- **Annotations**: Bounding boxes، segmentation، depth، normals
-- **Scalability**: Parallel میں ہزاروں تصاویر تیار کریں
-- **Formats**: COCO، KITTI، Custom JSON
+- **رینڈمائزیشن**: میٹیریلز، لائٹنگ، کیمرا پیرامز، آبجیکٹ پوزز
+- **اینوٹیشنز**: باؤنڈنگ باکسز، سیگمینٹیشن، ڈیپتھ، نارملز
+- **اسکیلیبیلیٹی**: پیرالل میں ہزاروں تصاویر تیار کریں
+- **فارمیٹس**: کوکو، کٹی، کسٹم جے سن
 
-### Replicator Workflow
+### ریپلیکیٹر ورک فلو
 
 ```
 1. بنیادی scene بنائیں
@@ -85,13 +85,13 @@
 5. Dataset export کریں
 ```
 
-## Synthetic Dataset بنانا
+## سنتھیٹک ڈیٹاسیٹ بنانا
 
-### مثال: Object Detection Dataset
+### مثال: آبجیکٹ ڈیٹیکشن ڈیٹاسیٹ
 
-**ہدف**: میز پر boxes کا پتہ لگانے کے لیے YOLOv8 ٹریننگ کریں
+**ہدف**: میز پر باکسز کا پتہ لگانے کے لیے یولو وی 8 ٹریننگ کریں
 
-#### مرحلہ 1: بنیادی Scene بنائیں
+#### مرحلہ 1: بنیادی سین بنائیں
 
 ```python
 from omni.isaac.kit import SimulationApp
@@ -134,7 +134,7 @@ light = rep.create.light(
 )
 ```
 
-#### مرحلہ 2: Randomizers کی تعریف کریں
+#### مرحلہ 2: رینڈمائزرز کی تعریف کریں
 
 ```python
 import omni.replicator.core as rep
@@ -200,7 +200,7 @@ def randomize_camera():
             rep.modify.pose(position=(x, y, z), look_at=(0, 0, 0.5))
 ```
 
-#### مرحلہ 3: Annotators رجسٹر کریں
+#### مرحلہ 3: اینوٹیٹرز رجسٹر کریں
 
 ```python
 # Annotations فعال کریں
@@ -223,7 +223,7 @@ depth_annot = rep.AnnotatorRegistry.get_annotator("distance_to_camera")
 depth_annot.attach(rp)
 ```
 
-#### مرحلہ 4: Custom Writer (COCO Format)
+#### مرحلہ 4: کسٹم رائٹر (کوکو فارمیٹ)
 
 ```python
 import omni.replicator.core as rep
@@ -298,7 +298,7 @@ writer = COCOWriter(output_dir="./dataset_boxes")
 writer.attach(rp)
 ```
 
-#### مرحلہ 5: Generation چلائیں
+#### مرحلہ 5: جنریشن چلائیں
 
 ```python
 # Generation loop
@@ -330,11 +330,11 @@ writer.on_final_frame()
 simulation_app.close()
 ```
 
-**نتیجہ**: YOLO ٹریننگ کے لیے تیار COCO annotations کے ساتھ 1000 تصاویر!
+**نتیجہ**: یولو ٹریننگ کے لیے تیار کوکو اینوٹیشنز کے ساتھ 1000 تصاویر!
 
-## Domain Randomization کے بہترین طریقے
+## ڈومین رینڈمائزیشن کے بہترین طریقے
 
-### 1. Lighting Randomization
+### 1. لائٹنگ رینڈمائزیشن
 
 ```python
 # بے ترتیب رنگوں کے ساتھ متعدد روشنیاں
@@ -351,7 +351,7 @@ for i in range(3):
     )
 ```
 
-### 2. Texture Randomization
+### 2. ٹیکسچر رینڈمائزیشن
 
 ```python
 # آبجیکٹس پر بے ترتیب materials لگائیں
@@ -367,7 +367,7 @@ def randomize_materials():
         rep.randomizer.materials(materials)
 ```
 
-### 3. Camera Randomization
+### 3. کیمرا رینڈمائزیشن
 
 ```python
 # حقیقی camera noise کی نقل کریں
@@ -383,7 +383,7 @@ with camera:
     rep.modify.attribute("focalLength", np.random.uniform(18, 55))
 ```
 
-### 4. Background Randomization
+### 4. بیک گراؤنڈ رینڈمائزیشن
 
 ```python
 # بے ترتیب HDRI backgrounds استعمال کریں
@@ -398,31 +398,31 @@ with rep.new_layer():
         rep.randomizer.texture(hdris)
 ```
 
-## Isaac Gym: بہت زیادہ Parallel RL
+## آئزک جم: بہت زیادہ پیرالل آر ایل
 
-**Isaac Gym** ایک GPU پر ہزاروں robot policies کی بیک وقت ٹریننگ کو ممکن بناتا ہے۔
+**آئزک جم** ایک جی پی یو پر ہزاروں روبوٹ پالیسیز کی بیک وقت ٹریننگ کو ممکن بناتا ہے۔
 
 ### اہم تصورات
 
-- **Vectorized environments**: بیک وقت 1000+ instances چلائیں
-- **GPU physics**: GPU پر تمام simulation (کوئی CPU bottleneck نہیں)
-- **GPU tensors**: Observations/actions GPU پر رہتے ہیں (کوئی CPU↔GPU transfer نہیں)
-- **Fast**: دنوں کے بجائے منٹوں میں policies ٹریننگ کریں
+- **ویکٹرائزڈ انوائرنمنٹس**: بیک وقت 1000+ انسٹینسز چلائیں
+- **جی پی یو فزکس**: جی پی یو پر تمام سمیولیشن (کوئی سی پی یو باٹل نیک نہیں)
+- **جی پی یو ٹینسرز**: آبزرویشنز/ایکشنز جی پی یو پر رہتے ہیں (کوئی سی پی یو↔جی پی یو ٹرانسفر نہیں)
+- **تیز**: دنوں کے بجائے منٹوں میں پالیسیز ٹریننگ کریں
 
-### Isaac Gym بمقابلہ روایتی RL
+### آئزک جم بمقابلہ روایتی آر ایل
 
-| میٹرک | روایتی (CPU) | Isaac Gym (GPU) |
+| میٹرک | روایتی (سی پی یو) | آئزک جم (جی پی یو) |
 |--------|-------------------|-----------------|
-| **Parallel envs** | 8-16 | 1024-8192 |
-| **Timesteps/sec** | 1000-5000 | 100K-1M |
-| **Training time (Reach)** | 24 گھنٹے | 5 منٹ |
-| **Hardware** | Multi-core CPU | Single RTX GPU |
+| **پیرالل انوز** | 8-16 | 1024-8192 |
+| **ٹائم سٹیپس/سیکنڈ** | 1000-5000 | 100 ہزار-10 لاکھ |
+| **ٹریننگ ٹائم (ریچ)** | 24 گھنٹے | 5 منٹ |
+| **ہارڈویئر** | ملٹی کور سی پی یو | سنگل آر ٹی ایکس جی پی یو |
 
-### سادہ Reach Task
+### سادہ ریچ ٹاسک
 
-**ہدف**: بے ترتیب ہدف positions تک پہنچنے کے لیے robot arm ٹریننگ کریں
+**ہدف**: بے ترتیب ہدف پوزیشنز تک پہنچنے کے لیے روبوٹ آرم ٹریننگ کریں
 
-#### Environment Setup
+#### انوائرنمنٹ سیٹ اپ
 
 ```python
 from omni.isaac.gym import VecEnvBase
@@ -494,7 +494,7 @@ class ReachEnv(VecEnvBase):
         return torch.rand((self.num_envs, 3), device=self.device)
 ```
 
-#### PPO کے ساتھ Training
+#### پی پی او کے ساتھ ٹریننگ
 
 ```python
 from stable_baselines3 import PPO
@@ -529,11 +529,11 @@ model.learn(total_timesteps=1_000_000)
 model.save("reach_policy")
 ```
 
-**Training RTX 3080 پر ~5 منٹ میں مکمل ہوتی ہے!**
+**ٹریننگ آر ٹی ایکس 3080 پر ~5 منٹ میں مکمل ہوتی ہے!**
 
-### حقیقی Isaac Gym مثال (Cartpole)
+### حقیقی آئزک جم مثال (کارٹ پول)
 
-Isaac Gym میں پہلے سے بنائے ہوئے tasks شامل ہیں:
+آئزک جم میں پہلے سے بنائے ہوئے ٹاسکس شامل ہیں:
 
 ```bash
 cd ~/.local/share/ov/pkg/isaac_sim-2023.1.1/standalone_examples/api/omni.isaac.gym
@@ -542,55 +542,55 @@ cd ~/.local/share/ov/pkg/isaac_sim-2023.1.1/standalone_examples/api/omni.isaac.g
 python cartpole.py
 ```
 
-Parallel میں 2048 cartpoles ٹریننگ کرتا ہے!
+پیرالل میں 2048 کارٹ پولز ٹریننگ کرتا ہے!
 
 ## ہفتہ 9 عملی پروجیکٹ
 
-**کام**: Synthetic dataset بنائیں اور سادہ model ٹریننگ کریں
+**کام**: سنتھیٹک ڈیٹاسیٹ بنائیں اور سادہ ماڈل ٹریننگ کریں
 
-**حصہ 1: Synthetic Dataset (50 پوائنٹس)**
-- Scene: 3-6 رنگین cubes کے ساتھ میز
-- Randomization: Lighting (3 ذرائع)، cube positions، cube رنگ
+**حصہ 1: سنتھیٹک ڈیٹاسیٹ (50 پوائنٹس)**
+- سین: 3-6 رنگین کیوبز کے ساتھ میز
+- رینڈمائزیشن: لائٹنگ (3 ذرائع)، کیوب پوزیشنز، کیوب رنگ
 - 2000 تصاویر تیار کریں (640x480)
-- Annotations: COCO format میں bounding boxes
-- Dataset کو disk پر محفوظ کریں
+- اینوٹیشنز: کوکو فارمیٹ میں باؤنڈنگ باکسز
+- ڈیٹاسیٹ کو ڈسک پر محفوظ کریں
 
-**حصہ 2: Model Training (50 پوائنٹس)**
-- Synthetic data پر YOLOv8 یا Faster R-CNN ٹریننگ کریں
-- 200-image validation set پر evaluate کریں
-- mAP (mean Average Precision) رپورٹ کریں
-- Sim-to-real gap کا جائزہ لینے کے لیے حقیقی تصاویر پر جانچ کریں (اگر دستیاب ہوں)
+**حصہ 2: ماڈل ٹریننگ (50 پوائنٹس)**
+- سنتھیٹک ڈیٹا پر یولو وی 8 یا فاسٹر آر-سی این این ٹریننگ کریں
+- 200-تصویر ویلیڈیشن سیٹ پر ایویلیوایٹ کریں
+- ایم اے پی (مین ایوریج پریسیژن) رپورٹ کریں
+- سم ٹو ریئل گیپ کا جائزہ لینے کے لیے حقیقی تصاویر پر جانچ کریں (اگر دستیاب ہوں)
 
 **ڈیلیور ایبلز:**
-- Dataset generation کے لیے Replicator script
-- Training script اور logs
-- Trained model weights
-- میٹرکس کے ساتھ evaluation رپورٹ
+- ڈیٹاسیٹ جنریشن کے لیے ریپلیکیٹر اسکرپٹ
+- ٹریننگ اسکرپٹ اور لاگز
+- ٹرینڈ ماڈل ویٹس
+- میٹرکس کے ساتھ ایویلیوایشن رپورٹ
 
 **بونس (+20 پوائنٹس):**
-- Custom domain randomization نافذ کریں (distractor objects، camera noise)
-- سادہ manipulation task کے لیے RL policy ٹریننگ کریں
+- کسٹم ڈومین رینڈمائزیشن نافذ کریں (ڈسٹریکٹر آبجیکٹس، کیمرا نوائز)
+- سادہ مینیپولیشن ٹاسک کے لیے آر ایل پالیسی ٹریننگ کریں
 
 ## وسائل
 
-- [Replicator Documentation](https://docs.omniverse.nvidia.com/extensions/latest/ext_replicator.html)
-- [Isaac Gym Documentation](https://docs.omniverse.nvidia.com/isaacsim/latest/isaac_gym_tutorials/index.html)
-- [Synthetic Data Generation Guide](https://docs.omniverse.nvidia.com/isaacsim/latest/replicator_tutorials/index.html)
-- [Domain Randomization Paper](https://arxiv.org/abs/1703.06907)
-- [Isaac Gym Benchmark](https://leggedrobotics.github.io/rl-games/)
+- [ریپلیکیٹر دستاویزات](https://docs.omniverse.nvidia.com/extensions/latest/ext_replicator.html)
+- [آئزک جم دستاویزات](https://docs.omniverse.nvidia.com/isaacsim/latest/isaac_gym_tutorials/index.html)
+- [سنتھیٹک ڈیٹا جنریشن گائیڈ](https://docs.omniverse.nvidia.com/isaacsim/latest/replicator_tutorials/index.html)
+- [ڈومین رینڈمائزیشن پیپر](https://arxiv.org/abs/1703.06907)
+- [آئزک جم بینچ مارک](https://leggedrobotics.github.io/rl-games/)
 
 ## اگلے قدم
 
-بہترین کام! اب آپ synthetic data generation اور parallel RL training سمجھتے ہیں۔
+بہترین کام! اب آپ سنتھیٹک ڈیٹا جنریشن اور پیرالل آر ایل ٹریننگ سمجھتے ہیں۔
 
-اگلا ہفتہ: [ہفتہ 10: Sim-to-Real Transfer & Chapter 3 Project](week-10.md)
+اگلا ہفتہ: [ہفتہ 10: سم ٹو ریئل ٹرانسفر اور باب 3 پروجیکٹ](week-10.md)
 
-ہم sim-to-real gap سے نمٹیں گے اور ایک جامع Isaac Sim پروجیکٹ مکمل کریں گے!
+ہم سم ٹو ریئل گیپ سے نمٹیں گے اور ایک جامع آئزک سم پروجیکٹ مکمل کریں گے!
 
 ---
 
-## 📝 ہفتہ وار Quiz
+## 📝 ہفتہ وار کوئز
 
-اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! Quiz multiple choice ہے، خودکار طور پر score ہوتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
+اس ہفتے کے مواد کی اپنی سمجھ کو جانچیں! کوئز ملٹیپل چوائس ہے، خودکار طور پر اسکور ہوتا ہے، اور آپ کے پاس 2 کوششیں ہیں۔
 
-**[ہفتہ 9 Quiz لیں →](/quiz?week=9)**
+**[ہفتہ 9 کوئز لیں →](/quiz?week=9)**
